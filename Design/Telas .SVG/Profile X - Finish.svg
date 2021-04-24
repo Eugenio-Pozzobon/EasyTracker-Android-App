@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="2340" viewBox="0 0 1080 2340">
+  <defs>
+    <filter id="Now_you_can_start_star_tracking_" x="55.5" y="1930" width="944" height="166" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#271701" flood-opacity="0.671"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Congrats_" x="249.5" y="302" width="582" height="164" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-color="#271701" flood-opacity="0.671"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-Profile_X_-_Finish">
+      <rect width="1080" height="2340"/>
+    </clipPath>
+  </defs>
+  <g id="Profile_X_-_Finish" data-name="Profile X - Finish" clip-path="url(#clip-Profile_X_-_Finish)">
+    <rect width="1080" height="2340" fill="#7a7a7a"/>
+    <rect id="Retângulo_7" data-name="Retângulo 7" width="1080" height="180" fill="#232222"/>
+    <text id="Launching_3_3_" data-name="Launching (3/3)" transform="translate(542 122)" fill="#fff" font-size="65" font-family="SegoeUI, Segoe UI"><tspan x="-223.644" y="0">Launching (3/3)</tspan></text>
+    <path id="Caminho_1" data-name="Caminho 1" d="M16,15a6,6,0,1,0-6-6A6,6,0,0,0,16,15Zm0,30a6,6,0,1,0,6,6A6,6,0,0,0,16,45Zm0-21a6,6,0,1,0,6,6A6,6,0,0,0,16,24Z" transform="translate(989 60)" fill="#fff"/>
+    <g id="Retângulo_1" data-name="Retângulo 1" transform="translate(242 2111)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile" data-name="Load Profile" transform="translate(347 2206)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_2" data-name="Retângulo 2" transform="translate(242 2111)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile-2" data-name="Load Profile" transform="translate(347 2206)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_3" data-name="Retângulo 3" transform="translate(242 2111)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile-3" data-name="Load Profile" transform="translate(347 2206)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_4" data-name="Retângulo 4" transform="translate(242 2111)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile-4" data-name="Load Profile" transform="translate(347 2206)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_5" data-name="Retângulo 5" transform="translate(242 2111)" fill="#bbe7d8" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Start_tracking" data-name="Start tracking" transform="translate(527 2206)" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="-202.115" y="0">Start tracking</tspan></text>
+    <path id="Caminho_12" data-name="Caminho 12" d="M76,19H20l6.4-4.8a4,4,0,0,0-4.8-6.4l-16,12a4,4,0,0,0,0,6.4l16,12a4,4,0,0,0,4.8-6.4L20,27H76a16,16,0,1,1,0,32H8a4,4,0,1,0,0,8H76a24,24,0,0,0,0-48Z" transform="translate(51 53)" fill="#fff"/>
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Now_you_can_start_star_tracking_)">
+      <text id="Now_you_can_start_star_tracking_2" data-name="Now, you can start star tracking!
+" transform="translate(527.5 1995)" fill="#f7d600" font-size="65" font-family="ArialMT, Arial"><tspan x="-462.411" y="0">Now, you can start star tracking!</tspan><tspan x="0" y="75"></tspan></text>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Congrats_)">
+      <text id="Congrats_2" data-name="Congrats!" transform="translate(540.5 426)" fill="#f7d600" font-size="130" font-family="ArialMT, Arial"><tspan x="-281.804" y="0">Congrats!</tspan></text>
+    </g>
+    <line id="Linha_4" data-name="Linha 4" x2="753" y2="7" transform="translate(163.5 540.5)" fill="none" stroke="#fff" stroke-width="1"/>
+    <line id="Linha_5" data-name="Linha 5" x2="753" y2="7" transform="translate(150.5 1852.5)" fill="none" stroke="#fff" stroke-width="1"/>
+    <text id="Lorem_ipsum_dolor_sit_amet_consetetur_sadipscing_elitr_sed_diam_nonumy_eirmod_tempor_invidunt_ut_labore_et_dolore_magna_aliquyam_erat_sed_diam_voluptua._At_vero_eos_et_accusam_et_justo_duo_dolores_et_ea_rebum._Stet_clita_kasd_gubergren_no_sea_takimata_" data-name="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata " transform="translate(92 656)" fill="#fff" font-size="60" font-family="ArialMT, Arial"><tspan x="0" y="54">Lorem ipsum dolor sit amet, </tspan><tspan x="0" y="123">consetetur sadipscing elitr, sed </tspan><tspan x="0" y="192">diam nonumy eirmod tempor </tspan><tspan x="0" y="261">invidunt ut labore et dolore </tspan><tspan x="0" y="330">magna aliquyam erat, sed diam </tspan><tspan x="0" y="399">voluptua. At vero eos et accusam </tspan><tspan x="0" y="468">et justo duo dolores et ea rebum. </tspan><tspan x="0" y="537">Stet clita kasd gubergren, no sea </tspan></text>
+    <g id="picture" transform="translate(215 1248.928)">
+      <g id="Grupo_17" data-name="Grupo 17" transform="translate(0 72)">
+        <g id="Grupo_16" data-name="Grupo 16">
+          <path id="Caminho_39" data-name="Caminho 39" d="M595.72,72H54.156A54.221,54.221,0,0,0,0,126.156v346.6a54.221,54.221,0,0,0,54.156,54.156H595.72a50.132,50.132,0,0,0,9.066-.791,54.005,54.005,0,0,0,45.091-53.366v-346.6A54.22,54.22,0,0,0,595.72,72ZM54.156,505.251a32.494,32.494,0,0,1-32.364-29.634l215.954-141.2L457.361,505.251Zm574.057-32.494a32.418,32.418,0,0,1-27.187,32.028,29.443,29.443,0,0,1-5.307.466H492.638l-143.5-111.681L477.464,290.954l150.75,90.452Zm0-116.609-146.06-87.636a10.832,10.832,0,0,0-12.348.823L331.523,379.922l-86.6-67.349a10.831,10.831,0,0,0-12.564-.52L21.663,449.816V126.156A32.494,32.494,0,0,1,54.156,93.663H595.72a32.494,32.494,0,0,1,32.494,32.494Z" transform="translate(0 -72)" fill="#f97f7f"/>
+          <path id="Caminho_40" data-name="Caminho 40" d="M256.988,120a64.988,64.988,0,1,0,64.988,64.988A64.987,64.987,0,0,0,256.988,120Zm0,108.313a43.325,43.325,0,1,1,43.325-43.325A43.325,43.325,0,0,1,256.988,228.313Z" transform="translate(67.95 -55.012)" fill="#f97f7f"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

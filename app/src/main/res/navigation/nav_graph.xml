@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.android.navigation.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/debugFragment"
+        android:name="com.example.android.navigation.DebugFragment"
+        android:label="fragment_debug"
+        tools:layout="@layout/fragment_debug" />
+    <fragment
+        android:id="@+id/howToUseFragment"
+        android:name="com.example.android.navigation.HowToUseFragment"
+        android:label="fragment_how_to_use"
+        tools:layout="@layout/fragment_how_to_use" />
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.StarTracker.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_currentProfileFragment"
+            app:destination="@id/currentProfileFragment"
+            app:exitAnim="@anim/slide_in_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/currentProfileFragment"
+        android:name="com.example.StarTracker.NewProfileFragment"
+        android:label="fragment_current_profile"
+        tools:layout="@layout/fragment_new_profile" />
+</navigation>

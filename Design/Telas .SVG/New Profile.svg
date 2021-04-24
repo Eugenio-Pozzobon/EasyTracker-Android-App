@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="2340" viewBox="0 0 1080 2340">
+  <defs>
+    <filter id="Add_your_GPS_Localization._" x="133.5" y="595" width="814" height="166" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#271701" flood-opacity="0.671"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Add_the_Magnetic_Declination_at_this_location." x="120.5" y="1369" width="840" height="166" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-color="#271701" flood-opacity="0.671"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-New_Profile">
+      <rect width="1080" height="2340"/>
+    </clipPath>
+  </defs>
+  <g id="New_Profile" data-name="New Profile" clip-path="url(#clip-New_Profile)">
+    <rect width="1080" height="2340" fill="#7a7a7a"/>
+    <rect id="Retângulo_7" data-name="Retângulo 7" width="1080" height="180" fill="#232222"/>
+    <text id="Add_Profile" data-name="Add Profile" transform="translate(542 122)" fill="#fff" font-size="74" font-family="SegoeUI, Segoe UI"><tspan x="-181.694" y="0">Add Profile</tspan></text>
+    <path id="Caminho_1" data-name="Caminho 1" d="M16,15a6,6,0,1,0-6-6A6,6,0,0,0,16,15Zm0,30a6,6,0,1,0,6,6A6,6,0,0,0,16,45Zm0-21a6,6,0,1,0,6,6A6,6,0,0,0,16,24Z" transform="translate(989 60)" fill="#fff"/>
+    <path id="Caminho_12" data-name="Caminho 12" d="M76,19H20l6.4-4.8a4,4,0,0,0-4.8-6.4l-16,12a4,4,0,0,0,0,6.4l16,12a4,4,0,0,0,4.8-6.4L20,27H76a16,16,0,1,1,0,32H8a4,4,0,1,0,0,8H76a24,24,0,0,0,0-48Z" transform="translate(51 53)" fill="#fff"/>
+    <g id="Retângulo_1" data-name="Retângulo 1" transform="translate(255 1943)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile" data-name="Load Profile" transform="translate(360 2038)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_2" data-name="Retângulo 2" transform="translate(255 1943)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile-2" data-name="Load Profile" transform="translate(360 2038)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_3" data-name="Retângulo 3" transform="translate(255 1943)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile-3" data-name="Load Profile" transform="translate(360 2038)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_4" data-name="Retângulo 4" transform="translate(255 1943)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Load_Profile-4" data-name="Load Profile" transform="translate(360 2038)" fill="#707070" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Load Profile</tspan></text>
+    <g id="Retângulo_5" data-name="Retângulo 5" transform="translate(255 1943)" fill="#bcccdb" stroke="#707070" stroke-width="1">
+      <rect width="570" height="132" rx="19" stroke="none"/>
+      <rect x="0.5" y="0.5" width="569" height="131" rx="18.5" fill="none"/>
+    </g>
+    <text id="Save_New_Profile" data-name="Save New Profile" transform="translate(540 2038)" font-size="69" font-family="SegoeUI, Segoe UI"><tspan x="-255.212" y="0">Save New Profile</tspan></text>
+    <g id="map" transform="translate(103 692.535)">
+      <g id="Grupo_12" data-name="Grupo 12" transform="translate(65.827 109.856)">
+        <path id="Caminho_24" data-name="Caminho 24" d="M437.451,334.2,417.261,222.963a3.768,3.768,0,0,0-1.877-2.621l-50.819-28.265a3.759,3.759,0,0,0-2.125-.457l9.245,119.268-.31.139,60.819,27.285a3.772,3.772,0,0,0,5.257-4.11Z" transform="translate(-246.339 -191.608)" fill="#44c868"/>
+        <path id="Caminho_25" data-name="Caminho 25" d="M193.815,219.1,141.84,192.027a3.76,3.76,0,0,0-1.994-.412,3.893,3.893,0,0,1,.541,0l-9.245,119.268,61.128,27.424a3.78,3.78,0,0,0,1.544.331h0Z" transform="translate(-131.142 -191.607)" fill="#44c868"/>
+      </g>
+      <g id="Grupo_13" data-name="Grupo 13" transform="translate(0 109.858)">
+        <path id="Caminho_26" data-name="Caminho 26" d="M75.072,191.621a3.763,3.763,0,0,0-2.125.457L22.128,220.343a3.766,3.766,0,0,0-1.877,2.621L.061,334.2a3.772,3.772,0,0,0,5.256,4.111L65.8,311.177Z" transform="translate(0 -191.61)" fill="#4ce166"/>
+        <path id="Caminho_27" data-name="Caminho 27" d="M309.427,191.628a3.761,3.761,0,0,0-1.453.411L256,219.109V338.653h0a3.77,3.77,0,0,0,1.545-.331L318.673,310.9Z" transform="translate(-127.5 -191.619)" fill="#4ce166"/>
+      </g>
+      <path id="Caminho_28" data-name="Caminho 28" d="M24.084,290.784l-4.1,22.6L80.716,281.3l1.41-18.19.234-3.017Z" transform="translate(-9.952 -115.862)" fill="#ffdb56"/>
+      <path id="Caminho_29" data-name="Caminho 29" d="M71.311,288.294l-.547,7.053L10.031,327.425l-9.97,54.93a3.772,3.772,0,0,0,5.256,4.111L65.8,359.33l5.506-71.036Z" transform="translate(0 -129.905)" fill="#a8eefc"/>
+      <g id="Grupo_14" data-name="Grupo 14" transform="translate(70.764 122.788)">
+        <path id="Caminho_30" data-name="Caminho 30" d="M198.728,268.12,142.621,260.1,140.977,281.3l57.736,87.681V337.1l-34.453-54.25,34.468,4.123Z" transform="translate(-140.977 -238.65)" fill="#ffbb24"/>
+        <path id="Caminho_31" data-name="Caminho 31" d="M412.792,230.948,388.38,217.37l-23.111,5.4.289,3.733,1.141,14.724Z" transform="translate(-252.685 -217.37)" fill="#ffbb24"/>
+      </g>
+      <path id="Caminho_32" data-name="Caminho 32" d="M314.343,273.027l-2.188-28.234h0l-1.292-16.664L256.03,252.2v18.854l35.817-15.576Z" transform="translate(-127.515 -99.94)" fill="#ffdb56"/>
+      <path id="Caminho_33" data-name="Caminho 33" d="M440.28,370.7l-5.071-27.942L368.119,264.9l2.05,26.442,68.8,82.933A3.764,3.764,0,0,0,440.28,370.7Z" transform="translate(-183.34 -118.253)" fill="#ffbb24"/>
+      <path id="Caminho_34" data-name="Caminho 34" d="M204.126,27.465a52.8,52.8,0,0,0-52.765,52.722c0,17.983,8.538,37.29,25.377,57.384a180.342,180.342,0,0,0,25.081,24.648,3.775,3.775,0,0,0,4.617,0,180.372,180.372,0,0,0,25.081-24.648c16.839-20.094,25.377-39.4,25.377-57.384A52.805,52.805,0,0,0,204.126,27.465Zm19.541,52.722a19.541,19.541,0,1,1-19.541-19.525A19.533,19.533,0,0,1,223.667,80.187Z" transform="translate(-75.385)" fill="#ff4a4a"/>
+      <path id="Caminho_35" data-name="Caminho 35" d="M249.728,27.465a53.062,53.062,0,0,0-6.806.438,52.816,52.816,0,0,1,45.96,52.284c0,17.983-8.538,37.29-25.377,57.384a188.707,188.707,0,0,1-20.583,20.916c2.637,2.285,4.315,3.591,4.5,3.733a3.775,3.775,0,0,0,4.617,0,180.373,180.373,0,0,0,25.081-24.648c16.839-20.094,25.377-39.4,25.377-57.384A52.805,52.805,0,0,0,249.728,27.465Z" transform="translate(-120.986)" fill="#e7343f"/>
+      <path id="Caminho_36" data-name="Caminho 36" d="M257.545,448.828l22.731-10.2L256,413.507v35.652h0A3.763,3.763,0,0,0,257.545,448.828Z" transform="translate(-127.5 -192.267)" fill="#ffdb56"/>
+      <g id="Grupo_15" data-name="Grupo 15" transform="translate(65.826 136.366)">
+        <path id="Caminho_37" data-name="Caminho 37" d="M420.088,249.266a3.768,3.768,0,0,0-1.877-2.621l-4-2.225L368.118,254.7h0l67.089,77.863Z" transform="translate(-249.166 -244.42)" fill="#1ea4e9"/>
+        <path id="Caminho_38" data-name="Caminho 38" d="M193.813,393.8h0v-3.769l-57.736-87.681-4.938,63.7,61.128,27.424A3.771,3.771,0,0,0,193.813,393.8Z" transform="translate(-131.14 -273.27)" fill="#1ea4e9"/>
+      </g>
+    </g>
+    <text id="Lat:_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_Long:_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" data-name="Lat: -  - - - - - - - - - - - - - - - - - - 
+Long: -  - - - - - - - - - - - - - - - - - " transform="translate(123 1100)" fill="#fff" font-size="65" font-family="ArialMT, Arial"><tspan x="0" y="0" xml:space="preserve">Lat: -  - - - - - - - - - - - - - - - - - - </tspan><tspan x="0" y="75" xml:space="preserve">Long: -  - - - - - - - - - - - - - - - - - </tspan></text>
+    <g id="Retângulo_11" data-name="Retângulo 11" transform="translate(487 764)" fill="#981414" stroke="#707070" stroke-width="1">
+      <rect width="458" height="141" rx="70.5" stroke="none"/>
+      <rect x="0.5" y="0.5" width="457" height="140" rx="70" fill="none"/>
+    </g>
+    <text id="Add" transform="translate(658 857)" fill="#fff" font-size="65" font-family="ArialMT, Arial"><tspan x="0" y="0">Add</tspan></text>
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Add_your_GPS_Localization._)">
+      <text id="Add_your_GPS_Localization._2" data-name="Add your GPS Localization.
+" transform="translate(540.5 660)" fill="#f7d600" font-size="65" font-family="ArialMT, Arial"><tspan x="-397.443" y="0">Add your GPS Localization.</tspan><tspan x="0" y="75"></tspan></text>
+    </g>
+    <g id="Retângulo_12" data-name="Retângulo 12" transform="translate(487 1585)" fill="#981414" stroke="#707070" stroke-width="1">
+      <rect width="458" height="141" rx="70.5" stroke="none"/>
+      <rect x="0.5" y="0.5" width="457" height="140" rx="70" fill="none"/>
+    </g>
+    <text id="Add-2" data-name="Add" transform="translate(658 1678)" fill="#fff" font-size="65" font-family="ArialMT, Arial"><tspan x="0" y="0">Add</tspan></text>
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Add_the_Magnetic_Declination_at_this_location.)">
+      <text id="Add_the_Magnetic_Declination_at_this_location.-2" data-name="Add the Magnetic Declination at this location." transform="translate(129.5 1375)" fill="#f7d600" font-size="65" font-family="ArialMT, Arial"><tspan x="158.062" y="59">Add the Magnetic </tspan><tspan x="24.396" y="134">Declination at this location.</tspan></text>
+    </g>
+    <g id="magnetic-field" transform="translate(151 1605)">
+      <path id="Caminho_15" data-name="Caminho 15" d="M173.392,2.419l66.457,65.687a8.379,8.379,0,0,1,2.488,5.909l.544,93.44a8.378,8.378,0,0,1-2.419,5.937l-65.688,66.456a8.378,8.378,0,0,1-5.909,2.488l-93.44.544a8.378,8.378,0,0,1-5.937-2.419L3.032,174.774a8.379,8.379,0,0,1-2.488-5.909L0,75.426a8.378,8.378,0,0,1,2.419-5.937L68.106,3.032A8.379,8.379,0,0,1,74.015.544L167.454,0A8.377,8.377,0,0,1,173.392,2.419Z" fill="#e57e25"/>
+      <path id="Caminho_16" data-name="Caminho 16" d="M35.751,182.12l-.483-83.075a4.187,4.187,0,0,1,1.209-2.969l58.4-59.082a4.19,4.19,0,0,1,2.954-1.244l83.075-.483a4.187,4.187,0,0,1,2.969,1.209l59.082,58.4A4.19,4.19,0,0,1,244.2,97.83l.483,83.075a4.187,4.187,0,0,1-1.209,2.969l-58.4,59.082a4.19,4.19,0,0,1-2.954,1.244l-83.075.483a4.187,4.187,0,0,1-2.969-1.209l-59.082-58.4A4.19,4.19,0,0,1,35.751,182.12Z" transform="translate(-18.535 -18.535)" fill="#f0c419"/>
+      <path id="Caminho_17" data-name="Caminho 17" d="M320.585,335.406v16.753a4.2,4.2,0,0,1-4.188,4.188H295.456a4.2,4.2,0,0,1-4.188-4.188V335.406Z" transform="translate(-153.074 -176.271)" fill="#fff"/>
+      <path id="Caminho_18" data-name="Caminho 18" d="M250.993,160.8v58.636H221.675V160.8a16.764,16.764,0,0,0-15.957-16.753,17.449,17.449,0,0,0-17.549,17.717v57.673H158.851V162.177a46.97,46.97,0,0,1,42.8-47.328A46.032,46.032,0,0,1,250.993,160.8Z" transform="translate(-83.482 -60.296)" fill="#e64c3c"/>
+      <g id="Grupo_11" data-name="Grupo 11" transform="translate(33.486 92.136)">
+        <path id="Caminho_19" data-name="Caminho 19" d="M188.171,335.406v16.753a4.2,4.2,0,0,1-4.188,4.188H163.041a4.2,4.2,0,0,1-4.188-4.188V335.406Z" transform="translate(-116.97 -268.407)" fill="#fff"/>
+        <path id="Caminho_20" data-name="Caminho 20" d="M383.534,253.783a4.188,4.188,0,0,1-3.523-6.446,23.058,23.058,0,0,0,.08-24.68,4.188,4.188,0,1,1,7.084-4.47,31.436,31.436,0,0,1-.108,33.666A4.187,4.187,0,0,1,383.534,253.783Z" transform="translate(-232.852 -205.777)" fill="#fff"/>
+        <path id="Caminho_21" data-name="Caminho 21" d="M409.777,254.45a4.188,4.188,0,0,1-3.463-6.54,39.6,39.6,0,0,0,6.859-22.318,39,39,0,0,0-8.551-24.572,4.188,4.188,0,1,1,6.548-5.223,48.033,48.033,0,0,1,2.076,56.816A4.184,4.184,0,0,1,409.777,254.45Z" transform="translate(-245.642 -194.193)" fill="#fff"/>
+        <path id="Caminho_22" data-name="Caminho 22" d="M114.362,253.783a4.184,4.184,0,0,1-3.532-1.931,31.436,31.436,0,0,1-.108-33.666,4.188,4.188,0,1,1,7.084,4.47,23.058,23.058,0,0,0,.08,24.68,4.188,4.188,0,0,1-3.524,6.446Z" transform="translate(-89.136 -205.776)" fill="#fff"/>
+        <path id="Caminho_23" data-name="Caminho 23" d="M82.352,254.507a4.184,4.184,0,0,1-3.471-1.837,48.03,48.03,0,0,1,2.078-56.816,4.188,4.188,0,0,1,6.549,5.223,38.99,38.99,0,0,0-8.553,24.572,39.6,39.6,0,0,0,6.859,22.318,4.189,4.189,0,0,1-3.463,6.54Z" transform="translate(-70.578 -194.25)" fill="#fff"/>
+      </g>
+    </g>
+    <text id="Declination:_x_" data-name="Declination: x°" transform="translate(508 1813)" fill="#fff" font-size="65" font-family="ArialMT, Arial"><tspan x="0" y="0">Declination: x°</tspan></text>
+    <g id="Retângulo_14" data-name="Retângulo 14" transform="translate(143 332)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0.9">
+      <rect width="794" height="99" stroke="none"/>
+      <rect x="0.5" y="0.5" width="793" height="98" fill="none"/>
+    </g>
+    <text id="Profile_Name:" data-name="Profile Name:" transform="translate(339 317)" fill="#fff" stroke="#707070" stroke-width="1" font-size="60" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Profile Name:</tspan></text>
+  </g>
+</svg>
