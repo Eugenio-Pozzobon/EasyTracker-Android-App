@@ -3,7 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
-    id 'kotlin-android-extensions'
 }
 
 android {
@@ -11,10 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     buildFeatures {
-        dataBinding true
-    }
-    viewBinding {
-        enabled = true
+        viewBinding true
     }
 
     defaultConfig {
@@ -52,12 +48,12 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.mediarouter:mediarouter:1.2.2'
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
 
-    def nav_version = "2.3.4"
+    def nav_version = "2.3.5"
 
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$nav_version"
@@ -74,5 +70,5 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Jetpack Compose Integration
-    implementation "androidx.navigation:navigation-compose:1.0.0-alpha09"
+    implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
 }
