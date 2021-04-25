@@ -16,7 +16,7 @@
             android:id="@+id/debugText1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/debug_fragment_1"
+            android:text="@string/howtouse_fragment_1"
             android:layout_marginStart="@dimen/big_margin"
             android:layout_marginTop="@dimen/big_margin"
             android:layout_marginEnd="@dimen/big_margin"

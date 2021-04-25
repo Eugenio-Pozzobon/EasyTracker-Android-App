@@ -1,15 +1,16 @@
 package com.example.StarTracker
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.example.StarTracker.databinding.FragmentWelcomeBinding
+
 
 class WelcomeFragment : Fragment() {
 
@@ -19,19 +20,18 @@ class WelcomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
+
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
         binding.initbutton.setOnClickListener{ v: View ->
-            val toast = Toast.makeText(getContext(), "GO", Toast.LENGTH_SHORT)
-            toast.show()
             v.findNavController().navigate(R.id.action_welcomeFragment_to_currentProfileFragment)
         }
 
-        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
+        //setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -40,14 +40,25 @@ class WelcomeFragment : Fragment() {
         inflater?.inflate(R.menu.menu_main, menu)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item,requireView().findNavController()) || super.onOptionsItemSelected(item)
+        return NavigationUI.onNavDestinationSelected(item!!,requireView().findNavController()) || super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+//    }
 
 }
 

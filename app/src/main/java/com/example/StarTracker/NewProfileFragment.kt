@@ -1,6 +1,7 @@
 package com.example.StarTracker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,8 @@ class NewProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentNewProfileBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return binding.root
+        val view = binding.root
+        return view
 
     }
 

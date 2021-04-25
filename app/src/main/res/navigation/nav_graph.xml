@@ -6,32 +6,32 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.android.navigation.AboutFragment"
-        android:label="fragment_about"
+        android:name="com.example.StarTracker.AboutFragment"
+        android:label="Sobre"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/debugFragment"
-        android:name="com.example.android.navigation.DebugFragment"
-        android:label="fragment_debug"
+        android:name="com.example.StarTracker.DebugFragment"
+        android:label="Debug"
         tools:layout="@layout/fragment_debug" />
     <fragment
         android:id="@+id/howToUseFragment"
-        android:name="com.example.android.navigation.HowToUseFragment"
-        android:label="fragment_how_to_use"
+        android:name="com.example.StarTracker.HowToUseFragment"
+        android:label="Tutorial"
         tools:layout="@layout/fragment_how_to_use" />
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.example.StarTracker.WelcomeFragment"
-        android:label="fragment_welcome"
+        android:label="Bem vindo!"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_currentProfileFragment"
             app:destination="@id/currentProfileFragment"
-            app:exitAnim="@anim/slide_in_right" />
+            app:enterAnim="@anim/slide_in_right" />
     </fragment>
     <fragment
         android:id="@+id/currentProfileFragment"
         android:name="com.example.StarTracker.NewProfileFragment"
-        android:label="fragment_current_profile"
-        tools:layout="@layout/fragment_new_profile" />
+        android:label="Perfil"
+        tools:layout="@layout/fragment_new_profile"/>
 </navigation>

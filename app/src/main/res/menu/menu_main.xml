@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.StarTracker.MainActivity">
 
-    <item
-        android:id="@+id/newProfileFragment"
-        android:orderInCategory="100"
-        android:title="@string/new_profile_menu"/>
-    <item
-        android:id="@+id/loadProfileFragment"
-        android:orderInCategory="101"
-        android:title="@string/load_profile_menu" />
-    <item
-        android:id="@+id/editProfileFragment"
-        android:orderInCategory="101"
-        android:title="@string/edit_profile" />
+<!--    <item-->
+<!--        android:id="@+id/newProfileFragment"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="@string/new_profile_menu"/>-->
+<!--    <item-->
+<!--        android:id="@+id/loadProfileFragment"-->
+<!--        android:orderInCategory="101"-->
+<!--        android:title="@string/load_profile_menu" />-->
+<!--    <item-->
+<!--        android:id="@+id/editProfileFragment"-->
+<!--        android:orderInCategory="101"-->
+<!--        android:title="@string/edit_profile" />-->
     <item
         android:id="@+id/howToUseFragment"
         android:orderInCategory="102"

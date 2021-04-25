@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,44 +7,46 @@
     tools:context=".WelcomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titleConstraint"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/aboutImage"
-            android:layout_width="486dp"
-            android:layout_height="518dp"
-            android:padding="@dimen/big_margin"
+            android:layout_width="385dp"
+            android:layout_height="385dp"
+            android:contentDescription="@string/about_fragment_title"
+            android:padding="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/star_tracker_illustration"
-            android:contentDescription="@string/about_fragment_title"/>
+            app:srcCompat="@drawable/star_tracker_illustration" />
 
         <Button
             android:id="@+id/initbutton"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/welcome_fragment_button"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:shadowColor="#000000"
+            android:layout_marginBottom="16dp"
             android:text="@string/welcome_fragment_text"
             android:textColor="@color/yellow"
-            android:textColorHighlight="@color/black"
-            android:textColorHint="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/initbutton"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,4 +55,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</ScrollView>
