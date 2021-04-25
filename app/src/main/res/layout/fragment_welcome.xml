@@ -8,8 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.StarTracker.AboutFragment">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/aboutImage"
@@ -38,8 +37,8 @@
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:shadowColor="#000000"
             android:text="@string/welcome_fragment_text"
             android:textColor="@color/yellow"
