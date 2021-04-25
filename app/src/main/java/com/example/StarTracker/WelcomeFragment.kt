@@ -27,7 +27,7 @@ class WelcomeFragment : Fragment() {
         binding.initbutton.setOnClickListener{ v: View ->
             val toast = Toast.makeText(getContext(), "GO", Toast.LENGTH_SHORT)
             toast.show()
-            v.findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCurrentProfileFragment())
+            v.findNavController().navigate(R.id.action_welcomeFragment_to_currentProfileFragment)
         }
 
         setHasOptionsMenu(true)
@@ -40,14 +40,14 @@ class WelcomeFragment : Fragment() {
         inflater?.inflate(R.menu.menu_main, menu)
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item,requireView().findNavController()) || super.onOptionsItemSelected(item)
     }
 
-//    override fun getStart(View v){
-//        v.findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCurrentProfileFragment())
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
 
