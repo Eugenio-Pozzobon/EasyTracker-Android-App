@@ -25,13 +25,29 @@
         android:label="Bem vindo!"
         tools:layout="@layout/fragment_welcome" >
         <action
-            android:id="@+id/action_welcomeFragment_to_currentProfileFragment"
+            android:id="@+id/action_welcomeFragment_to_newProfileFragment"
+            app:destination="@id/newProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/newProfileFragment"
+        android:name="com.example.StarTracker.NewProfile.NewProfileFragment"
+        android:label="Adicionar Perfil"
+        tools:layout="@layout/fragment_new_profile">
+        <action
+            android:id="@+id/action_newProfileFragment_to_currentProfileFragment"
             app:destination="@id/currentProfileFragment"
-            app:enterAnim="@anim/slide_in_right" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/currentProfileFragment"
-        android:name="com.example.StarTracker.NewProfileFragment"
-        android:label="Perfil"
-        tools:layout="@layout/fragment_new_profile"/>
+        android:name="com.example.StarTracker.CurrentProfile.CurrentProfileFragment"
+        android:label="Perfil X"
+        tools:layout="@layout/fragment_current_profile" />
 </navigation>

@@ -27,38 +27,21 @@ class WelcomeFragment : Fragment() {
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
         binding.initbutton.setOnClickListener{ v: View ->
-            v.findNavController().navigate(R.id.action_welcomeFragment_to_currentProfileFragment)
+            v.findNavController().navigate(R.id.action_welcomeFragment_to_newProfileFragment)
         }
+
+        binding.initbutton.setBackgroundColor(getResources().getColor(R.color.red_button));
+        binding.initbutton.setTextColor(getResources().getColor(R.color.black));
 
         // Inflate the layout for this fragment
         //setHasOptionsMenu(true)
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_main, menu)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item!!,requireView().findNavController()) || super.onOptionsItemSelected(item)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-//    }
 
 }
 

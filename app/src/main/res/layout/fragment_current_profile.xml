@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:visibility="visible"
-    tools:context="com.example.StarTracker.NewProfile.NewProfileFragment">
+    tools:context="com.example.StarTracker.CurrentProfile.CurrentProfileFragment">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

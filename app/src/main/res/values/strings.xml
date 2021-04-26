@@ -20,8 +20,10 @@
         suas informações de localização, e então você poderá iniciar o rastreio. Em caso de dúvidas, cheque o menu de Instruções. Boa sorte!
     </string>
 
-    <!-- Add Profile -->
+    <!-- New Profile -->
     <string name="add_profile_name">Nome do Perfil:</string>
+    <string name="add_profile_declination_hint">xx,x</string>
+    <string name="add_profile_gps_hint">xx,xxxxxxxx</string>
     <string name="add_profile_latitude">Latitude:</string>
     <string name="add_profile_declination">Declinação Magnética</string>
     <string name="add_profile_bluetooth">Conexão Bluetooth</string>
@@ -29,7 +31,7 @@
 
     <!-- Start Profile -->
     <string name="profile_start_button">Iniciar Alinhamento</string>
-
+    <string name="profile_instructions_check">Cheque se os valores acima estão corretos e então você poderá iniciar o alinhamento do seu dispositivo.</string>
 
     <!-- Edit Profile -->
 

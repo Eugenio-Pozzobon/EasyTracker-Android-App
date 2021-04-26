@@ -15,6 +15,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.StarTracker.NewProfile.NewProfileFragment
 import com.example.StarTracker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -53,48 +54,54 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = this.findNavController(R.id.nav_host_fragment)
+        return NavigationUI.navigateUp(navController,drawerLayout)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        menuInflater.inflate(R.menu.initial_menu, menu)
 
-        return true
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        val currentFragment = supportFragmentManager.fragments.last()
+        val currentFragment = supportFragmentManager.fragments.last()?.getChildFragmentManager()?.getFragments()?.get(0)
         if (currentFragment is WelcomeFragment){
+            //Log.i("CUSTOM LOG", "CLEAN")
             getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
         }
+        //Log.i("CUSTOM LOG", "ACTIVITY START")
+
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.aboutFragment -> _log()
-            R.id.howToUseFragment -> _log()
-            R.id.debugFragment -> _log()
-            android.R.id.home -> _onBackPressed()
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        //Log.i("CUSTOM LOG", "ACTIVITY PREPARE")
+//        return true
+//    }
 
-    private fun _log(): Boolean {
-        Log.i("Custom Tag", "Option pressed")
-        return true
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        return when (item.itemId) {
+//            R.id.aboutFragment -> _log()
+//            R.id.howToUseFragment -> _log()
+//            R.id.debugFragment -> _log()
+//            android.R.id.home -> _onBackPressed()
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     private fun _onBackPressed(): Boolean {
         onBackPressed()
         invalidateOptionsMenu()
+        //Log.i("CUSTOM LOG", "BACK PRESSED START")
         return true
     }
 
 
-
-
+//    private fun _log(): Boolean {
+//        Log.i("CUSTOM LOG", "Option pressed")
+//        return true
+//    }
 }
