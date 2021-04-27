@@ -1,4 +1,4 @@
-package com.example.StarTracker.endalignment
+package com.example.StarTracker.alignment.endalignment
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.example.StarTracker.tiltAlignment
+package com.example.StarTracker.alignment.tiltAlignment
 
 import androidx.lifecycle.ViewModel
 

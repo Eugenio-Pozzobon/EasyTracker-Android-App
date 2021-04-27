@@ -1,4 +1,4 @@
-package com.example.StarTracker.polarAlignment
+package com.example.StarTracker.alignment.levelAlignment
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,24 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.StarTracker.R
 
-class PolarAlignmentFragment : Fragment() {
+class LevelAlignmentFragment : Fragment() {
 
     companion object {
-        fun newInstance() = PolarAlignmentFragment()
+        fun newInstance() = LevelAlignmentFragment()
     }
 
-    private lateinit var viewModel: PolarAlignmentViewModel
+    private lateinit var viewModelLevel: LevelAlignmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_polar_alignment, container, false)
+        return inflater.inflate(R.layout.fragment_alignment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PolarAlignmentViewModel::class.java)
+        viewModelLevel = ViewModelProvider(this).get(LevelAlignmentViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

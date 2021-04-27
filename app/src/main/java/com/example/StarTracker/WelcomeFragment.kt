@@ -32,7 +32,7 @@ class WelcomeFragment : Fragment() {
         }
 
         binding.initbutton.setBackgroundColor(getResources().getColor(R.color.red_button));
-        binding.initbutton.setTextColor(getResources().getColor(R.color.black));
+        binding.initbutton.setTextColor(getResources().getColor(R.color.white));
 
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)

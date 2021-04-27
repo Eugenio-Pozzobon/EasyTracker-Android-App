@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="align_state">#FF00FF00</color>
+    <color name="align_state">#3B913B</color>
     <color name="red_button">#FFC94032</color>
     <color name="yellow">#FFFFFF00</color>
     <color name="black">#FF000000</color>

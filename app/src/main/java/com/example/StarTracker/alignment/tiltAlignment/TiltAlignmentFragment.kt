@@ -1,4 +1,4 @@
-package com.example.StarTracker.endalignment
+package com.example.StarTracker.alignment.tiltAlignment
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,24 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.StarTracker.R
 
-class EndAligmentFragment : Fragment() {
+class TiltAlignmentFragment : Fragment() {
 
     companion object {
-        fun newInstance() = EndAligmentFragment()
+        fun newInstance() = TiltAlignmentFragment()
     }
 
-    private lateinit var viewModel: EndAligmentViewModel
+    private lateinit var viewModel: TiltAlignmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_end_aligment, container, false)
+        return inflater.inflate(R.layout.fragment_tilt_alignment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EndAligmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TiltAlignmentViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

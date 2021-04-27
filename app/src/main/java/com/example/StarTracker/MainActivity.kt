@@ -43,18 +43,28 @@ class MainActivity : AppCompatActivity() {
         val graphInflater = navHostFragment.navController.navInflater
         val navGraph = graphInflater.inflate(R.navigation.nav_graph)
 
-        if (true){
-            navGraph.startDestination = R.id.welcomeFragment
-        }else {
-            navGraph.startDestination = R.id.currentProfileFragment
-        }
-
         navGraph.startDestination = R.id.welcomeFragment
         navController.graph = navGraph
         navHostFragment.navController.graph = navGraph
 
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView,navController)
+
+        if (true){
+            //TODO: detect old user
+            navGraph.startDestination = R.id.welcomeFragment
+
+            navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+                if (nd.id == R.id.currentProfileFragment) {
+                    navGraph.startDestination = R.id.currentProfileFragment
+                    setDrawer_locked()
+                }
+            }
+
+        }else {
+            navGraph.startDestination = R.id.currentProfileFragment
+            setDrawer_locked()
+        }
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             if (nd.id == nc.graph.startDestination) {
@@ -69,16 +79,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
         return NavigationUI.navigateUp(navController,drawerLayout)
-    }
-
-    fun makeHomeStart(){
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.welcomeFragment) as NavHostFragment
-        val graphInflater = navHostFragment.navController.navInflater
-        val navGraph = graphInflater.inflate(R.navigation.nav_graph)
-        navGraph.startDestination = R.id.currentProfileFragment
-        navHostFragment.navController.graph = navGraph
-        // This seems to be a magical command. Not sure why it's needed :(
     }
 
     fun setDrawer_locked(){

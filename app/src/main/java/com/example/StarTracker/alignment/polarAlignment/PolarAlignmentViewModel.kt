@@ -1,4 +1,4 @@
-package com.example.StarTracker.polarAlignment
+package com.example.StarTracker.alignment.polarAlignment
 
 import androidx.lifecycle.ViewModel
 

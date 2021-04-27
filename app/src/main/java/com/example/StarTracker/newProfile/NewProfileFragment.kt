@@ -30,7 +30,7 @@ class NewProfileFragment : Fragment() {
         }
 
         binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button));
-        binding.buttonConnect.setTextColor(getResources().getColor(R.color.black));
+        binding.buttonConnect.setTextColor(getResources().getColor(R.color.white));
 
         val view = binding.root
         return view
@@ -41,6 +41,8 @@ class NewProfileFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         //viewModel = ViewModelProvider(this).get(NewProfileViewModel::class.java)
         // TODO: Use the ViewModel
+        // TODO: Add get localization
+        // TODO: Add overflow fragment for question button
 
 //        if(true){
 //            Log.i("CUSTOM TAG", "activiy")
