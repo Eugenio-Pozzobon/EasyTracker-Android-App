@@ -68,8 +68,8 @@ interface ProfileDatabaseDao {
     /**
      * Selects and returns the latest night.
      */
-    @Query("SELECT * FROM profile_table ORDER BY profileID DESC LIMIT 1")
-    suspend fun getLastProfile(): Profile?
+    @Query("SELECT * FROM profile_table WHERE last_profile = :key")
+    suspend fun getLastProfile(key: Boolean): Profile?
 
     /**
      * Selects and returns the night with given nightId.

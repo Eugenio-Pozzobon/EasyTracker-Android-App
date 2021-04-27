@@ -1,5 +1,6 @@
 package com.example.StarTracker
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -34,7 +35,9 @@ class WelcomeFragment : Fragment() {
         binding.initbutton.setTextColor(getResources().getColor(R.color.black));
 
         // Inflate the layout for this fragment
-        //setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
+        (activity as MainActivity?)?.setDrawer_locked()
+
         return binding.root
     }
 

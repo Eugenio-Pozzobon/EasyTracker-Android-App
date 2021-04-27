@@ -10,7 +10,10 @@ data class Profile(
         var profileID: Long = 0L,
 
         @ColumnInfo(name = "profile_name")
-        val profileName: String = "",
+        var profileName: String = "",
+
+        @ColumnInfo(name = "last_profile")
+        var lastProfile: Boolean = false,
 
         @ColumnInfo(name = "gpsData")
         var gpsData: Double = 0.0,

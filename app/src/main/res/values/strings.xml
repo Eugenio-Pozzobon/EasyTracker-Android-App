@@ -2,9 +2,9 @@
     <string name="app_name">Star Tracker</string>
 
     <!-- Menu Strings -->
-    <string name="load_profile_menu">Load Profile</string>
-    <string name="edit_profile">Edit Profile</string>
-    <string name="new_profile_menu">New Profile</string>
+    <string name="load_profile_menu">Carregar Perfil</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="new_profile_menu">Novo Perfil</string>
 
 
     <!-- Strings used for fragments for navigation -->
@@ -22,8 +22,8 @@
 
     <!-- New Profile -->
     <string name="add_profile_name">Nome do Perfil:</string>
-    <string name="add_profile_declination_hint">xx,x</string>
-    <string name="add_profile_gps_hint">xx,xxxxxxxx</string>
+    <string name="add_profile_declination_hint">xx.xx</string>
+    <string name="add_profile_gps_hint">xx.xxxxxxxx</string>
     <string name="add_profile_latitude">Latitude:</string>
     <string name="add_profile_declination">Declinação Magnética</string>
     <string name="add_profile_bluetooth">Conexão Bluetooth</string>
@@ -53,7 +53,7 @@
 
     <!-- end Alignment -->
     <string name="congrats_instruction">Parabéns!</string>
-    <string name="phisical_button_instruction">Botão Manual...</string>
+    <string name="phisical_button_instruction">Botão Manual</string>
     <string name="end_instruction">Agora você pode iniciar o Rastreamento!</string>
     <string name="start_button">Iniciar Rastreamento</string>
 

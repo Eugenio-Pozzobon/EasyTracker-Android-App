@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:visibility="visible"
-    tools:context="com.example.StarTracker.NewProfile.NewProfileFragment">
+    tools:context="com.example.StarTracker.newProfile.NewProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,13 +16,13 @@
             android:id="@+id/image_gps"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="21dp"
             android:scaleType="fitCenter"
             android:src="@drawable/map_vector"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
         <TextView
             android:id="@+id/text_latitude"
@@ -142,6 +142,31 @@
             app:layout_constraintEnd_toEndOf="@+id/image_gps_circle"
             app:layout_constraintStart_toStartOf="@+id/image_gps_circle"
             app:layout_constraintTop_toTopOf="@+id/declination_number" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="266dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="72dp"
+            android:ems="10"
+            android:hint="Nome"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Nome do Perfil de Localização:"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -23,7 +23,7 @@
         android:id="@+id/welcomeFragment"
         android:name="com.example.StarTracker.WelcomeFragment"
         android:label="Bem vindo!"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_newProfileFragment"
             app:destination="@id/newProfileFragment"
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"
-        android:name="com.example.StarTracker.NewProfile.NewProfileFragment"
+        android:name="com.example.StarTracker.newProfile.NewProfileFragment"
         android:label="Adicionar Perfil"
         tools:layout="@layout/fragment_new_profile">
         <action
@@ -47,7 +47,8 @@
     </fragment>
     <fragment
         android:id="@+id/currentProfileFragment"
-        android:name="com.example.StarTracker.CurrentProfile.CurrentProfileFragment"
+        android:name="com.example.StarTracker.currentProfile.CurrentProfileFragment"
         android:label="Perfil X"
-        tools:layout="@layout/fragment_current_profile" />
+        tools:layout="@layout/fragment_current_profile"
+        app:defaultNavHost="true"/>
 </navigation>
