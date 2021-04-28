@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.startracker.R
+import com.example.startracker.alignment.endalignment.EndAligmentViewModel
 import com.example.startracker.databinding.FragmentNewProfileBinding
 import com.example.startracker.database.ProfileDatabase
 
@@ -20,8 +21,6 @@ class NewProfileFragment : Fragment() {
 //    // This property is only valid between onCreateView and
 //    // onDestroyView.
 //    private val binding get() = _binding!!
-
-    private lateinit var viewModel: NewProfileViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -38,17 +37,16 @@ class NewProfileFragment : Fragment() {
 
         val viewModelFactory = NewProfileViewModelFactory(dataSource, application)
 
-        val newProfileViewModel =
-            ViewModelProvider(
-                this, viewModelFactory).get(NewProfileViewModel::class.java)
+        val newProfileViewModel = ViewModelProvider(this, viewModelFactory).get(NewProfileViewModel::class.java)
+        //newProfileViewModel = ViewModelProvider(this).get(NewProfileViewModel::class.java)
 
         binding.newProfileViewModel = newProfileViewModel
 
         binding.lifecycleOwner = this
 
-        viewModel.onConnected.observe(viewLifecycleOwner, Observer {
+        newProfileViewModel.onConnected.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state is true.
-                viewModel.doneOnChangeScreen()
+                newProfileViewModel.doneOnChangeScreen()
                 this.findNavController().navigate(R.id.action_newProfileFragment_to_currentProfileFragment)
             }
         })

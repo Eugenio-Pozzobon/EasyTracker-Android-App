@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "profile_table")
 data class Profile(
         @PrimaryKey(autoGenerate = true)
-        var profileID: Long = 0L,
+        var profileId: Long = 0L,
 
         @ColumnInfo(name = "profile_name")
         var profileName: String = "",
@@ -15,12 +15,12 @@ data class Profile(
         @ColumnInfo(name = "last_profile")
         var lastProfile: Boolean = false,
 
-        @ColumnInfo(name = "gpsData")
-        var gpsData: Double = 0.0,
+        @ColumnInfo(name = "gps_data")
+        var gpsData: String = "",
 
         @ColumnInfo(name = "declination")
-        var declination: Double = 0.0,
+        var declination: String = "",
 
         @ColumnInfo(name = "bluetooth_mac")
-        var btAdress: String = ""
+        var btAddress: String = ""
 )

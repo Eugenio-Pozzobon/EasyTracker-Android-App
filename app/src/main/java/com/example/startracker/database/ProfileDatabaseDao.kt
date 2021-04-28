@@ -41,15 +41,6 @@ interface ProfileDatabaseDao {
     suspend fun update(profile: Profile)
 
     /**
-     * Selects and returns the row that matches the supplied start time, which is our key.
-     *
-     * @param key startTimeMilli to match
-
-    @Query("SELECT * from profile_table WHERE profileID = :key")
-    suspend fun get(key: Long): Profiles?
-     */
-
-    /**
      * Deletes all values from the table.
      *
      * This does not delete the table, only its contents.
@@ -62,7 +53,7 @@ interface ProfileDatabaseDao {
      *
      * sorted by start time in descending order.
      */
-    @Query("SELECT * FROM profile_table ORDER BY profileID DESC")
+    @Query("SELECT * FROM profile_table ORDER BY profileId DESC")
     fun getAllProfiles(): LiveData<List<Profile>>
 
     /**
@@ -74,7 +65,7 @@ interface ProfileDatabaseDao {
     /**
      * Selects and returns the night with given nightId.
      */
-    @Query("SELECT * from profile_table WHERE profileID = :key")
+    @Query("SELECT * from profile_table WHERE profileId = :key")
     fun getProfileWithId(key: Long): LiveData<Profile>
 }
 

@@ -1,24 +1,20 @@
 package com.example.startracker.newprofile
 
 import android.app.Application
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.startracker.database.Profile
 import com.example.startracker.database.ProfileDatabaseDao
+import kotlinx.coroutines.*
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * ViewModel for NewProfileFragment.
  */
 class NewProfileViewModel(
     val database: ProfileDatabaseDao,
-    application: Application) : AndroidViewModel(application) {
+    application: Application
+) : AndroidViewModel(application) {
 
     /**
      * viewModelJob allows us to cancel all coroutines started by this ViewModel.
@@ -38,16 +34,14 @@ class NewProfileViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
      */
 
-    var profile_name: String = ""
-    var gps_data: Double = 0.0
-    var mag_declination: Double = 0.0
-    var bluetooth_mac: String = ""
+
+    var profileName = MutableLiveData<String>()
+    var gpsData = MutableLiveData<String>()
+    var magDeclination = MutableLiveData<String>()
+    var bluetoothMac = MutableLiveData<String>()
 
     private var _onConnected = MutableLiveData<Boolean>()
 
-    /**
-     * If this is true, immediately `show()` a toast and call `doneShowingSnackbar()`.
-     */
     val onConnected: LiveData<Boolean>
         get() = _onConnected
 
@@ -59,50 +53,20 @@ class NewProfileViewModel(
         _onConnected.value = false
     }
 
-    fun addProfileName(){
-        profile_name = ""
-    }
-
-    val gpsTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            // Do nothing.
-        }
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            (s.toString()).toFloatOrNull() ?: gps_data
-            Log.i("TextGPSChange", "CHANGED!")
-        }
-        override fun afterTextChanged(s: Editable) {
-            // Do nothing.
-        }
-    }
-
-    fun addMagDeclination(){
-        mag_declination = 0.0
-    }
-
-    fun addBluetoothMac(){
-        bluetooth_mac = ""
-    }
-
     init {
 
     }
 
     private suspend fun updateLastProfile(){
         withContext(Dispatchers.IO) {
-            var last_profile = database.getLastProfile(true)
-            if (last_profile != null) {
-                last_profile.lastProfile = false
-                update(last_profile)
+            var lastProfile = database.getLastProfile(true)
+            if (lastProfile != null) {
+                lastProfile.lastProfile = false
+                update(lastProfile)
             }
         }
     }
 
-    private suspend fun clear() {
-        withContext(Dispatchers.IO) {
-            database.clear()
-        }
-    }
 
     private suspend fun update(profile: Profile) {
         withContext(Dispatchers.IO) {
@@ -116,32 +80,26 @@ class NewProfileViewModel(
         }
     }
 
-    suspend fun onConnect(){
-        viewModelScope.launch {
-            var newProfile = Profile()
-            if (checkValues()) {
-                newProfile.lastProfile = true
-                newProfile.profileName = profile_name
-                newProfile.gpsData = gps_data
-                newProfile.declination = mag_declination
-                newProfile.btAdress = bluetooth_mac
-                insert(newProfile)
-                doneOnConnected()
-            }
-        }
-    }
 
     private fun checkValues(): Boolean {
         return true
     }
 
-    /**
-     * Executes when the CLEAR button is clicked.
-     */
-    fun onClear() {
+    fun onConnect(){
         viewModelScope.launch {
-            // Clear the database table.
-            clear()
+            var newProfile = Profile()
+            if (checkValues()) {
+                updateLastProfile()
+                newProfile.lastProfile = true
+                newProfile.profileName = profileName.value.toString()
+
+                newProfile.gpsData = gpsData.value.toString()
+                newProfile.declination = magDeclination.value.toString()
+
+                newProfile.btAddress = bluetoothMac.value.toString()
+                insert(newProfile)
+                doneOnConnected()
+            }
         }
     }
 
