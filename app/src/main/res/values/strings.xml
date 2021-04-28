@@ -73,6 +73,8 @@
     <string name="nome_do_perfil_de_localiza_o">Nome do Perfil de Localização:</string>
     <string name="name_hint">Nome</string>
     <string name="todo_string">TODO</string>
+    <string name="clearProfiles">Deletar Perfis</string>
+    <string name="clearProfile">Deletar Perfil</string>
 
 
 </resources>

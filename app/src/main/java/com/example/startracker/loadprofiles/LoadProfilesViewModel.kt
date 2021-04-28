@@ -12,10 +12,11 @@ class LoadProfilesViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private var _onClear = MutableLiveData<Boolean>()
+    val profiles = database.getAllProfiles()
 
-    val onClear: LiveData<Boolean>
-        get() = _onClear
+    val clearButtonVisible = Transformations.map(profiles) {
+        it?.isNotEmpty()
+    }
 
     init {
 

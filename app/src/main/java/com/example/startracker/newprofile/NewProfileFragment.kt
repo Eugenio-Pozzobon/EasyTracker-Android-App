@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.startracker.R
-import com.example.startracker.alignment.endalignment.EndAligmentViewModel
 import com.example.startracker.databinding.FragmentNewProfileBinding
 import com.example.startracker.database.ProfileDatabase
 
@@ -68,7 +67,7 @@ class NewProfileFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.overflow_menu_np, menu)
+        inflater?.inflate(R.menu.overflow_menu_newprofile, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

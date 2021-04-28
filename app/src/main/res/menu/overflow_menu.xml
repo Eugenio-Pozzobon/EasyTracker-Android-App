@@ -7,24 +7,25 @@
         android:id="@+id/newProfileFragment"
         android:orderInCategory="100"
         android:title="@string/new_profile_menu"/>
-<!--    <item-->
-<!--        android:id="@+id/loadProfileFragment"-->
-<!--        android:orderInCategory="101"-->
-<!--        android:title="@string/load_profile_menu" />-->
+    <item
+        android:id="@+id/loadProfilesFragment"
+        android:orderInCategory="101"
+        android:title="@string/load_profile_menu" />
+
 <!--    <item-->
 <!--        android:id="@+id/editProfileFragment"-->
-<!--        android:orderInCategory="101"-->
+<!--        android:orderInCategory="102"-->
 <!--        android:title="@string/edit_profile" />-->
     <item
         android:id="@+id/howToUseFragment"
-        android:orderInCategory="102"
+        android:orderInCategory="103"
         android:title="@string/howtouse_fragment_title" />
     <item
         android:id="@+id/debugFragment"
-        android:orderInCategory="103"
+        android:orderInCategory="104"
         android:title="@string/debug_fragment_title" />
     <item
         android:id="@+id/aboutFragment"
-        android:orderInCategory="104"
+        android:orderInCategory="105"
         android:title="@string/about_fragment_title" />
 </menu>

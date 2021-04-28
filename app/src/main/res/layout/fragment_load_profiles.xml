@@ -7,6 +7,13 @@
          the whole ViewModel, so that we can access the LiveData,
          click handlers, and state variables. -->
 
+    <data>
+        <variable
+            name="loadProfilesViewModel"
+            type="com.example.startracker.loadprofiles.LoadProfilesViewModel"
+            />
+    </data>
+
     <!-- Start of the visible fragment layout using ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,6 +31,19 @@
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/buttonClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:enabled="@{loadProfilesViewModel.clearButtonVisible}"
+            android:onClick="@{() -> loadProfilesViewModel.onClear()}"
+            android:text="@string/clearProfiles"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- With data binding and LiveData, we can track the buttons' visibility states
              from the ViewModel. The click handler is in the ViewModel as well, and
