@@ -6,22 +6,22 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.StarTracker.AboutFragment"
+        android:name="com.example.startracker.AboutFragment"
         android:label="Sobre"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/debugFragment"
-        android:name="com.example.StarTracker.DebugFragment"
+        android:name="com.example.startracker.DebugFragment"
         android:label="Debug"
         tools:layout="@layout/fragment_debug" />
     <fragment
         android:id="@+id/howToUseFragment"
-        android:name="com.example.StarTracker.HowToUseFragment"
+        android:name="com.example.startracker.HowToUseFragment"
         android:label="Tutorial"
         tools:layout="@layout/fragment_how_to_use" />
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.StarTracker.WelcomeFragment"
+        android:name="com.example.startracker.WelcomeFragment"
         android:label="Bem vindo!"
         tools:layout="@layout/fragment_welcome">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"
-        android:name="com.example.StarTracker.newProfile.NewProfileFragment"
+        android:name="com.example.startracker.newprofile.NewProfileFragment"
         android:label="Adicionar Perfil"
         tools:layout="@layout/fragment_new_profile">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/currentProfileFragment"
-        android:name="com.example.StarTracker.currentProfile.CurrentProfileFragment"
+        android:name="com.example.startracker.currentprofile.CurrentProfileFragment"
         android:label="Perfil X"
         tools:layout="@layout/fragment_current_profile"
         app:defaultNavHost="true"/>
