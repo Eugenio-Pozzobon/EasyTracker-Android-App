@@ -1,6 +1,7 @@
 package com.example.startracker.newprofile
 
 import android.app.Application
+import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.startracker.database.Profile
@@ -80,8 +81,40 @@ class NewProfileViewModel(
         }
     }
 
+//    Checa se os valores estão validadaos
+
+
+    private var _setNameError = MutableLiveData<Boolean>()
+    private var _setGpsDataError = MutableLiveData<Boolean>()
+    private var _setMagDeclinationError = MutableLiveData<Boolean>()
+
+    val setNameError: LiveData<Boolean>
+        get() = _setNameError
+    val setGpsDataError: LiveData<Boolean>
+        get() = _setGpsDataError
+    val setMagDeclinationError: LiveData<Boolean>
+        get() = _setMagDeclinationError
 
     private fun checkValues(): Boolean {
+        if("null" == (profileName.value.toString())){
+            _setNameError.value = true
+            return false
+        }else{
+            _setNameError.value = false
+        }
+        if("null" == (gpsData.value.toString())){
+            _setGpsDataError.value = true
+            return false
+        }else{
+            _setGpsDataError.value = false
+        }
+        if("null" == (magDeclination.value.toString())){
+            _setMagDeclinationError.value = true
+            return false
+        }else{
+            _setMagDeclinationError.value = false
+        }
+
         return true
     }
 

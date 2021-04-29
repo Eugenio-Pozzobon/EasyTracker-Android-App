@@ -1,6 +1,7 @@
 package com.example.startracker.newprofile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -47,6 +48,36 @@ class NewProfileFragment : Fragment() {
             if (it == true) { // Observed state is true.
                 newProfileViewModel.doneOnChangeScreen()
                 this.findNavController().navigate(R.id.action_newProfileFragment_to_currentProfileFragment)
+            }
+        })
+
+        newProfileViewModel.setNameError.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state is true.
+                binding.textProfileName.setError("*")
+                binding.textProfileName.requestFocus()
+            }else{
+                binding.textProfileName.setError(null)
+                binding.textProfileName.clearFocus()
+            }
+        })
+
+        newProfileViewModel.setGpsDataError.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state is true.
+                binding.gpsNumber.setError("*")
+                binding.gpsNumber.requestFocus()
+            }else{
+                binding.gpsNumber.setError(null)
+                binding.gpsNumber.clearFocus()
+            }
+        })
+
+        newProfileViewModel.setMagDeclinationError.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state is true.
+                binding.declinationNumber.setError("*")
+                binding.declinationNumber.requestFocus()
+            }else{
+                binding.declinationNumber.setError(null)
+                binding.declinationNumber.clearFocus()
             }
         })
 

@@ -43,8 +43,11 @@ class MainActivity : AppCompatActivity() {
         val graphInflater = navHostFragment.navController.navInflater
         val navGraph = graphInflater.inflate(R.navigation.nav_graph)
 
+
+
         navGraph.startDestination = R.id.welcomeFragment
         navController.graph = navGraph
+        navGraph.label = ""
         navHostFragment.navController.graph = navGraph
 
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)

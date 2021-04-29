@@ -21,6 +21,9 @@ class CurrentProfileViewModel(
     var magDeclination = MutableLiveData<String>()
     var bluetoothMac = MutableLiveData<String>()
 
+    private var _profileName = MutableLiveData<String>()
+    val profileName: LiveData<String>
+        get() = _profileName
 
     private var _startAlignmentButtonVisible = MutableLiveData<Boolean>()
     val startAlignmentButtonVisible: LiveData<Boolean>
@@ -62,6 +65,7 @@ class CurrentProfileViewModel(
     private fun getLastProfile(){
         viewModelScope.launch{
             lastProfile = database.getLastProfile(true)!!
+            _profileName.value = lastProfile.profileName
             gpsData.value = lastProfile.gpsData
             magDeclination.value = lastProfile.declination
             bluetoothMac.value = lastProfile.btAddress

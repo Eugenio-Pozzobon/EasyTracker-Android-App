@@ -25,21 +25,27 @@
     <string name="add_profile_declination_hint">xx.xx</string>
     <string name="add_profile_gps_hint">xx.xxxxxxxx</string>
     <string name="add_profile_latitude">Latitude:</string>
-    <string name="add_profile_declination">Declinação Magnética</string>
-    <string name="add_profile_bluetooth">Conexão Bluetooth</string>
+    <string name="add_profile_declination">Declinação Magnética:</string>
+    <string name="add_profile_bluetooth">Conexão Bluetooth:</string>
     <string name="add_profile_bluetooth_button">Conectar</string>
+    <string name="name_hint">Nome</string>
+    <string name="nome_do_perfil_de_localiza_o">Nome do Perfil de Localização:</string>
 
     <!-- Start Profile -->
     <string name="profile_start_button">Iniciar Alinhamento</string>
     <string name="profile_instructions_check">Cheque se os valores acima estão corretos e então você poderá iniciar o alinhamento do seu dispositivo.</string>
+    <string name="start_aligment">Iniciar Alinhamento</string>
 
     <!-- Edit Profile -->
 
+    <string name="clearProfile">Deletar Perfil</string>
 
     <!-- Load Profiles -->
+    <string name="clearProfiles">Deletar Perfis</string>
 
 
     <string name="ok_button">Concluído</string>
+
     <!-- Alignemnt -->
     <string name="alignment_instruction">Incline a plataforma para esquerda/direta/frente/trás para nivelá-la</string>
 
@@ -69,12 +75,9 @@
     <!-- How to Use Fragment -->
     <string name="howtouse_fragment_title">Instruções</string>
     <string name="howtouse_fragment_1">Aqui você saberá como mexer no aplicativo</string>
-    <string name="start_aligment">Iniciar Alinhamento</string>
-    <string name="nome_do_perfil_de_localiza_o">Nome do Perfil de Localização:</string>
-    <string name="name_hint">Nome</string>
-    <string name="todo_string">TODO</string>
-    <string name="clearProfiles">Deletar Perfis</string>
-    <string name="clearProfile">Deletar Perfil</string>
 
+    <!-- Extra -->
+    
+    <string name="todo_string">TODO</string>
 
 </resources>
