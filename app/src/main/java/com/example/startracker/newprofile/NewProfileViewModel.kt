@@ -60,7 +60,7 @@ class NewProfileViewModel(
 
     private suspend fun updateLastProfile(){
         withContext(Dispatchers.IO) {
-            var lastProfile = database.getLastProfile(true)
+            val lastProfile = database.getLastProfile(true)
             if (lastProfile != null) {
                 lastProfile.lastProfile = false
                 update(lastProfile)
@@ -96,19 +96,19 @@ class NewProfileViewModel(
         get() = _setMagDeclinationError
 
     private fun checkValues(): Boolean {
-        if("null" == (profileName.value.toString())){
+        if(("null" == (profileName.value.toString())) || ("" == (profileName.value.toString()))){
             _setNameError.value = true
             return false
         }else{
             _setNameError.value = false
         }
-        if("null" == (gpsData.value.toString())){
+        if(("null" == (gpsData.value.toString()))|| ("" == (gpsData.value.toString()))){
             _setGpsDataError.value = true
             return false
         }else{
             _setGpsDataError.value = false
         }
-        if("null" == (magDeclination.value.toString())){
+        if(("null" == (magDeclination.value.toString()))|| ("" == (magDeclination.value.toString()))){
             _setMagDeclinationError.value = true
             return false
         }else{
@@ -120,7 +120,7 @@ class NewProfileViewModel(
 
     fun onConnect(){
         viewModelScope.launch {
-            var newProfile = Profile()
+            val newProfile = Profile()
             if (checkValues()) {
                 updateLastProfile()
                 newProfile.lastProfile = true
