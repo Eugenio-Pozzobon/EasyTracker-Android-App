@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -48,12 +49,17 @@ class LoadProfilesFragment : Fragment() {
 //            }
 //        })
 
-        binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.red_button))
-        binding.buttonClear.setTextColor(getResources().getColor(R.color.white))
+
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
+        val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
+        val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
+
+        binding.buttonClear.setBackgroundColor(redButtonColor)
+        binding.buttonClear.setTextColor(whiteTextColor)
 
         loadProfileViewModel.clearButtonVisible.observe(viewLifecycleOwner, {
             if (it == false) { // Observed state is true.
-                binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.green_button))
+                binding.buttonClear.setBackgroundColor(greenButtonColor)
                 this.findNavController().navigate(R.id.action_loadProfilesFragment_to_newProfileFragment)
             }
         })

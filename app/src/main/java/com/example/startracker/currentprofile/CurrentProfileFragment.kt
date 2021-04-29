@@ -3,9 +3,9 @@ package com.example.startracker.currentprofile
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -42,22 +42,28 @@ class CurrentProfileFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
+        val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
+        val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
+
         currentProfileViewModel.onConnected.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
-                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button))
+                binding.buttonConnect.setBackgroundColor(redButtonColor)
             } else {
-                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.green_button))
-                binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.green_button))
+                binding.buttonConnect.setBackgroundColor(greenButtonColor)
+                binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
             }
         })
+
+
 
         currentProfileViewModel.screenChange.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 currentProfileViewModel.doneOnChangeScreen()
                 this.findNavController()
                     .navigate(R.id.action_currentProfileFragment_to_levelAlignmentFragment)
-                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button))
-                binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.red_button))
+                binding.buttonConnect.setBackgroundColor(redButtonColor)
+                binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
             }
         })
 
@@ -66,18 +72,17 @@ class CurrentProfileFragment : Fragment() {
         })
 
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
-            if(it == true) {
+            if (it == true) {
                 this.findNavController()
                     .navigate(R.id.action_currentProfileFragment_to_welcomeFragment)
             }
         })
 
+        binding.buttonConnect.setBackgroundColor(redButtonColor)
+        binding.buttonConnect.setTextColor(whiteTextColor)
 
-        binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button))
-        binding.buttonConnect.setTextColor(getResources().getColor(R.color.white))
-
-        binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.red_button))
-        binding.buttonStartAlignment.setTextColor(getResources().getColor(R.color.white))
+        binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
+        binding.buttonStartAlignment.setTextColor(whiteTextColor)
 
 
         val navController = this.findNavController()
