@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var destinationHandler: NavDestination
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController.graph = navGraph
 
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-        NavigationUI.setupWithNavController(binding.navView,navController)
+        NavigationUI.setupWithNavController(binding.navView, navController)
 
         if (true){
             //TODO: detect old user
@@ -70,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+            destinationHandler = nd
             if (nd.id == nc.graph.startDestination) {
                 setDrawer_locked()
             } else {
@@ -81,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
-        return NavigationUI.navigateUp(navController,drawerLayout)
+        return NavigationUI.navigateUp(navController, drawerLayout)
     }
 
     fun setDrawer_locked(){
@@ -92,5 +95,19 @@ class MainActivity : AppCompatActivity() {
     fun setDrawer_unLocked(){
         Log.i("CUSTOM TAG", "SETTED LOCKED")
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    override fun onBackPressed() {
+        if (shouldAllowBack()) {
+            super.onBackPressed()
+        }
+    }
+
+    private fun shouldAllowBack(): Boolean {
+        if(destinationHandler.id == R.id.currentProfileFragment){
+            return false
+        }
+
+        return true
     }
 }

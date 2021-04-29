@@ -1,13 +1,10 @@
 package com.example.startracker.currentprofile
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.startracker.database.Profile
 import com.example.startracker.database.ProfileDatabaseDao
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class CurrentProfileViewModel(
     val database: ProfileDatabaseDao,
