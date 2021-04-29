@@ -23,4 +23,7 @@ data class Profile(
 
         @ColumnInfo(name = "bluetooth_mac")
         var btAddress: String = ""
+
+//        @ColumnInfo(name = "start_time_milli")
+//        val startTimeMilli: Long = System.currentTimeMillis()
 )

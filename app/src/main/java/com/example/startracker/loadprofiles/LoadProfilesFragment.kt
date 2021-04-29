@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentLoadProfilesBinding
@@ -35,7 +36,6 @@ class LoadProfilesFragment : Fragment() {
 
         val loadProfileViewModel = ViewModelProvider(this, viewModelFactory).get(LoadProfilesViewModel::class.java)
 
-
         binding.loadProfilesViewModel = loadProfileViewModel
 
         binding.lifecycleOwner = this
@@ -50,6 +50,13 @@ class LoadProfilesFragment : Fragment() {
 
         binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.red_button));
         binding.buttonClear.setTextColor(getResources().getColor(R.color.white));
+
+        loadProfileViewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer {
+            if (it == false) { // Observed state is true.
+                binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.green_button));
+            }
+        })
+
 
         return binding.root
     }

@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:visibility="visible"
-    tools:context="com.example.startracker.currentprofile.CurrentProfileFragment">
 
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Data to make available to the XML via data binding. In this case,
+         the whole ViewModel, so that we can access the LiveData,
+         click handlers, and state variables. -->
+    <data>
+
+        <variable
+            name="currentProfileViewModel"
+            type="com.example.startracker.currentprofile.CurrentProfileViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        tools:context=".newprofile.NewProfileFragment">
+
 
         <ImageView
             android:id="@+id/image_gps"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="32dp"
+            android:contentDescription="@string/todo_string"
             android:scaleType="fitCenter"
             android:src="@drawable/map_vector"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,11 +44,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_gps" />
 
+        <TextView
+            android:id="@+id/gps_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="4dp"
+            android:text="@{currentProfileViewModel.gpsData}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_latitude" />
+
+        <ImageView
+            android:id="@+id/image_gps_circle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="72dp"
+            android:contentDescription="@string/todo_string"
+            android:src="@drawable/gps_circle_vector"
+            app:layout_constraintBottom_toBottomOf="@+id/gps_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/gps_number"
+            app:layout_constraintTop_toTopOf="@+id/gps_number"
+            app:layout_constraintVertical_bias="0.0" />
+
         <ImageView
             android:id="@+id/image_declination"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/todo_string"
             android:src="@drawable/magnetic_field_vector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -58,56 +92,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_declination" />
 
-        <ImageView
-            android:id="@+id/image_bluetooth"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="32dp"
-            android:src="@drawable/bluetooth_vector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/declination_number" />
-
-        <EditText
+        <TextView
             android:id="@+id/declination_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/add_profile_declination_hint"
-            android:inputType="numberDecimal"
+            android:layout_marginTop="4dp"
+            android:text="@{currentProfileViewModel.magDeclination}"
             app:layout_constraintEnd_toEndOf="@+id/gps_number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_declination" />
 
-        <EditText
-            android:id="@+id/gps_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="4dp"
-            android:ems="10"
-            android:hint="@string/add_profile_gps_hint"
-            android:inputType="numberDecimal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_latitude" />
+        <ImageView
+            android:id="@+id/image_question_vector"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/todo_string"
+            android:src="@drawable/question_vector"
+            app:layout_constraintBottom_toBottomOf="@+id/declination_number"
+            app:layout_constraintEnd_toEndOf="@+id/image_gps_circle"
+            app:layout_constraintStart_toStartOf="@+id/image_gps_circle"
+            app:layout_constraintTop_toTopOf="@+id/declination_number" />
 
-        <Button
-            android:id="@+id/button_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/image_bluetooth"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/add_profile_bluetooth_button"
-            android:textAllCaps="false"
-
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/todo_string"
+            android:src="@drawable/bluetooth_vector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_bluetooth" />
+            app:layout_constraintTop_toBottomOf="@+id/declination_number" />
 
         <TextView
             android:id="@+id/text_bluetooth"
@@ -120,29 +136,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_bluetooth" />
 
-        <ImageView
-            android:id="@+id/image_gps_circle"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="72dp"
-            android:src="@drawable/gps_circle_vector"
-            app:layout_constraintBottom_toBottomOf="@+id/gps_number"
+        <Button
+            android:id="@+id/button_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:enabled="@{currentProfileViewModel.onConnected}"
+            android:onClick="@{() -> currentProfileViewModel.onConnect()}"
+            android:text="@{currentProfileViewModel.connectionStatus}"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/gps_number"
-            app:layout_constraintTop_toTopOf="@+id/gps_number"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_bluetooth" />
 
-        <ImageView
-            android:id="@+id/image_question_vector"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/question_vector"
-            app:layout_constraintBottom_toBottomOf="@+id/declination_number"
-            app:layout_constraintEnd_toEndOf="@+id/image_gps_circle"
-            app:layout_constraintStart_toStartOf="@+id/image_gps_circle"
-            app:layout_constraintTop_toTopOf="@+id/declination_number" />
+        <Button
+            android:id="@+id/button_start_alignment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:enabled="@{currentProfileViewModel.startAlignmentButtonVisible}"
+            android:onClick="@{() -> currentProfileViewModel.startAlignment()}"
+            android:text="@string/start_aligment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_connect" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</layout>
