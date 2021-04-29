@@ -26,6 +26,9 @@ class CurrentProfileViewModel(
     val startAlignmentButtonVisible: LiveData<Boolean>
         get() = _startAlignmentButtonVisible
 
+    private var _newUserDetected = MutableLiveData<Boolean>()
+    val newUserDetected: LiveData<Boolean>
+        get() = _newUserDetected
 
     private var _onConnected = MutableLiveData<Boolean>()
     val onConnected: LiveData<Boolean>
@@ -61,11 +64,20 @@ class CurrentProfileViewModel(
 
     private fun getLastProfile(){
         viewModelScope.launch{
-            lastProfile = database.getLastProfile(true)!!
-            _profileName.value = lastProfile.profileName
-            gpsData.value = lastProfile.gpsData
-            magDeclination.value = lastProfile.declination
-            bluetoothMac.value = lastProfile.btAddress
+
+            if(database.getLastProfile(true) == null) {
+                _profileName.value = ""
+                gpsData.value = ""
+                magDeclination.value = ""
+                bluetoothMac.value = ""
+                _newUserDetected.value = true
+            }else {
+                lastProfile = database.getLastProfile(true)!!
+                _profileName.value = lastProfile.profileName
+                gpsData.value = lastProfile.gpsData
+                magDeclination.value = lastProfile.declination
+                bluetoothMac.value = lastProfile.btAddress
+            }
         }
     }
 

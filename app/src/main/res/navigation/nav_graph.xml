@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/welcomeFragment">
+    app:startDestination="@id/currentProfileFragment">
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.startracker.AboutFragment"
@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_currentProfileFragment_to_levelAlignmentFragment"
             app:destination="@id/levelAlignmentFragment" />
+        <action
+            android:id="@+id/action_currentProfileFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadProfilesFragment"

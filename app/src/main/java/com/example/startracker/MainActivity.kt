@@ -1,6 +1,7 @@
 package com.example.startracker
 
 
+import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +11,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.startracker.database.ProfileDatabase
+import com.example.startracker.database.ProfileDatabaseDao
 import com.example.startracker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -46,29 +50,22 @@ class MainActivity : AppCompatActivity() {
         val navGraph = graphInflater.inflate(R.navigation.nav_graph)
 
 
-
-        navGraph.startDestination = R.id.welcomeFragment
-        navController.graph = navGraph
-        navGraph.label = ""
-        navHostFragment.navController.graph = navGraph
-
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-        if (true){
-            //TODO: detect old user
-            navGraph.startDestination = R.id.welcomeFragment
 
-            navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
-                if (nd.id == R.id.currentProfileFragment) {
-                    navGraph.startDestination = R.id.currentProfileFragment
-                    setDrawer_locked()
-                }
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+            if (nd.id == R.id.currentProfileFragment) {
+                navGraph.startDestination = R.id.currentProfileFragment
+                setDrawer_locked()
             }
+        }
 
-        }else {
-            navGraph.startDestination = R.id.currentProfileFragment
-            setDrawer_locked()
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+            if (nd.id == R.id.welcomeFragment) {
+                navGraph.startDestination = R.id.welcomeFragment
+                setDrawer_locked()
+            }
         }
 
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->

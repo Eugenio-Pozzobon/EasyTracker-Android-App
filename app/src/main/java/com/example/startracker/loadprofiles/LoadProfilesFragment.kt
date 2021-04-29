@@ -23,7 +23,7 @@ class LoadProfilesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentLoadProfilesBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_load_profiles, container, false)
@@ -48,12 +48,13 @@ class LoadProfilesFragment : Fragment() {
 //            }
 //        })
 
-        binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.red_button));
-        binding.buttonClear.setTextColor(getResources().getColor(R.color.white));
+        binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.red_button))
+        binding.buttonClear.setTextColor(getResources().getColor(R.color.white))
 
-        loadProfileViewModel.clearButtonVisible.observe(viewLifecycleOwner, Observer {
+        loadProfileViewModel.clearButtonVisible.observe(viewLifecycleOwner, {
             if (it == false) { // Observed state is true.
-                binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.green_button));
+                binding.buttonClear.setBackgroundColor(getResources().getColor(R.color.green_button))
+                this.findNavController().navigate(R.id.action_loadProfilesFragment_to_newProfileFragment)
             }
         })
 

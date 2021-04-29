@@ -22,7 +22,7 @@ class CurrentProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val binding: FragmentCurrentProfileBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_current_profile, container, false
@@ -42,34 +42,42 @@ class CurrentProfileFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        currentProfileViewModel.onConnected.observe(viewLifecycleOwner, Observer {
+        currentProfileViewModel.onConnected.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
-                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button));
+                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button))
             } else {
-                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.green_button));
-                binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.green_button));
+                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.green_button))
+                binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.green_button))
             }
         })
 
-        currentProfileViewModel.screenChange.observe(viewLifecycleOwner, Observer {
+        currentProfileViewModel.screenChange.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 currentProfileViewModel.doneOnChangeScreen()
                 this.findNavController()
                     .navigate(R.id.action_currentProfileFragment_to_levelAlignmentFragment)
-                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button));
+                binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button))
                 binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.red_button))
             }
         })
 
-        currentProfileViewModel.profileName.observe(viewLifecycleOwner, Observer {
+        currentProfileViewModel.profileName.observe(viewLifecycleOwner, {
             (activity as AppCompatActivity?)!!.supportActionBar!!.title = it
         })
 
-        binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button));
-        binding.buttonConnect.setTextColor(getResources().getColor(R.color.white));
+        currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
+            if(it == true) {
+                this.findNavController()
+                    .navigate(R.id.action_currentProfileFragment_to_welcomeFragment)
+            }
+        })
 
-        binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.red_button));
-        binding.buttonStartAlignment.setTextColor(getResources().getColor(R.color.white));
+
+        binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button))
+        binding.buttonConnect.setTextColor(getResources().getColor(R.color.white))
+
+        binding.buttonStartAlignment.setBackgroundColor(getResources().getColor(R.color.red_button))
+        binding.buttonStartAlignment.setTextColor(getResources().getColor(R.color.white))
 
 
         val navController = this.findNavController()
@@ -83,13 +91,12 @@ class CurrentProfileFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = currentProfileViewModel.profileName.value.toString()
-
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.overflow_menu, menu)
+        inflater.inflate(R.menu.overflow_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
