@@ -2,6 +2,7 @@ package com.example.startracker
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.startracker.databinding.FragmentWelcomeBinding
@@ -17,7 +18,7 @@ class WelcomeFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
@@ -25,8 +26,11 @@ class WelcomeFragment : Fragment() {
             v.findNavController().navigate(R.id.action_welcomeFragment_to_newProfileFragment)
         }
 
-        binding.initbutton.setBackgroundColor(getResources().getColor(R.color.red_button));
-        binding.initbutton.setTextColor(getResources().getColor(R.color.white));
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
+        val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
+
+        binding.initbutton.setBackgroundColor(redButtonColor)
+        binding.initbutton.setTextColor(whiteTextColor)
 
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)

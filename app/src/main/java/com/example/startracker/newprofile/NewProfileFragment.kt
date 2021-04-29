@@ -3,6 +3,7 @@ package com.example.startracker.newprofile
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,7 +26,7 @@ class NewProfileFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 //        // Inflate the layout for this fragment
 //        _binding = FragmentNewProfileBinding.inflate(inflater, container, false)
         val binding: FragmentNewProfileBinding = DataBindingUtil.inflate(
@@ -44,39 +45,39 @@ class NewProfileFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        newProfileViewModel.onConnected.observe(viewLifecycleOwner, Observer {
+        newProfileViewModel.onConnected.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 newProfileViewModel.doneOnChangeScreen()
                 this.findNavController().navigate(R.id.action_newProfileFragment_to_currentProfileFragment)
             }
         })
 
-        newProfileViewModel.setNameError.observe(viewLifecycleOwner, Observer {
+        newProfileViewModel.setNameError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.textProfileName.setError("*")
                 binding.textProfileName.requestFocus()
             }else{
-                binding.textProfileName.setError(null)
+                binding.textProfileName.error = null
                 binding.textProfileName.clearFocus()
             }
         })
 
-        newProfileViewModel.setGpsDataError.observe(viewLifecycleOwner, Observer {
+        newProfileViewModel.setGpsDataError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
-                binding.gpsNumber.setError("*")
+                binding.gpsNumber.error = "*"
                 binding.gpsNumber.requestFocus()
             }else{
-                binding.gpsNumber.setError(null)
+                binding.gpsNumber.error = null
                 binding.gpsNumber.clearFocus()
             }
         })
 
-        newProfileViewModel.setMagDeclinationError.observe(viewLifecycleOwner, Observer {
+        newProfileViewModel.setMagDeclinationError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
-                binding.declinationNumber.setError("*")
+                binding.declinationNumber.error = "*"
                 binding.declinationNumber.requestFocus()
             }else{
-                binding.declinationNumber.setError(null)
+                binding.declinationNumber.error = null
                 binding.declinationNumber.clearFocus()
             }
         })
@@ -87,8 +88,12 @@ class NewProfileFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        binding.buttonConnect.setBackgroundColor(getResources().getColor(R.color.red_button));
-        binding.buttonConnect.setTextColor(getResources().getColor(R.color.white));
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
+        //val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
+        val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
+
+        binding.buttonConnect.setBackgroundColor(redButtonColor)
+        binding.buttonConnect.setTextColor(whiteTextColor)
 
         val view = binding.root
         return view
@@ -98,17 +103,10 @@ class NewProfileFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.overflow_menu_newprofile, menu)
+        inflater.inflate(R.menu.overflow_menu_newprofile, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val optionsBuilder = NavOptions.Builder()
-        optionsBuilder
-            .setEnterAnim(R.anim.fade_in)
-            .setExitAnim(R.anim.fade_out)
-            .setPopEnterAnim(R.anim.fade_in)
-            .setPopExitAnim(R.anim.fade_out);
-
         return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) || super.onOptionsItemSelected(item)
     }
 
