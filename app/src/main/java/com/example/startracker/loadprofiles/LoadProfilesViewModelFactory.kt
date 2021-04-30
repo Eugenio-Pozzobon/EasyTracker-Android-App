@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.startracker.database.ProfileDatabaseDao
 import com.example.startracker.loadprofiles.LoadProfilesViewModel
 
-
 class LoadProfilesViewModelFactory(
     private val dataSource: ProfileDatabaseDao,
     private val application: Application

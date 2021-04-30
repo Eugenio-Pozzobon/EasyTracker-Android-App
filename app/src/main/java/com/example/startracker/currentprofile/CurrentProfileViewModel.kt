@@ -11,9 +11,9 @@ class CurrentProfileViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    // TODO: Implement the ViewModel
-
     var connectionStatus = MutableLiveData<String>()
+    var gpsDataString = MutableLiveData<String>()
+    var magDeclinationString = MutableLiveData<String>()
     var gpsData = MutableLiveData<String>()
     var magDeclination = MutableLiveData<String>()
     var bluetoothMac = MutableLiveData<String>()
@@ -67,6 +67,8 @@ class CurrentProfileViewModel(
 
             if(database.getLastProfile(true) == null) {
                 _profileName.value = ""
+                gpsDataString.value = "Latitude: 0"
+                magDeclinationString.value = "Declinação Magnética: 0"
                 gpsData.value = ""
                 magDeclination.value = ""
                 bluetoothMac.value = ""
@@ -74,6 +76,8 @@ class CurrentProfileViewModel(
             }else {
                 lastProfile = database.getLastProfile(true)!!
                 _profileName.value = lastProfile.profileName
+                gpsDataString.value = "Latitude: " + lastProfile.gpsData
+                magDeclinationString.value = "Declinação Magnética: " + lastProfile.declination + "°"
                 gpsData.value = lastProfile.gpsData
                 magDeclination.value = lastProfile.declination
                 bluetoothMac.value = lastProfile.btAddress

@@ -24,7 +24,7 @@
             android:id="@+id/image_gps"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/todo_string"
             android:scaleType="fitCenter"
             android:src="@drawable/map_vector"
@@ -34,27 +34,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_latitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="128dp"
-            android:text="@string/add_profile_latitude"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_gps" />
-
-        <TextView
             android:id="@+id/gps_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{currentProfileViewModel.gpsData}"
+            android:layout_marginTop="8dp"
+            android:text="@{currentProfileViewModel.gpsDataString}"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_latitude"
-            app:layout_constraintStart_toEndOf="@+id/text_latitude"
-            app:layout_constraintTop_toTopOf="@+id/text_latitude" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_gps" />
 
         <ImageView
             android:id="@+id/image_declination"
@@ -69,27 +57,15 @@
             app:layout_constraintTop_toBottomOf="@+id/gps_number" />
 
         <TextView
-            android:id="@+id/text_declination"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="64dp"
-            android:text="@string/add_profile_declination"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_declination" />
-
-        <TextView
             android:id="@+id/declination_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{currentProfileViewModel.magDeclination}"
+            android:layout_marginTop="8dp"
+            android:text="@{currentProfileViewModel.magDeclinationString}"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_declination"
-            app:layout_constraintStart_toEndOf="@+id/text_declination"
-            app:layout_constraintTop_toTopOf="@+id/text_declination" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_declination" />
 
         <ImageView
             android:id="@+id/image_bluetooth"
@@ -106,9 +82,9 @@
             android:id="@+id/text_bluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:text="@string/add_profile_bluetooth"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_bluetooth" />
@@ -132,6 +108,7 @@
             android:id="@+id/button_start_alignment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="32dp"
             android:enabled="@{currentProfileViewModel.startAlignmentButtonVisible}"
             android:onClick="@{() -> currentProfileViewModel.startAlignment()}"

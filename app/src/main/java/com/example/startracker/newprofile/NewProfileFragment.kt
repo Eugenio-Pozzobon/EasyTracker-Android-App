@@ -28,7 +28,6 @@ class NewProfileFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
 //        // Inflate the layout for this fragment
-//        _binding = FragmentNewProfileBinding.inflate(inflater, container, false)
         val binding: FragmentNewProfileBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_new_profile, container, false)
 
@@ -83,8 +82,6 @@ class NewProfileFragment : Fragment() {
         })
 
         // TODO: Add get localization
-        // TODO: Add overflow fragment for question button
-
 
         setHasOptionsMenu(true)
 

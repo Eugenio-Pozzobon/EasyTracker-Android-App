@@ -106,4 +106,8 @@
             android:id="@+id/action_endAligmentFragment_to_currentProfileFragment"
             app:destination="@id/currentProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.startracker.editprofile.EditProfileFragment"
+        android:label="Editar Perfil" />
 </navigation>

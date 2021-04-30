@@ -79,5 +79,7 @@
     <!-- Extra -->
     
     <string name="todo_string">TODO</string>
+    <string name="helper_mag">Valor em graus(°). Para mais informações clique no botão de informação</string>
+    <string name="helper_gps">Para capturar sua localização atual, clique no marcador à direita.</string>
 
 </resources>

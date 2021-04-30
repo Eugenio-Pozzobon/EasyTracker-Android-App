@@ -12,10 +12,11 @@
         android:orderInCategory="101"
         android:title="@string/load_profile_menu" />
 
-<!--    <item-->
-<!--        android:id="@+id/editProfileFragment"-->
-<!--        android:orderInCategory="102"-->
-<!--        android:title="@string/edit_profile" />-->
+    <item
+        android:id="@+id/editProfileFragment"
+        android:orderInCategory="102"
+        android:title="@string/edit_profile" />
+
     <item
         android:id="@+id/howToUseFragment"
         android:orderInCategory="103"
