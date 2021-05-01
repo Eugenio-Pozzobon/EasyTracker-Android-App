@@ -83,7 +83,8 @@ class NewProfileFragment : Fragment() {
 
         // TODO: Add get localization
 
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
+        // TODO: Find a way to make options menu in this screen
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         //val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
@@ -104,11 +105,10 @@ class NewProfileFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) || super.onOptionsItemSelected(item)
+            return NavigationUI.onNavDestinationSelected(
+                item,
+                requireView().findNavController()
+            ) || super.onOptionsItemSelected(item)
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
 }

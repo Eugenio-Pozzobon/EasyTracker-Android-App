@@ -53,10 +53,17 @@
         app:defaultNavHost="true">
         <action
             android:id="@+id/action_currentProfileFragment_to_levelAlignmentFragment"
-            app:destination="@id/levelAlignmentFragment" />
+            app:destination="@id/levelAlignmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"   />
         <action
             android:id="@+id/action_currentProfileFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_currentProfileFragment_to_newProfileFragment"
+            app:destination="@id/newProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadProfilesFragment"
@@ -77,7 +84,11 @@
         tools:layout="@layout/fragment_alignment" >
         <action
             android:id="@+id/action_levelAlignmentFragment_to_polarAlignmentFragment"
-            app:destination="@id/polarAlignmentFragment" />
+            app:destination="@id/polarAlignmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/polarAlignmentFragment"
@@ -86,7 +97,11 @@
         tools:layout="@layout/fragment_polar_alignment" >
         <action
             android:id="@+id/action_polarAlignmentFragment_to_tiltAlignmentFragment"
-            app:destination="@id/tiltAlignmentFragment" />
+            app:destination="@id/tiltAlignmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/tiltAlignmentFragment"
@@ -95,7 +110,11 @@
         tools:layout="@layout/fragment_tilt_alignment" >
         <action
             android:id="@+id/action_tiltAlignmentFragment_to_endAligmentFragment"
-            app:destination="@id/endAligmentFragment" />
+            app:destination="@id/endAligmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/endAligmentFragment"
@@ -104,10 +123,29 @@
         tools:layout="@layout/fragment_end_aligment" >
         <action
             android:id="@+id/action_endAligmentFragment_to_currentProfileFragment"
-            app:destination="@id/currentProfileFragment" />
+            app:destination="@id/currentProfileFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.startracker.editprofile.EditProfileFragment"
-        android:label="Editar Perfil" />
+        android:label="Editar Perfil" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_currentProfileFragment"
+            app:destination="@id/currentProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_loadProfilesFragment"
+            app:destination="@id/loadProfilesFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
 </navigation>

@@ -48,6 +48,9 @@ interface ProfileDatabaseDao {
     @Query("DELETE FROM profile_table")
     suspend fun clear()
 
+    @Query("DELETE FROM profile_table WHERE last_profile = :key")
+    fun deleteLastProfile(key: Boolean)
+
     /**
      * Selects and returns all rows in the table,
      *

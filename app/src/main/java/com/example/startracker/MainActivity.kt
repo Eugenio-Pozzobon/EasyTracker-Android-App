@@ -18,6 +18,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.database.ProfileDatabaseDao
 import com.example.startracker.databinding.ActivityMainBinding
+import com.example.startracker.newprofile.NewProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             if (nd.id == R.id.currentProfileFragment) {
                 navGraph.startDestination = R.id.currentProfileFragment
@@ -85,12 +85,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setDrawer_locked(){
-        Log.i("CUSTOM TAG", "SETTED LOCKED")
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         toolbar.setNavigationIcon(null)
     }
     fun setDrawer_unLocked(){
-        Log.i("CUSTOM TAG", "SETTED LOCKED")
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 

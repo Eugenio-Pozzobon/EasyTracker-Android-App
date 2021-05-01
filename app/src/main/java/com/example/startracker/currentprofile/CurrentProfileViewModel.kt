@@ -1,10 +1,13 @@
 package com.example.startracker.currentprofile
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.startracker.database.Profile
 import com.example.startracker.database.ProfileDatabaseDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CurrentProfileViewModel(
     val database: ProfileDatabaseDao,
@@ -34,22 +37,9 @@ class CurrentProfileViewModel(
     val onConnected: LiveData<Boolean>
         get() = _onConnected
 
-    private fun doneOnConnected(){
-        _onConnected.value = false
-        connectionStatus.value = "Conectado"
-        _startAlignmentButtonVisible.value = true
-    }
-
     private var _screenChange = MutableLiveData<Boolean>()
     val screenChange: LiveData<Boolean>
         get() = _screenChange
-
-    fun doneOnChangeScreen() {
-        _screenChange.value = false
-        _onConnected.value = false
-        connectionStatus.value = "Conectar"
-        _startAlignmentButtonVisible.value = true
-    }
 
     private lateinit var lastProfile: Profile
 
@@ -58,8 +48,8 @@ class CurrentProfileViewModel(
         _onConnected.value = true
         connectionStatus.value = "Conectar"
         _startAlignmentButtonVisible.value = false
+        _newUserDetected.value = false
         getLastProfile()
-
     }
 
     private fun getLastProfile(){
@@ -95,5 +85,18 @@ class CurrentProfileViewModel(
         viewModelScope.launch{
             _screenChange.value = true
         }
+    }
+
+    private fun doneOnConnected(){
+        _onConnected.value = false
+        connectionStatus.value = "Conectado"
+        _startAlignmentButtonVisible.value = true
+    }
+
+    fun doneOnChangeScreen() {
+        _screenChange.value = false
+        _onConnected.value = false
+        connectionStatus.value = "Conectar"
+        _startAlignmentButtonVisible.value = true
     }
 }

@@ -35,32 +35,65 @@ class EditProfileViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
      */
 
-
-    var profileName = MutableLiveData<String>()
     var gpsData = MutableLiveData<String>()
     var magDeclination = MutableLiveData<String>()
     var bluetoothMac = MutableLiveData<String>()
+    var profileName = MutableLiveData<String>()
 
-    private var _onConnected = MutableLiveData<Boolean>()
+    private lateinit var lastProfile: Profile
 
-    val onConnected: LiveData<Boolean>
-        get() = _onConnected
+    private var _onEdit = MutableLiveData<Boolean>()
+    //    private var _goToNewProfile = MutableLiveData<Boolean>()
+    private var _goToLoadProfiles = MutableLiveData<Boolean>()
 
-    fun doneOnConnected(){
-        _onConnected.value = true
-    }
+    val onEdit: LiveData<Boolean>
+        get() = _onEdit
 
-    fun doneOnChangeScreen() {
-        _onConnected.value = false
+//    val goToNewProfile: LiveData<Boolean>
+//        get() = _goToNewProfile
+
+    val goToLoadProfiles: LiveData<Boolean>
+        get() = _goToLoadProfiles
+
+
+    private fun doneOnEdit() {
+        _onEdit.value = true
     }
 
     init {
+//        _goToNewProfile.value = false
+        _goToLoadProfiles.value = false
+        _onEdit.value = false
+        getLastProfile()
 
+        gpsData.value = ""
+        magDeclination.value = ""
+        bluetoothMac.value = ""
+        profileName.value = ""
+    }
+
+
+    private fun getLastProfile(){
+        viewModelScope.launch{
+            lastProfile = database.getLastProfile(true)!!
+            profileName.value = lastProfile.profileName
+            gpsData.value = lastProfile.gpsData
+            magDeclination.value = lastProfile.declination
+            gpsData.value = lastProfile.gpsData
+            magDeclination.value = lastProfile.declination
+            bluetoothMac.value = lastProfile.btAddress
+        }
     }
 
     private suspend fun update(profile: Profile) {
         withContext(Dispatchers.IO) {
             database.update(profile)
+        }
+    }
+
+    private suspend fun deleteByLastProfile() {
+        withContext(Dispatchers.IO) {
+            database.deleteLastProfile(true)
         }
     }
 
@@ -99,21 +132,44 @@ class EditProfileViewModel(
         return true
     }
 
-    fun onDone(){
+
+    fun onEdit(){
         viewModelScope.launch {
-            val editableProfile = Profile()
             if (checkValues()) {
-                editableProfile.lastProfile = true
-                editableProfile.profileName = profileName.value.toString()
+                lastProfile.lastProfile = true
+                lastProfile.profileName = profileName.value.toString()
 
-                editableProfile.gpsData = gpsData.value.toString()
-                editableProfile.declination = magDeclination.value.toString()
+                lastProfile.gpsData = gpsData.value.toString()
+                lastProfile.declination = magDeclination.value.toString()
 
-                editableProfile.btAddress = bluetoothMac.value.toString()
-                update(editableProfile)
-                doneOnConnected()
+                //lastProfile.btAddress = bluetoothMac.value.toString()
+
+                update(lastProfile)
+                doneOnEdit()
             }
         }
+    }
+
+    fun onDelete(){
+        viewModelScope.launch {
+            deleteByLastProfile()
+            doneOnDelete()
+        }
+    }
+
+    private fun doneOnDelete() {
+//        if(true){
+//            _goToNewProfile.value = true
+//        }else{
+            _goToLoadProfiles.value = true
+//        }
+    }
+
+
+    fun doneOnChangeScreen() {
+//        _goToNewProfile.value = false
+        _goToLoadProfiles.value = false
+        _onEdit.value = false
     }
 
     /**

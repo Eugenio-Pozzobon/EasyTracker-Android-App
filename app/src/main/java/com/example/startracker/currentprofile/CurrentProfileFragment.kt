@@ -1,6 +1,7 @@
 package com.example.startracker.currentprofile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -56,7 +57,6 @@ class CurrentProfileFragment : Fragment() {
         })
 
 
-
         currentProfileViewModel.screenChange.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 currentProfileViewModel.doneOnChangeScreen()
@@ -85,17 +85,9 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonStartAlignment.setTextColor(whiteTextColor)
 
 
-        val navController = this.findNavController()
-        val graph = navController.getGraph()
-        graph.label = currentProfileViewModel.profileName.value.toString()
-
         setHasOptionsMenu(true)
         return binding.root
-    }
 
-    override fun onStart() {
-        super.onStart()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = currentProfileViewModel.profileName.value.toString()
     }
 
 
