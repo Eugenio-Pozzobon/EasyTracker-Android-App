@@ -40,10 +40,8 @@ class PolarAlignmentFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
-        val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
-        binding.textNorth.setBackgroundColor(whiteTextColor)
         binding.okButton.setBackgroundColor(redButtonColor)
         binding.okButton.setTextColor(whiteTextColor)
 

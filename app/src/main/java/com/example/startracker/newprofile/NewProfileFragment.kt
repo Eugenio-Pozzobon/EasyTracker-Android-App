@@ -1,21 +1,17 @@
 package com.example.startracker.newprofile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.startracker.R
-import com.example.startracker.databinding.FragmentNewProfileBinding
 import com.example.startracker.database.ProfileDatabase
+import com.example.startracker.databinding.FragmentNewProfileBinding
 
 class NewProfileFragment : Fragment() {
 
@@ -97,7 +93,6 @@ class NewProfileFragment : Fragment() {
         return view
 
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

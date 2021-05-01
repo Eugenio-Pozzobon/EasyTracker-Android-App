@@ -39,11 +39,10 @@ class EndAlignmentFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
-        binding.okButton.setBackgroundColor(redButtonColor)
+        binding.okButton.setBackgroundColor(greenButtonColor)
         binding.okButton.setTextColor(whiteTextColor)
 
         binding.okButton.setOnClickListener(){
