@@ -6,6 +6,7 @@ import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
@@ -83,8 +84,7 @@ class NewProfileFragment : Fragment() {
 
         // TODO: Add get localization
 
-        //setHasOptionsMenu(true)
-        // TODO: Find a way to make options menu in this screen
+        setHasOptionsMenu(true)
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         //val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)

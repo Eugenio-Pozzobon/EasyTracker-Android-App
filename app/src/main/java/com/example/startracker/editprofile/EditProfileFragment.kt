@@ -2,13 +2,13 @@ package com.example.startracker.editprofile
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentEditProfileBinding
@@ -52,6 +52,7 @@ class EditProfileFragment : Fragment() {
         })
 
 
+        setHasOptionsMenu(true)
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
@@ -64,6 +65,18 @@ class EditProfileFragment : Fragment() {
 
         val view = binding.root
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.overflow_menu_newprofile, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(
+            item,
+            requireView().findNavController()
+        ) || super.onOptionsItemSelected(item)
     }
 
 }
