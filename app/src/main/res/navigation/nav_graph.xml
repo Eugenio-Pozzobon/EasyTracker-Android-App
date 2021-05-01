@@ -123,7 +123,7 @@
     </fragment>
     <fragment
         android:id="@+id/endAligmentFragment"
-        android:name="com.example.startracker.alignment.endalignment.EndAligmentFragment"
+        android:name="com.example.startracker.alignment.endalignment.EndAlignmentFragment"
         android:label="fragment_end_aligment"
         tools:layout="@layout/fragment_end_aligment" >
         <action

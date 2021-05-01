@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Star Tracker</string>
+    <string name="load_profile_menu">Load Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="new_profile_menu">New Profile</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="welcome_fragment_button">Init</string>
+    <string name="welcome_fragment_title">Star Tracker</string>
+    <string name="previous">Previous</string>
+    <string name="welcome_fragment_text">" "</string>
+    <string name="add_profile_name">Profile Name:</string>
+    <string name="add_profile_declination_hint">xx.xx</string>
+    <string name="add_profile_gps_hint">xx.xxxxxxxx</string>
+    <string name="add_profile_latitude">Latitude:</string>
+    <string name="add_profile_declination">Magnetic Declination</string>
+    <string name="add_profile_bluetooth">Bluetooth Connection</string>
+    <string name="add_profile_bluetooth_button">Connect</string>
+    <string name="name_hint">Name</string>
+    <string name="nome_do_perfil_de_localiza_o">Profile Name</string>
+    <string name="profile_start_button">Init Alignment</string>
+    <string name="profile_instructions_check">" "</string>
+    <string name="start_aligment">Init Alignment</string>
+    <string name="clearProfile">Delete Profile</string>
+    <string name="clearProfiles">Delete All Profiles</string>
+    <string name="ok_button">Check</string>
+    <string name="alignment_instruction">" "</string>
+    <string name="polar_instruction">" "</string>
+    <string name="tilt_instruction">" "</string>
+    <string name="congrats_instruction">Congratulations!</string>
+    <string name="phisical_button_instruction">" "</string>
+    <string name="end_instruction">" "</string>
+    <string name="start_button">Init Tracker</string>
+    <string name="debug_fragment_title">Debug</string>
+    <string name="debug_fragment_1">Init Debug</string>
+    <string name="about_fragment_title">About</string>
+    <string name="about_us">About App</string>
+    <string name="howtouse_fragment_title">Instructions</string>
+    <string name="howtouse_fragment_1">" "</string>
+    <string name="todo_string">TODO</string>
+    <string name="helper_mag">" "</string>
+    <string name="helper_gps">" "</string>
+    <string name="deletar_perfil_button">Delete Profile</string>
+    <string name="button_confirm_edit">Confirm Changes</string>
+</resources>

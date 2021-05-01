@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.startracker.R
 
-class EndAligmentFragment : Fragment() {
+class EndAlignmentFragment : Fragment() {
 
     companion object {
-        fun newInstance() = EndAligmentFragment()
+        fun newInstance() = EndAlignmentFragment()
     }
 
-    private lateinit var viewModel: EndAligmentViewModel
+    private lateinit var viewModel: EndAlignmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class EndAligmentFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EndAligmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(EndAlignmentViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

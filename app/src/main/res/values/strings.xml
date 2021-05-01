@@ -8,10 +8,10 @@
 
 
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label">Primeiro Fragmento</string>
+    <string name="second_fragment_label">Segundo Fragmento</string>
+    <string name="next">Próximo</string>
+    <string name="previous">Anterior</string>
 
     <!-- Welcome -->
     <string name="welcome_fragment_title">Start Tracker</string>
@@ -44,6 +44,7 @@
     <string name="clearProfiles">Deletar Perfis</string>
 
 
+    <!-- Concluido Button -->
     <string name="ok_button">Concluído</string>
 
     <!-- Alignemnt -->
