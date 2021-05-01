@@ -8,8 +8,8 @@
          click handlers, and state variables. -->
     <data>
         <variable
-            name="tiltAlignmentViewModel"
-            type="com.example.startracker.alignment.tiltalignment.TiltAlignmentViewModel" />
+            name="levelAlignmentViewModel"
+            type="com.example.startracker.alignment.levelalignment.LevelAlignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +24,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
 
             <View
                 android:id="@+id/divider3"
@@ -53,8 +64,8 @@
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:contentDescription="@string/todo_string"
@@ -68,13 +79,12 @@
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="150dp"
-                android:contentDescription="@string/todo_string"
                 android:src="@drawable/circle_vector_yellow_light"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="@+id/imageView"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView" />
+                app:layout_constraintTop_toTopOf="@+id/imageView"
+                android:contentDescription="@string/todo_string" />
 
             <View
                 android:id="@+id/divider"
@@ -97,7 +107,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="4dp"
-                android:text="@string/tilt_instruction"
+                android:text="@string/alignment_instruction"
                 android:gravity="center_horizontal|center_vertical"
                 android:textColor="@color/yellow"
                 android:textSize="18sp"
@@ -110,12 +120,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:text="@string/ok_button"
                 android:textAllCaps="false"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 

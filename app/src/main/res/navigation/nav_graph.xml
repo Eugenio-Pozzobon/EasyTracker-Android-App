@@ -69,7 +69,7 @@
     <fragment
         android:id="@+id/loadProfilesFragment"
         android:name="com.example.startracker.loadprofiles.LoadProfilesFragment"
-        android:label="LoadProfilesFragment" >
+        android:label="Carregar Perfil" >
         <action
             android:id="@+id/action_loadProfilesFragment_to_newProfileFragment"
             app:destination="@id/newProfileFragment"
@@ -81,8 +81,8 @@
     <fragment
         android:id="@+id/levelAlignmentFragment"
         android:name="com.example.startracker.alignment.levelalignment.LevelAlignmentFragment"
-        android:label="fragment_alignment"
-        tools:layout="@layout/fragment_alignment" >
+        android:label="@string/level_alignment_title"
+        tools:layout="@layout/fragment_level_alignment" >
         <action
             android:id="@+id/action_levelAlignmentFragment_to_polarAlignmentFragment"
             app:destination="@id/polarAlignmentFragment"
@@ -96,7 +96,7 @@
     <fragment
         android:id="@+id/polarAlignmentFragment"
         android:name="com.example.startracker.alignment.polaralignment.PolarAlignmentFragment"
-        android:label="fragment_polar_alignment"
+        android:label="@string/polar_alignment_title"
         tools:layout="@layout/fragment_polar_alignment" >
         <action
             android:id="@+id/action_polarAlignmentFragment_to_tiltAlignmentFragment"
@@ -110,7 +110,7 @@
     <fragment
         android:id="@+id/tiltAlignmentFragment"
         android:name="com.example.startracker.alignment.tiltalignment.TiltAlignmentFragment"
-        android:label="fragment_tilt_alignment"
+        android:label="@string/tilt_alignment_title"
         tools:layout="@layout/fragment_tilt_alignment" >
         <action
             android:id="@+id/action_tiltAlignmentFragment_to_endAligmentFragment"
@@ -124,8 +124,8 @@
     <fragment
         android:id="@+id/endAligmentFragment"
         android:name="com.example.startracker.alignment.endalignment.EndAlignmentFragment"
-        android:label="fragment_end_aligment"
-        tools:layout="@layout/fragment_end_aligment" >
+        android:label="@string/end_alignment_title"
+        tools:layout="@layout/fragment_end_alignment" >
         <action
             android:id="@+id/action_endAligmentFragment_to_currentProfileFragment"
             app:destination="@id/currentProfileFragment"

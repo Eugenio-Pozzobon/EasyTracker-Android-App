@@ -25,35 +25,93 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/aboutImage"
-                android:layout_width="385dp"
-                android:layout_height="385dp"
-                android:contentDescription="@string/about_fragment_title"
-                android:padding="8dp"
-                android:scaleType="centerInside"
+            <TextView
+                android:id="@+id/text_north"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/north"
+                android:textSize="36sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/star_tracker_illustration" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="1dp"
+                android:layout_height="300dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/todo_string"
+                android:scaleType="centerInside"
+                android:scaleX="0.95"
+                android:scaleY="0.95"
+                android:src="@drawable/tilt_vector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_min="wrap"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_north"
+                app:layout_constraintWidth_min="wrap" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="225dp"
+                android:layout_height="225dp"
+                android:rotation="50"
+                app:layout_constraintBottom_toBottomOf="@+id/divider3"
+                app:layout_constraintEnd_toEndOf="@+id/divider2"
+                app:layout_constraintStart_toStartOf="@+id/divider2"
+                app:layout_constraintTop_toTopOf="@+id/divider3"
+                app:srcCompat="@drawable/indicator_compass_vector" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/grey"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="16dp"
-                android:justificationMode="inter_word"
-                android:text="@string/alignment_instruction"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/polar_instruction"
+                android:gravity="center_horizontal|center_vertical"
                 android:textColor="@color/yellow"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/ok_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/aboutImage"
-                tools:targetApi="o" />
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <Button
                 android:id="@+id/ok_button"

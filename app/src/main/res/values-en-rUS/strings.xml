@@ -44,4 +44,9 @@
     <string name="helper_gps">" "</string>
     <string name="deletar_perfil_button">Delete Profile</string>
     <string name="button_confirm_edit">Confirm Changes</string>
+    <string name="end_alignment_title">(4/4) Start Track</string>
+    <string name="tilt_alignment_title">(3/4) Tilt Alignment</string>
+    <string name="polar_alignment_title">(2/4) Polar Alignment</string>
+    <string name="level_alignment_title">(1/4) Level Alignment</string>
+    <string name="north">N</string>
 </resources>

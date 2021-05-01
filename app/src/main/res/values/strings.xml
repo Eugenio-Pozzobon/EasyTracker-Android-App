@@ -85,4 +85,11 @@
     <string name="deletar_perfil_button">Deletar Perfil</string>
     <string name="button_confirm_edit">Confirmar Alterações</string>
 
+
+    <string name="end_alignment_title">(4/4) Finalizar e Rastrear</string>
+    <string name="tilt_alignment_title">(3/4) Alinhamento de Elevação</string>
+    <string name="polar_alignment_title">(2/4) Alinhamento de Azimute</string>
+    <string name="level_alignment_title">(1/4) Alinhamento de Nível</string>
+    <string name="north">N</string>
+
 </resources>
