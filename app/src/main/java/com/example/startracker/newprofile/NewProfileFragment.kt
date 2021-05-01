@@ -1,7 +1,15 @@
 package com.example.startracker.newprofile
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,6 +20,8 @@ import androidx.navigation.ui.NavigationUI
 import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentNewProfileBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 class NewProfileFragment : Fragment() {
 
@@ -19,6 +29,11 @@ class NewProfileFragment : Fragment() {
 //    // This property is only valid between onCreateView and
 //    // onDestroyView.
 //    private val binding get() = _binding!!
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val locationPermissionCode = 1
+
+    lateinit var newProfileViewModel:NewProfileViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +49,7 @@ class NewProfileFragment : Fragment() {
 
         val viewModelFactory = NewProfileViewModelFactory(dataSource, application)
 
-        val newProfileViewModel = ViewModelProvider(this, viewModelFactory).get(NewProfileViewModel::class.java)
+        newProfileViewModel = ViewModelProvider(this, viewModelFactory).get(NewProfileViewModel::class.java)
         //newProfileViewModel = ViewModelProvider(this).get(NewProfileViewModel::class.java)
 
         binding.newProfileViewModel = newProfileViewModel
@@ -78,8 +93,6 @@ class NewProfileFragment : Fragment() {
             }
         })
 
-        // TODO: Add get localization
-
         setHasOptionsMenu(true)
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
@@ -89,9 +102,29 @@ class NewProfileFragment : Fragment() {
         binding.buttonConnect.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setTextColor(whiteTextColor)
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        binding.imageGpsCircle.setOnClickListener(){
+            getLocation()
+        }
+
         val view = binding.root
         return view
 
+    }
+
+    private fun getLocation(){
+        if ((ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+        }else{
+            Log.i("DEBUGLOCATION","GPS LOCATION")
+
+            fusedLocationProviderClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    if (location != null) {
+                        newProfileViewModel.updateGps(location.latitude.toString())
+                    }
+                }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

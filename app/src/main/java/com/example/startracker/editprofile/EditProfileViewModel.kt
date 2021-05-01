@@ -172,6 +172,10 @@ class EditProfileViewModel(
         _onEdit.value = false
     }
 
+    fun updateGps(latitude:String){
+        gpsData.value = latitude
+    }
+
     /**
      * Called when the ViewModel is dismantled.
      * At this point, we want to cancel all coroutines;

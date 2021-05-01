@@ -1,8 +1,13 @@
 package com.example.startracker.editprofile
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -13,10 +18,15 @@ import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentEditProfileBinding
 import com.example.startracker.newprofile.EditProfileViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 class EditProfileFragment : Fragment() {
 
     private lateinit var editProfileViewModel: EditProfileViewModel
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val locationPermissionCode = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +61,6 @@ class EditProfileFragment : Fragment() {
             }
         })
 
-
         setHasOptionsMenu(true)
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
@@ -63,8 +72,29 @@ class EditProfileFragment : Fragment() {
         binding.buttonEdit.setBackgroundColor(redButtonColor)
         binding.buttonEdit.setTextColor(whiteTextColor)
 
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        binding.imageGpsCircle.setOnClickListener(){
+            getLocation()
+        }
+
         val view = binding.root
         return view
+    }
+
+    private fun getLocation(){
+        if ((ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+        }else{
+            Log.i("DEBUGLOCATION","GPS LOCATION")
+
+            fusedLocationProviderClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    if (location != null) {
+                        editProfileViewModel.updateGps(location.latitude.toString())
+                    }
+                }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
