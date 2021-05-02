@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/howToUseFragment"
         android:name="com.example.startracker.HowToUseFragment"
-        android:label="Tutorial"
+        android:label="FAQ"
         tools:layout="@layout/fragment_how_to_use" />
     <fragment
         android:id="@+id/welcomeFragment"
@@ -44,6 +44,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_newProfileFragment_to_howToUseFragment"
+            app:destination="@id/howToUseFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/newProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/currentProfileFragment"
@@ -65,6 +73,9 @@
         <action
             android:id="@+id/action_currentProfileFragment_to_newProfileFragment"
             app:destination="@id/newProfileFragment" />
+        <action
+            android:id="@+id/action_currentProfileFragment_to_loadProfilesFragment"
+            app:destination="@id/loadProfilesFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadProfilesFragment"
@@ -77,6 +88,14 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_loadProfilesFragment_to_currentProfileFragment"
+            app:destination="@id/currentProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/loadProfilesFragment" />
     </fragment>
     <fragment
         android:id="@+id/levelAlignmentFragment"
@@ -152,5 +171,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_howToUseFragment"
+            app:destination="@id/howToUseFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:popUpTo="@id/editProfileFragment" />
     </fragment>
 </navigation>

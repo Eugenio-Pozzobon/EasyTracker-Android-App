@@ -66,9 +66,12 @@ interface ProfileDatabaseDao {
     suspend fun getLastProfile(key: Boolean): Profile?
 
     /**
-     * Selects and returns the night with given nightId.
+     * Selects and returns the profile with given nightId.
      */
     @Query("SELECT * from profile_table WHERE profileId = :key")
-    fun getProfileWithId(key: Long): LiveData<Profile>
+    fun getProfileWithId(key: Long): Profile
+
+    @Query("SELECT EXISTS(SELECT * FROM profile_table)")
+    fun isExists(): Boolean
 }
 

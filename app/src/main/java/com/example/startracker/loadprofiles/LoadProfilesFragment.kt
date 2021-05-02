@@ -2,6 +2,7 @@ package com.example.startracker.loadprofiles
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentLoadProfilesBinding
-import com.example.startracker.databinding.FragmentNewProfileBinding
 import com.example.startracker.newprofile.NewProfileViewModel
 
 class LoadProfilesFragment : Fragment() {
@@ -41,14 +42,19 @@ class LoadProfilesFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-//        val adapter = ProfileListAdapter()
-//        binding.profilesList.adapter = adapter
-//        loadProfileViewModel.profiles.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                adapter.submitList(it)
-//            }
-//        })
+        val adapter = ProfileListAdapter(ProfileListener{
+            profileId -> loadProfileViewModel.onProfileClicked(profileId)
+        })
 
+        val manager = LinearLayoutManager(activity)
+        binding.profileList.layoutManager = manager
+        binding.profileList.adapter = adapter
+
+        loadProfileViewModel.profiles.observe(viewLifecycleOwner, {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
@@ -56,6 +62,14 @@ class LoadProfilesFragment : Fragment() {
 
         binding.buttonClear.setBackgroundColor(redButtonColor)
         binding.buttonClear.setTextColor(whiteTextColor)
+
+        loadProfileViewModel.navigateToEditProfile.observe(viewLifecycleOwner, {
+
+            if(it == true) {
+                this.findNavController()
+                    .navigate(R.id.action_loadProfilesFragment_to_currentProfileFragment)
+            }
+        })
 
         loadProfileViewModel.clearButtonVisible.observe(viewLifecycleOwner, {
             if (it == false) { // Observed state is true.

@@ -71,8 +71,17 @@ class CurrentProfileFragment : Fragment() {
             (activity as AppCompatActivity?)!!.supportActionBar!!.title = it
         })
 
+        currentProfileViewModel.noLastProfileAvailable.observe(viewLifecycleOwner, {
+            if (it == true) {
+                currentProfileViewModel.doneOnChangeScreen()
+                this.findNavController()
+                    .navigate(R.id.action_currentProfileFragment_to_loadProfilesFragment)
+            }
+        })
+
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
             if (it == true) {
+                currentProfileViewModel.doneOnChangeScreen()
                 this.findNavController()
                     .navigate(R.id.action_currentProfileFragment_to_welcomeFragment)
             }

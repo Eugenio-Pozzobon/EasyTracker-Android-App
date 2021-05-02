@@ -102,6 +102,10 @@ class NewProfileFragment : Fragment() {
         binding.buttonConnect.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setTextColor(whiteTextColor)
 
+        binding.imageQuestionVector.setOnClickListener(){
+            this.findNavController().navigate(R.id.action_newProfileFragment_to_howToUseFragment)
+        }
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         binding.imageGpsCircle.setOnClickListener(){
             getLocation()

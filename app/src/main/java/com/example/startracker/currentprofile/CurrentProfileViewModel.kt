@@ -29,6 +29,10 @@ class CurrentProfileViewModel(
     val startAlignmentButtonVisible: LiveData<Boolean>
         get() = _startAlignmentButtonVisible
 
+    private var _noLastProfileAvailable = MutableLiveData<Boolean>()
+    val noLastProfileAvailable: LiveData<Boolean>
+        get() = _noLastProfileAvailable
+
     private var _newUserDetected = MutableLiveData<Boolean>()
     val newUserDetected: LiveData<Boolean>
         get() = _newUserDetected
@@ -44,27 +48,37 @@ class CurrentProfileViewModel(
     private lateinit var lastProfile: Profile
 
     init {
+
+        _newUserDetected.value = false
+        _noLastProfileAvailable.value = false
+
         _screenChange.value = false
         _onConnected.value = true
         connectionStatus.value = "Conectar"
         _startAlignmentButtonVisible.value = false
-        _newUserDetected.value = false
         getLastProfile()
     }
 
     private fun getLastProfile(){
         viewModelScope.launch{
 
-            if(database.getLastProfile(true) == null) {
+            if(getLastProfile(true) == null) {
                 _profileName.value = ""
                 gpsDataString.value = "Latitude: 0"
                 magDeclinationString.value = "Declinação Magnética: 0"
                 gpsData.value = ""
                 magDeclination.value = ""
                 bluetoothMac.value = ""
-                _newUserDetected.value = true
+
+                if(databaseIsExists()) {
+                    _noLastProfileAvailable.value = true
+                    //_newUserDetected.value = true
+                }else{
+                    _newUserDetected.value = true
+                }
+
             }else {
-                lastProfile = database.getLastProfile(true)!!
+                lastProfile = getLastProfile(true)!!
                 _profileName.value = lastProfile.profileName
                 gpsDataString.value = "Latitude: " + lastProfile.gpsData
                 magDeclinationString.value = "Declinação Magnética: " + lastProfile.declination + "°"
@@ -75,6 +89,21 @@ class CurrentProfileViewModel(
         }
     }
 
+    private suspend fun getLastProfile(key: Boolean): Profile?{
+        var prof:Profile?
+        withContext(Dispatchers.IO) {
+            prof = database.getLastProfile(key)
+        }
+        return prof
+    }
+
+    suspend fun databaseIsExists():Boolean{
+        val result:Boolean
+        withContext(Dispatchers.IO) {
+            result = database.isExists()
+        }
+        return result
+    }
     fun onConnect(){
         viewModelScope.launch {
             doneOnConnected()
