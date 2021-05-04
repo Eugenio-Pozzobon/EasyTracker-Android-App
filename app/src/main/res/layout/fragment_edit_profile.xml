@@ -38,9 +38,9 @@
                 android:hint="@string/add_profile_name"
 
                 android:textColorHint="@color/white"
-                app:helperText="@string/helper_mag"
                 app:helperTextEnabled="true"
                 app:helperTextTextColor="@color/white"
+                app:helperText="@string/helper_mag"
 
                 app:hintTextColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout"
@@ -89,12 +89,14 @@
                     app:hintEnabled="true"
                     android:inputType="numberDecimal"
 
+                    app:suffixText="@string/sulfix_grausdecimais"
+
                     android:textColorHint="@color/white"
                     app:hintTextColor="@color/white"
 
                     app:helperTextEnabled="true"
-                    app:helperText="@string/helper_gps"
                     app:helperTextTextColor="@color/white"
+                    app:helperText="@string/helper_gps"
 
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/image_gps_circle"
@@ -146,10 +148,10 @@
                 android:hint="@string/add_profile_declination"
 
                 android:inputType="numberDecimal"
-
+                app:suffixText="@string/mag_degree"
                 android:textColorHint="@color/white"
-                app:helperText="@string/helper_mag"
                 app:helperTextEnabled="true"
+                app:helperText="@string/helper_mag"
                 app:helperTextTextColor="@color/white"
 
                 app:hintTextColor="@color/white"

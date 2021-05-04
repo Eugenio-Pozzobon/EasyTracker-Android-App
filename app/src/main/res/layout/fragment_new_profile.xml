@@ -93,6 +93,7 @@
 
                     android:hint="@string/add_profile_latitude"
                     android:inputType="numberDecimal"
+                    app:suffixText="@string/sulfix_grausdecimais"
 
                     android:textColorHint="@color/white"
                     app:helperTextEnabled="true"
@@ -150,6 +151,7 @@
                 android:autofillHints=""
                 android:hint="@string/add_profile_declination"
 
+                app:suffixText="@string/mag_degree"
                 android:inputType="numberDecimal"
 
                 android:textColorHint="@color/white"

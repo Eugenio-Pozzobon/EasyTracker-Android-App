@@ -80,8 +80,8 @@
     <!-- Extra -->
     
     <string name="todo_string">TODO</string>
-    <string name="helper_mag">Valor em graus(°). Para mais informações clique no botão de informação</string>
-    <string name="helper_gps">Para capturar sua localização atual, clique no marcador à direita.</string>
+    <string name="helper_mag">Para mais informações clique em (?)</string>
+    <string name="helper_gps">Clique no marcador para pegar seu GPS atual.</string>
     <string name="deletar_perfil_button">Deletar Perfil</string>
     <string name="button_confirm_edit">Confirmar Alterações</string>
 
@@ -91,5 +91,7 @@
     <string name="polar_alignment_title">(2/4) Alinhamento de Azimute</string>
     <string name="level_alignment_title">(1/4) Alinhamento de Nível</string>
     <string name="north">N</string>
+    <string name="sulfix_grausdecimais">(DD)</string>
+    <string name="mag_degree">°</string>
 
 </resources>

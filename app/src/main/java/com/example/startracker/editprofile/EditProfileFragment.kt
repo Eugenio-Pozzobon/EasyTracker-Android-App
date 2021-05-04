@@ -61,6 +61,26 @@ class EditProfileFragment : Fragment() {
             }
         })
 
+        editProfileViewModel.setGpsDataError.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is true.
+                binding.gpsNumber.error = "*"
+                binding.gpsNumber.requestFocus()
+            }else{
+                binding.gpsNumber.error = null
+                binding.gpsNumber.clearFocus()
+            }
+        })
+
+        editProfileViewModel.setMagDeclinationError.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is true.
+                binding.declinationNumber.error = "*"
+                binding.declinationNumber.requestFocus()
+            }else{
+                binding.declinationNumber.error = null
+                binding.declinationNumber.clearFocus()
+            }
+        })
+
         setHasOptionsMenu(true)
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
@@ -80,6 +100,7 @@ class EditProfileFragment : Fragment() {
         binding.imageGpsCircle.setOnClickListener(){
             getLocation()
         }
+
 
         val view = binding.root
         return view

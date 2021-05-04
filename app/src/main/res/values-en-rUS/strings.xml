@@ -49,4 +49,6 @@
     <string name="polar_alignment_title">(2/4) Polar Alignment</string>
     <string name="level_alignment_title">(1/4) Level Alignment</string>
     <string name="north">N</string>
+    <string name="sulfix_grausdecimais">(DD)</string>
+    <string name="mag_degree">°</string>
 </resources>

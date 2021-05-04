@@ -1,9 +1,7 @@
 package com.example.startracker
 
 
-import android.database.Cursor
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
@@ -11,14 +9,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.startracker.database.ProfileDatabase
-import com.example.startracker.database.ProfileDatabaseDao
 import com.example.startracker.databinding.ActivityMainBinding
-import com.example.startracker.newprofile.NewProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
