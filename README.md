@@ -11,6 +11,6 @@
 ## Sobre o App
 O aplicativo foi desenvolvido pelo Aluno de Graduação de Engenharia de Computação, Eugênio Pozzobon, sob orientação do professor Rafael Beltrame para trabalho de conclusão de curso na Universidade Federal de Santa Maria (UFSM).
 
-##Licença
+## Licença
 
  
