@@ -63,6 +63,14 @@ class LoadProfilesFragment : Fragment() {
         binding.buttonClear.setBackgroundColor(redButtonColor)
         binding.buttonClear.setTextColor(whiteTextColor)
 
+        binding.buttonNew.setBackgroundColor(redButtonColor)
+        binding.buttonNew.setTextColor(whiteTextColor)
+
+        binding.buttonNew.setOnClickListener(){
+            this.findNavController()
+                .navigate(R.id.action_loadProfilesFragment_to_newProfileFragment)
+        }
+
         loadProfileViewModel.navigateToEditProfile.observe(viewLifecycleOwner, {
 
             if(it == true) {

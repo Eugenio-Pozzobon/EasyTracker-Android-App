@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Star Tracker</string>
+    <string name="app_name">Easy Tracker</string>
 
     <!-- Menu Strings -->
     <string name="load_profile_menu">Carregar Perfil</string>

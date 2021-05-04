@@ -17,109 +17,119 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".newprofile.NewProfileFragment">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
 
-
-        <ImageView
-            android:id="@+id/image_gps"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/todo_string"
-            android:scaleType="fitCenter"
-            android:src="@drawable/map_vector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/gps_number"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{currentProfileViewModel.gpsDataString}"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_gps" />
-
-        <ImageView
-            android:id="@+id/image_declination"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="32dp"
-            android:contentDescription="@string/todo_string"
-            android:src="@drawable/magnetic_field_vector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gps_number" />
-
-        <TextView
-            android:id="@+id/declination_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{currentProfileViewModel.magDeclinationString}"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_declination" />
-
-        <ImageView
-            android:id="@+id/image_bluetooth"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="32dp"
-            android:contentDescription="@string/todo_string"
-            android:src="@drawable/bluetooth_vector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/declination_number" />
-
-        <TextView
-            android:id="@+id/text_bluetooth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/add_profile_bluetooth"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_bluetooth" />
-
-        <Button
-            android:id="@+id/button_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:enabled="@{currentProfileViewModel.onConnected}"
-            android:onClick="@{() -> currentProfileViewModel.onConnect()}"
-            android:text="@{currentProfileViewModel.connectionStatus}"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_bluetooth" />
-
-        <Button
-            android:id="@+id/button_start_alignment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="32dp"
-            android:enabled="@{currentProfileViewModel.startAlignmentButtonVisible}"
-            android:onClick="@{() -> currentProfileViewModel.startAlignment()}"
-            android:text="@string/start_aligment"
-            android:textAllCaps="false"
-            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_connect" />
+            app:layout_constraintTop_toTopOf="parent">
 
+
+            <ImageView
+                android:id="@+id/image_gps"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/todo_string"
+                android:scaleType="fitCenter"
+                android:src="@drawable/map_vector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/gps_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{currentProfileViewModel.gpsDataString}"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_gps" />
+
+            <ImageView
+                android:id="@+id/image_declination"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="32dp"
+                android:contentDescription="@string/todo_string"
+                android:src="@drawable/magnetic_field_vector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gps_number" />
+
+            <TextView
+                android:id="@+id/declination_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{currentProfileViewModel.magDeclinationString}"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_declination" />
+
+            <ImageView
+                android:id="@+id/image_bluetooth"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="32dp"
+                android:contentDescription="@string/todo_string"
+                android:src="@drawable/bluetooth_vector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/declination_number" />
+
+            <TextView
+                android:id="@+id/text_bluetooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_profile_bluetooth"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_bluetooth" />
+
+            <Button
+                android:id="@+id/button_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="@{currentProfileViewModel.onConnected}"
+                android:onClick="@{() -> currentProfileViewModel.onConnect()}"
+                android:text="@{currentProfileViewModel.connectionStatus}"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_bluetooth" />
+
+            <Button
+                android:id="@+id/button_start_alignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                android:enabled="@{currentProfileViewModel.startAlignmentButtonVisible}"
+                android:onClick="@{() -> currentProfileViewModel.startAlignment()}"
+                android:text="@string/start_aligment"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_connect" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

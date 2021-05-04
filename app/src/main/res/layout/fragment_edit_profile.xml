@@ -58,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/image_gps"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/todo_string"
                 android:scaleType="fitCenter"
@@ -85,17 +85,16 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="4dp"
 
-                    android:autofillHints=""
-
                     android:hint="@string/add_profile_latitude"
+                    app:hintEnabled="true"
                     android:inputType="numberDecimal"
 
                     android:textColorHint="@color/white"
-
-                    app:helperText="@string/helper_gps"
-                    app:helperTextEnabled="true"
-                    app:helperTextTextColor="@color/white"
                     app:hintTextColor="@color/white"
+
+                    app:helperTextEnabled="true"
+                    app:helperText="@string/helper_gps"
+                    app:helperTextTextColor="@color/white"
 
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/image_gps_circle"
@@ -127,8 +126,8 @@
 
             <ImageView
                 android:id="@+id/image_declination"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/todo_string"
                 android:src="@drawable/magnetic_field_vector"

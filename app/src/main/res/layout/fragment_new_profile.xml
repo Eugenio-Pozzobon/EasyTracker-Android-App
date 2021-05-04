@@ -62,8 +62,8 @@
 
             <ImageView
                 android:id="@+id/image_gps"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/todo_string"
                 android:scaleType="fitCenter"
@@ -95,10 +95,10 @@
                     android:inputType="numberDecimal"
 
                     android:textColorHint="@color/white"
-
-                    app:helperText="@string/helper_gps"
                     app:helperTextEnabled="true"
+                    app:helperText="@string/helper_gps"
                     app:helperTextTextColor="@color/white"
+                    app:counterTextColor="@color/white"
                     app:hintTextColor="@color/white"
 
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -131,8 +131,8 @@
 
             <ImageView
                 android:id="@+id/image_declination"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/todo_string"
                 android:src="@drawable/magnetic_field_vector"
@@ -185,8 +185,8 @@
 
             <ImageView
                 android:id="@+id/image_bluetooth"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/todo_string"
                 android:src="@drawable/bluetooth_vector"
