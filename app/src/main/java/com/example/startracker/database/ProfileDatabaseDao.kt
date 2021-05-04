@@ -48,29 +48,35 @@ interface ProfileDatabaseDao {
     @Query("DELETE FROM profile_table")
     suspend fun clear()
 
+    /**
+     * Selects and delete the latest profile.
+     */
     @Query("DELETE FROM profile_table WHERE last_profile = :key")
     fun deleteLastProfile(key: Boolean)
 
     /**
      * Selects and returns all rows in the table,
      *
-     * sorted by start time in descending order.
+     * sorted by profileId in descending order.
      */
     @Query("SELECT * FROM profile_table ORDER BY profileId DESC")
     fun getAllProfiles(): LiveData<List<Profile>>
 
     /**
-     * Selects and returns the latest night.
+     * Selects and returns the latest profile.
      */
     @Query("SELECT * FROM profile_table WHERE last_profile = :key")
     suspend fun getLastProfile(key: Boolean): Profile?
 
     /**
-     * Selects and returns the profile with given nightId.
+     * Selects and returns the profile with given profileId.
      */
     @Query("SELECT * from profile_table WHERE profileId = :key")
     fun getProfileWithId(key: Long): Profile
 
+    /**
+     * Return if database is empty or not
+     */
     @Query("SELECT EXISTS(SELECT * FROM profile_table)")
     fun isExists(): Boolean
 }

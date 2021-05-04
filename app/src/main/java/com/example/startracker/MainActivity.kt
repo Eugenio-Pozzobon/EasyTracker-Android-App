@@ -24,9 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
-
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var destinationHandler: NavDestination
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
 
         toolbar = binding.toolbar
-        //toolbar.setNavigationIcon(null)          // to hide Navigation icon
         setSupportActionBar(toolbar)
 
         drawerLayout = binding.drawerLayout
@@ -46,21 +43,19 @@ class MainActivity : AppCompatActivity() {
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         val navController = navHostFragment.navController
-        //Change default home screen
         val graphInflater = navHostFragment.navController.navInflater
         val navGraph = graphInflater.inflate(R.navigation.nav_graph)
-
 
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
+        //change home screen in agreement with the case of new user or not
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             if (nd.id == R.id.currentProfileFragment) {
                 navGraph.startDestination = R.id.currentProfileFragment
                 setDrawer_locked()
             }
         }
-
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             if (nd.id == R.id.welcomeFragment) {
                 navGraph.startDestination = R.id.welcomeFragment
@@ -68,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //set the back button menu to be hide at home screen
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             destinationHandler = nd
             if (nd.id == nc.graph.startDestination) {
@@ -79,12 +75,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //activate the navigation in acivity
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
 
         return NavigationUI.navigateUp(navController, drawerLayout)
     }
 
+    //set the back button menu to be displayed or not
     fun setDrawer_locked(){
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         toolbar.setNavigationIcon(null)
@@ -93,12 +91,14 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
+    //block native back button
     override fun onBackPressed() {
         if (shouldAllowBack()) {
             super.onBackPressed()
         }
     }
 
+    //block native back button for ensure that the new user wont back to the welcome screen manualy and/or replicate the same profile
     private fun shouldAllowBack(): Boolean {
         if(destinationHandler.id == R.id.currentProfileFragment){
             return false

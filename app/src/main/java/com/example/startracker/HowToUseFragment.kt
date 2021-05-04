@@ -10,10 +10,6 @@ import androidx.fragment.app.FragmentManager
 
 class HowToUseFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,6 +18,7 @@ class HowToUseFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_how_to_use, container, false)
     }
 
+    //Make the menu back button return for the previous screen and not return for the home screen as its default
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

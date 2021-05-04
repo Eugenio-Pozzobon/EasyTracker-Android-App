@@ -14,18 +14,11 @@ class DebugFragment : Fragment() {
     private val binding
     get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         _binding = FragmentDebugBinding.inflate(inflater, container, false)
         return binding.root
+        //Todo: DEBUG FRAGMENT FOR BLUETOOTH!
     }
 }

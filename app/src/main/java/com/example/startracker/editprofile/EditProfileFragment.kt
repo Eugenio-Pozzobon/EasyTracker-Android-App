@@ -61,6 +61,18 @@ class EditProfileFragment : Fragment() {
             }
         })
 
+        //handle if the user didnt filled name text input
+        editProfileViewModel.setNameError.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is true.
+                binding.textProfileName.setError("*")
+                binding.textProfileName.requestFocus()
+            }else{
+                binding.textProfileName.error = null
+                binding.textProfileName.clearFocus()
+            }
+        })
+
+        //handle if the user didnt filled gps text input
         editProfileViewModel.setGpsDataError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.gpsNumber.error = "*"
@@ -71,6 +83,7 @@ class EditProfileFragment : Fragment() {
             }
         })
 
+        //handle if the user didnt filled declination text input
         editProfileViewModel.setMagDeclinationError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.declinationNumber.error = "*"
@@ -83,6 +96,7 @@ class EditProfileFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+        //change buttons collors as design guidlines
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
@@ -96,6 +110,7 @@ class EditProfileFragment : Fragment() {
             this.findNavController().navigate(R.id.action_editProfileFragment_to_howToUseFragment)
         }
 
+        //get user current localization if clicked at marker button
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         binding.imageGpsCircle.setOnClickListener(){
             getLocation()
@@ -106,6 +121,7 @@ class EditProfileFragment : Fragment() {
         return view
     }
 
+    //check if user allow localization services an get current latitude of the smartphone
     private fun getLocation(){
         if ((ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
@@ -121,11 +137,13 @@ class EditProfileFragment : Fragment() {
         }
     }
 
+    //inflate the overflow menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.overflow_menu_newprofile, menu)
     }
 
+    //handle the user selection at overflow menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(
             item,

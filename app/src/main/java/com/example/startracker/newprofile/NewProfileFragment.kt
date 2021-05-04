@@ -47,12 +47,12 @@ class NewProfileFragment : Fragment() {
         val viewModelFactory = NewProfileViewModelFactory(dataSource, application)
 
         newProfileViewModel = ViewModelProvider(this, viewModelFactory).get(NewProfileViewModel::class.java)
-        //newProfileViewModel = ViewModelProvider(this).get(NewProfileViewModel::class.java)
 
         binding.newProfileViewModel = newProfileViewModel
 
         binding.lifecycleOwner = this
 
+        //handle if bluetooth is connected or not, if yes, change to the current profile fragment
         newProfileViewModel.onConnected.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 newProfileViewModel.doneOnChangeScreen()
@@ -60,6 +60,7 @@ class NewProfileFragment : Fragment() {
             }
         })
 
+        //handle if the user didnt filled name text input
         newProfileViewModel.setNameError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.textProfileName.setError("*")
@@ -70,6 +71,7 @@ class NewProfileFragment : Fragment() {
             }
         })
 
+        //handle if the user didnt filled gps text input
         newProfileViewModel.setGpsDataError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.gpsNumber.error = "*"
@@ -80,6 +82,7 @@ class NewProfileFragment : Fragment() {
             }
         })
 
+        //handle if the user didnt filled declination text input
         newProfileViewModel.setMagDeclinationError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.declinationNumber.error = "*"
@@ -92,6 +95,7 @@ class NewProfileFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+        //change buttons collors as design guidlines
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         //val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
@@ -103,6 +107,7 @@ class NewProfileFragment : Fragment() {
             this.findNavController().navigate(R.id.action_newProfileFragment_to_howToUseFragment)
         }
 
+        //get user current localization if clicked at marker button
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         binding.imageGpsCircle.setOnClickListener(){
             getLocation()
@@ -113,6 +118,7 @@ class NewProfileFragment : Fragment() {
 
     }
 
+    //check if user allow localization services an get current latitude of the smartphone
     private fun getLocation(){
         if ((ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
@@ -128,11 +134,13 @@ class NewProfileFragment : Fragment() {
         }
     }
 
+    //inflate the overflow menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.overflow_menu_newprofile, menu)
     }
 
+    //handle the user selection at overflow menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
             return NavigationUI.onNavDestinationSelected(
                 item,
