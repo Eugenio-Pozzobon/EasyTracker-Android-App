@@ -1,8 +1,11 @@
 package com.example.startracker.newprofile
 
+import android.app.Activity
 import android.app.Application
-import android.text.TextUtils
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
 import android.util.Log
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.*
 import com.example.startracker.database.Profile
 import com.example.startracker.database.ProfileDatabaseDao
@@ -51,7 +54,9 @@ class NewProfileViewModel(
     }
 
     fun doneOnChangeScreen() {
-        _onConnected.value = false
+        viewModelScope.launch {
+            _onConnected.value = false
+        }
     }
 
     init {
@@ -82,8 +87,6 @@ class NewProfileViewModel(
     }
 
 //    Checa se os valores estão validadaos
-
-
     private var _setNameError = MutableLiveData<Boolean>()
     private var _setGpsDataError = MutableLiveData<Boolean>()
     private var _setMagDeclinationError = MutableLiveData<Boolean>()
@@ -120,8 +123,8 @@ class NewProfileViewModel(
 
     fun onConnect(){
         viewModelScope.launch {
-            val newProfile = Profile()
             if (checkValues()) {
+                val newProfile = Profile()
                 updateLastProfile()
                 newProfile.lastProfile = true
                 newProfile.profileName = profileName.value.toString()
@@ -136,7 +139,8 @@ class NewProfileViewModel(
         }
     }
 
-    fun updateGps(latitude:String){
+
+    fun updateGps(latitude: String){
         gpsData.value = latitude
     }
 

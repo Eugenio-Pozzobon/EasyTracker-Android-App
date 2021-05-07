@@ -78,7 +78,7 @@
     <string name="howtouse_fragment_1">Aqui você saberá como mexer no aplicativo</string>
 
     <!-- Extra -->
-    
+
     <string name="todo_string">TODO</string>
     <string name="helper_mag">Para mais informações clique em (?)</string>
     <string name="helper_gps">Clique no marcador para pegar seu GPS atual.</string>
@@ -93,5 +93,7 @@
     <string name="north">N</string>
     <string name="sulfix_grausdecimais">(DD)</string>
     <string name="mag_degree">°</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

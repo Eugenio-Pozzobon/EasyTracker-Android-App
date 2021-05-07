@@ -1,11 +1,16 @@
 package com.example.startracker.newprofile
 
 import android.Manifest
+import android.app.Activity
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -19,6 +24,7 @@ import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentNewProfileBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import java.util.ArrayList
 
 class NewProfileFragment : Fragment() {
 
@@ -31,6 +37,9 @@ class NewProfileFragment : Fragment() {
     private val locationPermissionCode = 1
 
     lateinit var newProfileViewModel:NewProfileViewModel
+
+    lateinit var btAdapter: BluetoothAdapter
+    private val REQUEST_ENABLE_BT=1
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -51,14 +60,6 @@ class NewProfileFragment : Fragment() {
         binding.newProfileViewModel = newProfileViewModel
 
         binding.lifecycleOwner = this
-
-        //handle if bluetooth is connected or not, if yes, change to the current profile fragment
-        newProfileViewModel.onConnected.observe(viewLifecycleOwner, {
-            if (it == true) { // Observed state is true.
-                newProfileViewModel.doneOnChangeScreen()
-                this.findNavController().navigate(R.id.action_newProfileFragment_to_currentProfileFragment)
-            }
-        })
 
         //handle if the user didnt filled name text input
         newProfileViewModel.setNameError.observe(viewLifecycleOwner, {
@@ -113,9 +114,52 @@ class NewProfileFragment : Fragment() {
             getLocation()
         }
 
+        newProfileViewModel.onConnected.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is true.
+                newProfileViewModel.doneOnChangeScreen()
+                //this.findNavController().navigate(R.id.action_newProfileFragment_to_currentProfileFragment)
+                this.findNavController().navigate(R.id.action_newProfileFragment_to_pairedDevicesFragment)
+            }
+        })
+
+        binding.buttonConnect.setOnClickListener(){
+            startBluetooth()
+        }
+
         val view = binding.root
         return view
 
+    }
+
+    private fun startBluetooth() {
+        var btOperationState = false
+        btAdapter = BluetoothAdapter.getDefaultAdapter()
+        if(btAdapter.isEnabled){
+            btOperationState = true
+        }else {
+            //turn on bluetooth
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+        }
+        if(btOperationState){
+            connectBluetoothDevice()
+        }
+    }
+
+    private fun connectBluetoothDevice() {
+        if(true){ //call view model for save data and allow change screen
+            newProfileViewModel.onConnect()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when(requestCode){
+            REQUEST_ENABLE_BT ->
+                if (resultCode == Activity.RESULT_OK){
+                    connectBluetoothDevice()
+                }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     //check if user allow localization services an get current latitude of the smartphone

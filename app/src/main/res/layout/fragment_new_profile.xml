@@ -201,7 +201,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:onClick="@{() -> newProfileViewModel.onConnect()}"
                 android:text="@string/add_profile_bluetooth_button"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
