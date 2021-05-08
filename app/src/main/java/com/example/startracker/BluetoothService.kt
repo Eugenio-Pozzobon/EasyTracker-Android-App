@@ -1,34 +1,73 @@
+package com.example.startracker
+
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
 
+class BluetoothService {
 
-private const val TAG = "DEBUG_BLUETOOTH"
-
-// Defines several constants used when transmitting messages between the
+    // Defines several constants used when transmitting messages between the
 // service and the UI.
-const val MESSAGE_READ: Int = 0
-const val MESSAGE_WRITE: Int = 1
-const val MESSAGE_TOAST: Int = 2
+    val MESSAGE_READ: Int = 0
+    val MESSAGE_WRITE: Int = 1
+    val MESSAGE_TOAST: Int = 2
 // ... (Add other message types here as needed.)
 
-val myUUID: UUID? = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
-class BluetoothService(
-    // handler that gets info from Bluetooth service
-    private val handler: Handler
-) {
+    companion object {
+        // Debugging
+        private val TAG = "BluetoothServiceDebug"
+        private var mmDeviceMAC: String = ""
+        // Unique UUID for this application
+        val myUUID: UUID? = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
-    private class ConnectedDevice {
-
+        // Constants that indicate the current connection state
+        val STATE_NONE = 0       // we're doing nothing
+        val STATE_LISTEN = 1     // now listening for incoming connections
+        val STATE_CONNECTING = 2 // now initiating an outgoing connection
+        val STATE_CONNECTED = 3  // now connected to a remote device
     }
 
-    private inner class ConnectedThread(private val mmSocket: BluetoothSocket) : Thread() {
+    private lateinit var handler: Handler
+
+    private lateinit var mmSocket: BluetoothSocket
+    private lateinit var mmDevice: BluetoothDevice
+    private lateinit var mmAdapter: BluetoothAdapter
+    private var mmIsConnected = false
+
+    fun connect(DeviceMAC:String) {
+
+        mmDeviceMAC = DeviceMAC
+        mmAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (!mmAdapter.isEnabled()){
+            throw Exception("Bluetooth adapter not found or not enabled!");
+        }
+
+        Log.i(TAG, mmDeviceMAC)
+        mmDevice = mmAdapter.getRemoteDevice(mmDeviceMAC)
+        mmSocket = mmDevice.createRfcommSocketToServiceRecord(myUUID)
+        mmSocket.connect()
+    }
+
+    fun disconect(){
+        try{
+            mmSocket.close()
+            mmIsConnected = false
+        } catch (e: IOException){
+            e.printStackTrace()
+        }
+    }
+
+
+    private inner class ConnectedThread() : Thread() {
 
         private val mmInStream: InputStream = mmSocket.inputStream
         private val mmOutStream: OutputStream = mmSocket.outputStream
@@ -56,6 +95,8 @@ class BluetoothService(
                 write("0".toString().encodeToByteArray())
                 readMsg.sendToTarget()
             }
+
+            disconnect()
         }
 
         // Call this from the main activity to send data to the remote device.
@@ -82,13 +123,26 @@ class BluetoothService(
             writtenMsg.sendToTarget()
         }
 
-        // Call this method from the main activity to shut down the connection.
-        fun cancel() {
+
+        fun disconnect() {
+            try {
+                mmInStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            try {
+                mmOutStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
             try {
                 mmSocket.close()
             } catch (e: IOException) {
+                e.printStackTrace()
                 Log.e(TAG, "Could not close the connect socket", e)
             }
         }
     }
 }
+
+

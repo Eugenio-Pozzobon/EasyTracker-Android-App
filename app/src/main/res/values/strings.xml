@@ -27,7 +27,9 @@
     <string name="add_profile_latitude">Latitude:</string>
     <string name="add_profile_declination">Declinação Magnética:</string>
     <string name="add_profile_bluetooth">Conexão Bluetooth:</string>
-    <string name="add_profile_bluetooth_button">Conectar</string>
+
+    <string name="add_profile_bluetooth_button">Selecionar Dispositivo</string>
+    <string name="current_profile_bluetooth_button">Conectar</string>
     <string name="name_hint">Nome</string>
     <string name="nome_do_perfil_de_localiza_o">Nome do Perfil de Localização:</string>
 
@@ -93,7 +95,9 @@
     <string name="north">N</string>
     <string name="sulfix_grausdecimais">(DD)</string>
     <string name="mag_degree">°</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="connect_status_sucessfull">Conectado</string>
+    <string name="connect_status_init">Conectar</string>
+    <string name="connecting_status">Conectando</string>
 
 </resources>

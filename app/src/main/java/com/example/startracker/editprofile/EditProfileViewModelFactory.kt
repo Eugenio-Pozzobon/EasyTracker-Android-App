@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.startracker.database.ProfileDatabaseDao
 import com.example.startracker.newprofile.EditProfileViewModel
 
+@Suppress("UNCHECKED_CAST")
 class EditProfileViewModelFactory (
     private val dataSource:ProfileDatabaseDao,
     private val application: Application

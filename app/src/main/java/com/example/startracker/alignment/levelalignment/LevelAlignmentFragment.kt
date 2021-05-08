@@ -1,7 +1,11 @@
 package com.example.startracker.alignment.levelalignment
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +14,13 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.startracker.R
+import com.example.startracker.convertDpToPixel
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentLevelAlignmentBinding
+import java.lang.Math.ceil
+import java.lang.Math.floor
+import kotlin.math.ceil
+import kotlin.math.floor
 
 class LevelAlignmentFragment : Fragment() {
 
@@ -48,6 +57,16 @@ class LevelAlignmentFragment : Fragment() {
         binding.okButton.setOnClickListener(){
             this.findNavController().navigate(R.id.action_levelAlignmentFragment_to_polarAlignmentFragment)
         }
+
+        levelAlignmentViewModel.updateAlignmentCheck.observe(viewLifecycleOwner,{
+            if(it) {
+                binding.circleAlignment.translationY = convertDpToPixel(levelAlignmentViewModel.marginX.value!!,requireContext())
+                binding.circleAlignment.translationX = convertDpToPixel(levelAlignmentViewModel.marginY.value!!,requireContext())
+                levelAlignmentViewModel.doneUpdateAlignment()
+            }
+        })
+
+
 
         return binding.root
     }

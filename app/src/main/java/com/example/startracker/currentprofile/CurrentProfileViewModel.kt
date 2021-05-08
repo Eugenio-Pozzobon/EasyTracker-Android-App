@@ -54,7 +54,6 @@ class CurrentProfileViewModel(
 
         _screenChange.value = false
         _onConnected.value = true
-        connectionStatus.value = "Conectar"
         _startAlignmentButtonVisible.value = false
         getLastProfile()
     }
@@ -72,7 +71,6 @@ class CurrentProfileViewModel(
 
                 if(databaseIsExists()) {
                     _noLastProfileAvailable.value = true
-                    //_newUserDetected.value = true
                 }else{
                     _newUserDetected.value = true
                 }
@@ -97,7 +95,7 @@ class CurrentProfileViewModel(
         return prof
     }
 
-    suspend fun databaseIsExists():Boolean{
+    private suspend fun databaseIsExists():Boolean{
         val result:Boolean
         withContext(Dispatchers.IO) {
             result = database.isExists()
@@ -118,14 +116,12 @@ class CurrentProfileViewModel(
 
     private fun doneOnConnected(){
         _onConnected.value = false
-        connectionStatus.value = "Conectado"
         _startAlignmentButtonVisible.value = true
     }
 
     fun doneOnChangeScreen() {
         _screenChange.value = false
         _onConnected.value = false
-        connectionStatus.value = "Conectar"
         _startAlignmentButtonVisible.value = true
     }
 }

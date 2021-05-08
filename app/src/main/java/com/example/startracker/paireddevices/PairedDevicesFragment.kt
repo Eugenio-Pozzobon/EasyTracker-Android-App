@@ -25,7 +25,7 @@ import com.example.startracker.databinding.FragmentNewProfileBinding
 import com.example.startracker.databinding.FragmentPairedDevicesBinding
 import com.example.startracker.newprofile.NewProfileViewModel
 import com.example.startracker.newprofile.NewProfileViewModelFactory
-import java.util.ArrayList
+import java.util.*
 
 
 class PairedDevicesFragment : Fragment() {
@@ -79,7 +79,6 @@ class PairedDevicesFragment : Fragment() {
             val device: BluetoothDevice = listDevices[position]
             val address: String = device.address
             Log.i("DEBUGAPP", address)
-
             pairedDevicesViewModel.updateLastProfileWithBluetooth(address)
         }
 
