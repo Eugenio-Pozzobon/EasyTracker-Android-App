@@ -35,6 +35,7 @@ class CurrentProfileFragment : Fragment() {
     var redButtonColor by Delegates.notNull<Int>()
     var greenButtonColor by Delegates.notNull<Int>()
     var whiteTextColor by Delegates.notNull<Int>()
+    var yellowButtonColor by Delegates.notNull<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +61,7 @@ class CurrentProfileFragment : Fragment() {
         redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
+        yellowButtonColor = ContextCompat.getColor(requireContext(), R.color.yellow)
 
         //handle bluetooth connection. Change buttons colors if was connected.
         currentProfileViewModel.onConnected.observe(viewLifecycleOwner, {
@@ -146,8 +148,15 @@ class CurrentProfileFragment : Fragment() {
 
     private fun connectWithBluetoothDevice() {
         binding.buttonConnect.text = getString(R.string.connecting_status)
-        //(activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString())
-        connectedWithBluetoothDevice()
+        binding.buttonConnect.setBackgroundColor(yellowButtonColor)
+        (activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString())
+        (activity as MainActivity).hc05.mmIsConnected.observeForever {
+            if (it == true) {
+                connectedWithBluetoothDevice()
+            }else{
+                NotConnectedWithBluetoothDevice()
+            }
+        }
     }
 
     private fun connectedWithBluetoothDevice() {
@@ -167,6 +176,9 @@ class CurrentProfileFragment : Fragment() {
                     connectWithBluetoothDevice()
                 }else{
                     NotConnectedWithBluetoothDevice()
+                    binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
+                    binding.buttonStartAlignment.setTextColor(whiteTextColor)
+                    binding.buttonConnect.text = getString(R.string.connect_status_init)
                 }
         }
         super.onActivityResult(requestCode, resultCode, data)

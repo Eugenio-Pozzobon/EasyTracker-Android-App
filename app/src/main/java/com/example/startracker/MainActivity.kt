@@ -22,7 +22,7 @@ import com.example.startracker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    //var hc05 = BluetoothService()
+    var hc05 = BluetoothService()
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var binding: ActivityMainBinding
