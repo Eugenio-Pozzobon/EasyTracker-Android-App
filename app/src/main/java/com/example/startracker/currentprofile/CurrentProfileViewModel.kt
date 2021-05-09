@@ -103,9 +103,16 @@ class CurrentProfileViewModel(
         }
         return result
     }
+
     fun onConnect(){
         viewModelScope.launch {
             doneOnConnected()
+        }
+    }
+
+    fun notConnect(){
+        viewModelScope.launch {
+            NOTdoneOnConnected()
         }
     }
 
@@ -118,6 +125,11 @@ class CurrentProfileViewModel(
     private fun doneOnConnected(){
         _onConnected.value = false
         _startAlignmentButtonVisible.value = true
+    }
+
+    private fun NOTdoneOnConnected(){
+        _onConnected.value = true
+        _startAlignmentButtonVisible.value = false
     }
 
     fun doneOnChangeScreen() {

@@ -29,7 +29,7 @@ class CurrentProfileFragment : Fragment() {
     lateinit var binding:FragmentCurrentProfileBinding
     lateinit var currentProfileViewModel: CurrentProfileViewModel
 
-    lateinit var btAdapter: BluetoothAdapter
+    var btAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
     private val REQUEST_ENABLE_BT=1
 
     var redButtonColor by Delegates.notNull<Int>()
@@ -61,18 +61,7 @@ class CurrentProfileFragment : Fragment() {
         redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
-        yellowButtonColor = ContextCompat.getColor(requireContext(), R.color.yellow)
-
-        //handle bluetooth connection. Change buttons colors if was connected.
-        currentProfileViewModel.onConnected.observe(viewLifecycleOwner, {
-            if (it == true) { // Observed state is true.
-                binding.buttonConnect.setBackgroundColor(redButtonColor)
-            } else {
-                if(startBluetooth()) {
-                    connectWithBluetoothDevice()
-                }
-            }
-        })
+        yellowButtonColor = ContextCompat.getColor(requireContext(), R.color.yellow_button)
 
         //handle if user want to start alignment process
         currentProfileViewModel.screenChange.observe(viewLifecycleOwner, {
@@ -80,8 +69,6 @@ class CurrentProfileFragment : Fragment() {
                 currentProfileViewModel.doneOnChangeScreen()
                 this.findNavController()
                     .navigate(R.id.action_currentProfileFragment_to_levelAlignmentFragment)
-                binding.buttonConnect.setBackgroundColor(redButtonColor)
-                binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
             }
         })
 
@@ -116,6 +103,12 @@ class CurrentProfileFragment : Fragment() {
             }
         })
 
+        binding.buttonConnect.setOnClickListener(){
+            if(startBluetooth()) {
+                connectWithBluetoothDevice()
+            }
+        }
+
         //change buttons and text colors
         binding.buttonConnect.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setTextColor(whiteTextColor)
@@ -134,7 +127,6 @@ class CurrentProfileFragment : Fragment() {
 
     private fun startBluetooth(): Boolean {
         var btOperationState = false
-        btAdapter = BluetoothAdapter.getDefaultAdapter()
         if(btAdapter.isEnabled){
             btOperationState = true
         }else {
@@ -153,20 +145,25 @@ class CurrentProfileFragment : Fragment() {
         (activity as MainActivity).hc05.mmIsConnected.observeForever {
             if (it == true) {
                 connectedWithBluetoothDevice()
-            }else{
+            }else if(it == false){
+                Toast.makeText(context, "Unnable to connect with device", Toast.LENGTH_SHORT).show()
                 NotConnectedWithBluetoothDevice()
             }
         }
     }
 
     private fun connectedWithBluetoothDevice() {
+        currentProfileViewModel.onConnect()
         binding.buttonConnect.setBackgroundColor(greenButtonColor)
         binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
         binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
     }
 
     private fun NotConnectedWithBluetoothDevice() {
-        Toast.makeText(context, "Unnable to connect with device", Toast.LENGTH_SHORT).show()
+        currentProfileViewModel.notConnect()
+        binding.buttonConnect.setBackgroundColor(redButtonColor)
+        binding.buttonConnect.setTextColor(whiteTextColor)
+        binding.buttonConnect.text = getString(R.string.connect_status_init)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -176,9 +173,6 @@ class CurrentProfileFragment : Fragment() {
                     connectWithBluetoothDevice()
                 }else{
                     NotConnectedWithBluetoothDevice()
-                    binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
-                    binding.buttonStartAlignment.setTextColor(whiteTextColor)
-                    binding.buttonConnect.text = getString(R.string.connect_status_init)
                 }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -192,8 +186,16 @@ class CurrentProfileFragment : Fragment() {
 
     //handle the user selection at overflow menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) || super.onOptionsItemSelected(
-            item
-        )
+
+        if(item.itemId == R.id.newProfileFragment){
+            (activity as MainActivity).hc05.disconect()
+        }
+
+        if(item.itemId == R.id.loadProfilesFragment){
+            (activity as MainActivity).hc05.disconect()
+        }
+
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) ||
+                super.onOptionsItemSelected(item)
     }
 }

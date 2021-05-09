@@ -105,7 +105,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:enabled="@{currentProfileViewModel.onConnected}"
-                android:onClick="@{() -> currentProfileViewModel.onConnect()}"
                 android:text="@string/connect_status_init"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
