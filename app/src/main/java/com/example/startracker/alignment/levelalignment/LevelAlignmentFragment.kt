@@ -10,13 +10,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import com.example.startracker.MainActivity
 import com.example.startracker.R
 import com.example.startracker.convertDpToPixel
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentLevelAlignmentBinding
+import com.example.startracker.mapFloat
+import kotlinx.coroutines.launch
 import java.lang.Math.ceil
 import java.lang.Math.floor
 import kotlin.math.ceil
@@ -24,10 +29,13 @@ import kotlin.math.floor
 
 class LevelAlignmentFragment : Fragment() {
 
+    private var circleMarginX:Float = 0F
+    private var circleMarginY:Float = 0F
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentLevelAlignmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_level_alignment, container, false
@@ -58,16 +66,29 @@ class LevelAlignmentFragment : Fragment() {
             this.findNavController().navigate(R.id.action_levelAlignmentFragment_to_polarAlignmentFragment)
         }
 
-        levelAlignmentViewModel.updateAlignmentCheck.observe(viewLifecycleOwner,{
-            if(it) {
-                binding.circleAlignment.translationY = convertDpToPixel(levelAlignmentViewModel.marginX.value!!,requireContext())
-                binding.circleAlignment.translationX = convertDpToPixel(levelAlignmentViewModel.marginY.value!!,requireContext())
-                levelAlignmentViewModel.doneUpdateAlignment()
-            }
-        })
+        (activity as MainActivity).hc05.updatedHandle.observeForever {
+            updateAlignment()
+            binding.circleAlignment.translationY = convertDpToPixel(circleMarginX,requireContext())
+            binding.circleAlignment.translationX = convertDpToPixel(circleMarginY,requireContext())
+
+        }
 
 
 
         return binding.root
+    }
+
+    private fun updateAlignment(){
+        val pitch: Float? = (activity as MainActivity).hc05.dataPitch.value
+        val roll:Float? = (activity as MainActivity).hc05.dataRoll.value
+
+        val valueMax:Float = 90F
+        val valueMin:Float = -90F
+
+        val paddingMax:Float = 115.0F
+        val paddingMin:Float = -115.0F
+
+        circleMarginX =  mapFloat(-pitch!!, valueMin, valueMax, paddingMin, paddingMax)
+        circleMarginY = mapFloat(roll!!, valueMin, valueMax, paddingMin, paddingMax)
     }
 }

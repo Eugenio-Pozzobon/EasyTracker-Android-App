@@ -29,8 +29,34 @@ class BluetoothService {
 
     lateinit var socket: BluetoothSocket
 
+    private var _rawDataRoll:Int = 0
+    private var _rawDataPitch:Int = 0
+    private var _rawDataYaw:Int = 0
+    private var _rawDataCRC:Int = 0
+    private var _rawDataError:Boolean = false
+
+    private var _dataRoll = MutableLiveData<Float>()
+    val dataRoll: LiveData<Float>
+        get() = _dataRoll
+
+    private var _dataPitch = MutableLiveData<Float>()
+    val dataPitch: LiveData<Float>
+        get() = _dataPitch
+
+    private var _dataYaw = MutableLiveData<Float>()
+    val dataYaw: LiveData<Float>
+        get() = _dataYaw
+
+    private var _dataError1 = MutableLiveData<Boolean>()
+    val dataError1: LiveData<Boolean>
+        get() = _dataError1
 // ... (Add other message types here as needed.)
 
+    private var _updatedHandle = MutableLiveData<Boolean>()
+    val updatedHandle: LiveData<Boolean>
+        get() = _updatedHandle
+
+    var stringBuffer:String = "0,0,0,0"
 
 
     companion object {
@@ -48,6 +74,7 @@ class BluetoothService {
 
     init {
         _mmIsConnected.value = null
+        _updatedHandle.value = false
     }
 
     /**
@@ -55,6 +82,26 @@ class BluetoothService {
      */
     private val handler = object:Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
+
+            // getting the bundle back
+            val bundle:Bundle = msg.data;
+
+            stringBuffer = bundle.getString("key1", stringBuffer)
+
+            //Log.i("DEBUGCONNECTION", stringBuffer)
+
+            val dataString = stringBuffer.split(",").toTypedArray()
+            _rawDataRoll = dataString[0].toInt()
+            _rawDataPitch = dataString[1].toInt()
+            _rawDataYaw = dataString[2].toInt()
+            _rawDataCRC = dataString[3].toInt()
+            //_rawDataError:Boolean = dataString[0].toInt()
+            if((_rawDataRoll + _rawDataPitch + _rawDataYaw) == _rawDataCRC){
+                _dataRoll.value = _rawDataRoll.toFloat()/10
+                _dataPitch.value = _rawDataRoll.toFloat()/10
+                _dataYaw.value = _rawDataYaw.toFloat()/10
+                _updatedHandle.value = !_updatedHandle.value!!
+            }
         }
     }
 
@@ -135,18 +182,19 @@ class BluetoothService {
         private val mmBuffer: ByteArray = ByteArray(1024) // mmBuffer store for the stream
 
         override fun run() {
-            var numBytes: Int // bytes returned from read()
-
             // Keep listening to the InputStream until an exception occurs.
-            write("0".toString().encodeToByteArray())
+            write("0".encodeToByteArray())
+
+            write("0".encodeToByteArray())
+
             var str:String
             while (true) {
                 // Read from the InputStream.
                 try {
                     str = readUntilChar(mmInStream, '\n')
-                    Log.i("DEBUGCONNECTION", str)
+                    //Log.d("DEBUGCONNECTION", str)
                 } catch (e: IOException) {
-                    Log.d("DEBUGCONNECTION", "Input stream was disconnected", e)
+                    Log.e("DEBUGCONNECTION", "Input stream was disconnected", e)
                     break
                 }
 
@@ -154,13 +202,19 @@ class BluetoothService {
 
                 //val str = String(mmBuffer, StandardCharsets.UTF_8);
 
-
                 val readMsg = handler.obtainMessage(
                     MESSAGE_READ, 1, -1,
                     str
                 )
 
-                write("0".toString().encodeToByteArray())
+                // creating the instance of the bundle
+                val bundle = Bundle()
+
+                bundle.putString("key1", str)
+
+                readMsg.data = bundle
+
+                write("0".encodeToByteArray())
 
                 readMsg.sendToTarget()
             }
@@ -168,7 +222,7 @@ class BluetoothService {
             disconnect()
         }
 
-        fun readUntilChar(stream: InputStream?, target: Char): String {
+        private fun readUntilChar(stream: InputStream?, target: Char): String {
             val sb = StringBuilder()
             try {
                 val buffer = BufferedReader(InputStreamReader(stream))
@@ -193,20 +247,20 @@ class BluetoothService {
                 Log.e("DEBUGCONNECTION", "Error occurred when sending data", e)
 
                 // Send a failure message back to the activity.
-                val writeErrorMsg = handler.obtainMessage(MESSAGE_TOAST)
-                val bundle = Bundle().apply {
-                    putString("toast", "Couldn't send data to the other device")
-                }
-                writeErrorMsg.data = bundle
-                handler.sendMessage(writeErrorMsg)
+//                val writeErrorMsg = handler.obtainMessage(MESSAGE_TOAST)
+//                val bundle = Bundle().apply {
+//                    putString("toast", "Couldn't send data to the other device")
+//                }
+//                writeErrorMsg.data = bundle
+//                handler.sendMessage(writeErrorMsg)
                 return
             }
 
             // Share the sent message with the UI activity.
-            val writtenMsg = handler.obtainMessage(
-                MESSAGE_WRITE, -1, -1, mmBuffer
-            )
-            writtenMsg.sendToTarget()
+//            val writtenMsg = handler.obtainMessage(
+//                MESSAGE_WRITE, -1, -1, mmBuffer
+//            )
+//            writtenMsg.sendToTarget()
         }
 
 
