@@ -22,6 +22,7 @@ import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentLevelAlignmentBinding
 import com.example.startracker.mapFloat
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.lang.Math.ceil
 import java.lang.Math.floor
 import kotlin.math.ceil
@@ -65,30 +66,37 @@ class LevelAlignmentFragment : Fragment() {
         binding.okButton.setOnClickListener(){
             this.findNavController().navigate(R.id.action_levelAlignmentFragment_to_polarAlignmentFragment)
         }
-
+        var getTime: Long = System.currentTimeMillis()
         (activity as MainActivity).hc05.updatedHandle.observeForever {
             updateAlignment()
-            binding.circleAlignment.translationY = convertDpToPixel(circleMarginX,requireContext())
-            binding.circleAlignment.translationX = convertDpToPixel(circleMarginY,requireContext())
+            binding.circleAlignment.translationY = convertDpToPixel(circleMarginY,requireContext())
+            binding.circleAlignment.translationX = convertDpToPixel(circleMarginX,requireContext())
+            print(it.toString() + " " + circleMarginY.toString() + circleMarginX.toString())
+            print("  timing: ")
+            println(System.currentTimeMillis()-getTime)
+            getTime = System.currentTimeMillis()
 
         }
-
-
 
         return binding.root
     }
 
     private fun updateAlignment(){
-        val pitch: Float? = (activity as MainActivity).hc05.dataPitch.value
-        val roll:Float? = (activity as MainActivity).hc05.dataRoll.value
+        try {
+            val pitch: Float? = (activity as MainActivity).hc05.dataPitch.value
+            val roll: Float? = (activity as MainActivity).hc05.dataRoll.value
 
-        val valueMax:Float = 90F
-        val valueMin:Float = -90F
+            val valueMax: Float = 90F
+            val valueMin: Float = -90F
 
-        val paddingMax:Float = 115.0F
-        val paddingMin:Float = -115.0F
+            val paddingMax: Float = 115.0F
+            val paddingMin: Float = -115.0F
 
-        circleMarginX =  mapFloat(-pitch!!, valueMin, valueMax, paddingMin, paddingMax)
-        circleMarginY = mapFloat(roll!!, valueMin, valueMax, paddingMin, paddingMax)
+            circleMarginX = mapFloat(-pitch!!, valueMin, valueMax, paddingMin, paddingMax)
+            circleMarginY = mapFloat(roll!!, valueMin, valueMax, paddingMin, paddingMax)
+        }catch (e: Exception){
+            circleMarginX = 0F
+            circleMarginY = 0F
+        }
     }
 }

@@ -161,6 +161,7 @@ class CurrentProfileFragment : Fragment() {
 
     private fun NotConnectedWithBluetoothDevice() {
         currentProfileViewModel.notConnect()
+        binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setTextColor(whiteTextColor)
         binding.buttonConnect.text = getString(R.string.connect_status_init)
