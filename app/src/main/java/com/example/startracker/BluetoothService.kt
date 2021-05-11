@@ -85,13 +85,9 @@ class BluetoothService {
      */
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
-
-            // getting the bundle back
             val bundle: Bundle = msg.data;
 
             stringBuffer = bundle.getString("key1", stringBuffer)
-
-            //Log.i("DEBUGCONNECTION", stringBuffer)
 
             val dataString = stringBuffer.split(",").toTypedArray()
             if (dataString.size == 4) {
@@ -104,11 +100,13 @@ class BluetoothService {
                 } catch (e: Exception) {
                     Log.e("DEBUGCONNECTION", "Data Values with error", e)
                 }
-                if ((_rawDataRoll + _rawDataPitch + _rawDataYaw) == _rawDataCRC) {
-                    _dataRoll.postValue(_rawDataRoll.toFloat() / 10)
-                    _dataPitch.postValue(_rawDataPitch.toFloat() / 10)
-                    _dataYaw.postValue(_rawDataYaw.toFloat() / 10)
-                    _updatedHandle.postValue(!_updatedHandle.value!!)
+                thread {
+                    if ((_rawDataRoll + _rawDataPitch + _rawDataYaw) == _rawDataCRC) {
+                        _dataRoll.postValue(_rawDataRoll.toFloat() / 10)
+                        _dataPitch.postValue(_rawDataPitch.toFloat() / 10)
+                        _dataYaw.postValue(_rawDataYaw.toFloat() / 10)
+                        _updatedHandle.postValue(!_updatedHandle.value!!)
+                    }
                 }
             }
         }
@@ -186,6 +184,7 @@ class BluetoothService {
                 mmThreadIsConnected = mmSocket.isConnected
                 // Cancel discovery because it otherwise slows down the connection.
                 mmAdapter.cancelDiscovery()
+
             } catch (e: IOException) {
                 mmThreadIsConnected = mmSocket.isConnected
             }
@@ -207,20 +206,20 @@ class BluetoothService {
             var bytes: Int
             var readMessage: String = ""
             var readChar: String = ""
+
+            var getTime: Long = System.currentTimeMillis()
             while (true) {
-                // Read from the InputStream.
                 try {
-                    //readMessage = readUntilChar(mmInStream, '\n')
-                    val time = System.currentTimeMillis()
-                    if (mmInStream.available() > 0) {
+                    if ((mmInStream.available() > 0 ) && ((System.currentTimeMillis() - getTime) > 15)) {
                         bytes = mmInStream.read(buffer) //read bytes from input buffer
                         readChar = String(buffer, 0, bytes)
                         if (readChar == "\n") {
-
-                            Log.d("DEBUGCONNECTION", readMessage)
-                            // Send the obtained bytes to the UI activity.
+                            print(System.currentTimeMillis() - getTime)
+                            print("    ")
+                            println(mmInStream.available())
+                            getTime = System.currentTimeMillis()
+//                          Log.d("DEBUGCONNECTION", readMessage)
                             val readMsg = handler.obtainMessage(MESSAGE_READ)
-                            // creating the instance of the bundle
                             val bundle = Bundle()
                             bundle.putString("key1", readMessage)
                             readMsg.data = bundle
@@ -231,45 +230,22 @@ class BluetoothService {
                             readMessage += readChar
                         }
                     }
-
-                    //write("0".encodeToByteArray())
                 } catch (e: IOException) {
                     Log.e("DEBUGCONNECTION", "Input stream was disconnected", e)
                     break
                 }
 
-
-
-                if ((System.currentTimeMillis() - getWriteTime) > 1000) {
-                    getWriteTime = System.currentTimeMillis()
-                    thread {
+                thread {
+                    if ((System.currentTimeMillis() - getWriteTime) > 750) {
+                        getWriteTime = System.currentTimeMillis()
+                        println("************************** sending: ")
                         write("0".encodeToByteArray())
                     }
                 }
+
             }
 
             disconnect()
-        }
-
-        private fun readUntilChar(stream: InputStream?, target: Char = '\n'): String {
-
-            val sb = StringBuilder()
-            try {
-                val buffer = BufferedReader(InputStreamReader(stream))
-                var r: Int
-                while (buffer.read().also { r = it } != -1) {
-                    val c = r.toChar()
-                    if (c == target) {
-                        break
-                    }
-                    sb.append(c)
-                }
-
-            } catch (e: IOException) {
-                Log.e("DEBUGCONNECTION", "Error handling 'n' ", e)
-
-            }
-            return sb.toString()
         }
 
         // Call this from the main activity to send data to the remote device.
