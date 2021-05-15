@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -142,13 +143,19 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonConnect.text = getString(R.string.connecting_status)
         binding.buttonConnect.setBackgroundColor(yellowButtonColor)
         (activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString())
-        (activity as MainActivity).hc05.mmIsConnected.observeForever {
-            if (it == true) {
-                connectedWithBluetoothDevice()
-            }else if(it == false){
-                Toast.makeText(context, "Unnable to connect with device", Toast.LENGTH_SHORT).show()
-                NotConnectedWithBluetoothDevice()
-            }
+        (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+    }
+
+    private val checkConnection = Observer<Boolean?>{
+        if (it == true) {
+            print(true)
+            println(true)
+            connectedWithBluetoothDevice()
+        }else if(it == false){
+            println(false)
+            println(false)
+            Toast.makeText(context, "Unnable to connect with device", Toast.LENGTH_SHORT).show()
+            NotConnectedWithBluetoothDevice()
         }
     }
 
@@ -189,14 +196,24 @@ class CurrentProfileFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if(item.itemId == R.id.newProfileFragment){
-            (activity as MainActivity).hc05.disconect()
+            (activity as MainActivity).hc05.disconnect()
         }
 
         if(item.itemId == R.id.loadProfilesFragment){
-            (activity as MainActivity).hc05.disconect()
+            (activity as MainActivity).hc05.disconnect()
         }
 
         return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) ||
                 super.onOptionsItemSelected(item)
     }
+
+    override fun onResume() {
+        super.onResume()
+        if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
+            connectedWithBluetoothDevice()
+        }else {
+            NotConnectedWithBluetoothDevice()
+        }
+    }
+
 }

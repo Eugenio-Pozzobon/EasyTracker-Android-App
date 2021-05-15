@@ -10,11 +10,21 @@ import android.os.Message
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import java.io.*
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.*
 import kotlin.concurrent.thread
 
-
+/**
+ * A group of *members*.
+ *
+ * This class has no useful logic; it's just a documentation example.
+ *
+ * @param T the type of a member in this group.
+ * @property name the name of this group.
+ * @constructor Creates an empty group.
+ */
 class BluetoothService {
 
     // Defines several constants used when transmitting messages between the
@@ -22,6 +32,7 @@ class BluetoothService {
     val MESSAGE_READ: Int = 0
     val MESSAGE_WRITE: Int = 1
     val MESSAGE_TOAST: Int = 2
+
     private var _mmIsConnected = MutableLiveData<Boolean?>()
     val mmIsConnected: LiveData<Boolean?>
         get() = _mmIsConnected
@@ -55,25 +66,9 @@ class BluetoothService {
 
     var stringBuffer: String = "0,0,0,0"
 
+    private var mmDeviceMAC: String = ""
 
-    companion object {
-        // Debugging
-        private var mmDeviceMAC: String = ""
-
-        // Unique UUID for this application
-        val myUUID: UUID? = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-
-        // Constants that indicate the current connection state
-        val STATE_NONE = 0       // we're doing nothing
-        val STATE_LISTEN = 1     // now listening for incoming connections
-        val STATE_CONNECTING = 2 // now initiating an outgoing connection
-        val STATE_CONNECTED = 3  // now connected to a remote device
-
-        lateinit var ConnectThread: ConnectToDevice
-        lateinit var RunnableThread: ConnectedThread
-
-        lateinit var socket: BluetoothSocket
-    }
+    lateinit var RunnableThread: ConnectedThread
 
     init {
         _mmIsConnected.value = null
@@ -92,10 +87,10 @@ class BluetoothService {
             val dataString = stringBuffer.split(",").toTypedArray()
             if (dataString.size == 4) {
                 try {
-                    _rawDataRoll = dataString[0]!!.toInt()
-                    _rawDataPitch = dataString[1]!!.toInt()
-                    _rawDataYaw = dataString[2]!!.toInt()
-                    _rawDataCRC = dataString[3]!!.toInt()
+                    _rawDataRoll = dataString[0].toInt()
+                    _rawDataPitch = dataString[1].toInt()
+                    _rawDataYaw = dataString[2].toInt()
+                    _rawDataCRC = dataString[3].toInt()
                     //_rawDataError:Boolean = dataString[0].toInt()
                 } catch (e: Exception) {
                     Log.e("DEBUGCONNECTION", "Data Values with error", e)
@@ -112,22 +107,25 @@ class BluetoothService {
         }
     }
 
+    /**
+     * Adds a [member] to this group.
+     * @return the new size of the group.
+     */
     fun connect(DeviceMAC: String) {
         thread {
             try {
-                if (_mmIsConnected.value != true) {
-                    connecting(DeviceMAC)
-                }
+                connecting(DeviceMAC)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-    fun disconect() {
+    fun disconnect() {
         thread {
             try {
                 disconnecting()
+                _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
@@ -135,117 +133,92 @@ class BluetoothService {
     }
 
     private fun connecting(DeviceMAC: String) {
-        mmDeviceMAC = DeviceMAC
-        ConnectThread = ConnectToDevice(DeviceMAC)
-        ConnectThread.run()
-        //postValue - Posts a task to a main thread to set the given value.
-        _mmIsConnected.postValue(ConnectThread.mmThreadIsConnected)
-        socket = ConnectThread.mmSocket
-        RunnableThread = ConnectedThread(socket, handler)
-        RunnableThread.run()
+        if (_mmIsConnected.value != true) {
+            mmDeviceMAC = DeviceMAC
+            RunnableThread = ConnectedThread(DeviceMAC, handler)
+            RunnableThread.connectThread()
+            _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
+            if (RunnableThread.mmThreadIsConnected) {
+                RunnableThread.run()
+            } else {
+                _mmIsConnected.postValue(false)
+            }
+        }
     }
 
     private fun disconnecting() {
         if (_mmIsConnected.value == true) {
-            BluetoothService.RunnableThread.disconnect()
-            //postValue - Posts a task to a main thread to set the given value.
-            _mmIsConnected.postValue(BluetoothService.ConnectThread.mmThreadIsConnected)
+            RunnableThread.disconnectThread()
+            _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
         }
     }
 
+    inner class ConnectedThread(var DeviceMAC: String, var handler: Handler) : Thread() {
 
-    fun reConnect(): Boolean? {
-        disconnecting()
-        _mmIsConnected.postValue(null)
-        connecting(mmDeviceMAC)
-        return _mmIsConnected.value
-    }
-
-    inner class ConnectToDevice(DeviceMAC: String) : Thread() {
         private lateinit var mmDevice: BluetoothDevice
         private lateinit var mmAdapter: BluetoothAdapter
-        private var mmDeviceMAC: String = DeviceMAC
 
         lateinit var mmSocket: BluetoothSocket
         var mmThreadIsConnected = false
+        var mmThreadIsDesconnecting = false
 
+        // Unique UUID for this application
+        val myUUID: UUID? = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+
+        private lateinit var mmInStream: InputStream
+        private lateinit var mmOutStream: OutputStream
         override fun run() {
 
-            super.run()
-            mmAdapter = BluetoothAdapter.getDefaultAdapter()
-            if (!mmAdapter.isEnabled()) {
-                throw Exception("Bluetooth adapter not found or not enabled!");
-            }
+            if (mmThreadIsConnected == true) {
 
-            mmDevice = mmAdapter.getRemoteDevice(mmDeviceMAC)
-            mmSocket = mmDevice.createRfcommSocketToServiceRecord(myUUID)
-            try {
-                mmSocket.connect()
-                mmThreadIsConnected = mmSocket.isConnected
-                // Cancel discovery because it otherwise slows down the connection.
-                mmAdapter.cancelDiscovery()
+                // Keep listening to the InputStream until an exception occurs.
+                var getWriteTime: Long = System.currentTimeMillis()
+                val buffer = ByteArray(1)
+                var bytes: Int
+                var readMessage: String = ""
+                var readChar: String = ""
 
-            } catch (e: IOException) {
-                mmThreadIsConnected = mmSocket.isConnected
-            }
-        }
-    }
+                var getTime: Long = System.currentTimeMillis()
+                while (true) {
+                    try {
+                        if ((mmInStream.available() > 0) && ((System.currentTimeMillis() - getTime) > 15)) {
+                            bytes = mmInStream.read(buffer) //read bytes from input buffer
+                            readChar = String(buffer, 0, bytes)
+                            if (readChar == "\n") {
+                                getTime = System.currentTimeMillis()
+                                val readMsg = handler.obtainMessage(MESSAGE_READ)
+                                val bundle = Bundle()
+                                bundle.putString("key1", readMessage)
+                                readMsg.data = bundle
+                                readMsg.sendToTarget()
+                                readMessage = ""
+                            } else {
+                                readMessage += readChar
+                            }
+                        }
+                    } catch (e: IOException) {
+                        Log.e("DEBUGCONNECTION", "Input stream was disconnected")
+                        if(!mmThreadIsDesconnecting) {
+                            mmThreadIsDesconnecting = true
+                            disconnect()
+                        }
+                        break
+                    }
 
-    inner class ConnectedThread(var mmSocket: BluetoothSocket, var handler: Handler) : Thread() {
-
-        private val mmInStream: InputStream = mmSocket.inputStream
-        private val mmOutStream: OutputStream = mmSocket.outputStream
-        private var reconnectCounter: Int = 0
-
-        override fun run() {
-
-            // Keep listening to the InputStream until an exception occurs.
-            var getWriteTime: Long = System.currentTimeMillis()
-
-            val buffer = ByteArray(1)
-            var bytes: Int
-            var readMessage: String = ""
-            var readChar: String = ""
-
-            var getTime: Long = System.currentTimeMillis()
-            while (true) {
-                try {
-                    if ((mmInStream.available() > 0 ) && ((System.currentTimeMillis() - getTime) > 15)) {
-                        bytes = mmInStream.read(buffer) //read bytes from input buffer
-                        readChar = String(buffer, 0, bytes)
-                        if (readChar == "\n") {
-                            print(System.currentTimeMillis() - getTime)
-                            print("    ")
-                            println(mmInStream.available())
-                            getTime = System.currentTimeMillis()
-//                          Log.d("DEBUGCONNECTION", readMessage)
-                            val readMsg = handler.obtainMessage(MESSAGE_READ)
-                            val bundle = Bundle()
-                            bundle.putString("key1", readMessage)
-                            readMsg.data = bundle
-                            readMsg.sendToTarget()
-                            readMessage = ""
-
-                        } else {
-                            readMessage += readChar
+                    thread {
+                        if ((System.currentTimeMillis() - getWriteTime) > 500) {
+                            getWriteTime = System.currentTimeMillis()
+                            write("0".encodeToByteArray())
                         }
                     }
-                } catch (e: IOException) {
-                    Log.e("DEBUGCONNECTION", "Input stream was disconnected", e)
-                    break
-                }
 
-                thread {
-                    if ((System.currentTimeMillis() - getWriteTime) > 750) {
-                        getWriteTime = System.currentTimeMillis()
-                        println("************************** sending: ")
-                        write("0".encodeToByteArray())
-                    }
                 }
-
             }
 
-            disconnect()
+            if(!mmThreadIsDesconnecting) {
+                mmThreadIsDesconnecting = true
+                disconnect()
+            }
         }
 
         // Call this from the main activity to send data to the remote device.
@@ -253,7 +226,7 @@ class BluetoothService {
             try {
                 mmOutStream.write(bytes)
             } catch (e: IOException) {
-                Log.e("DEBUGCONNECTION", "Error occurred when sending data", e)
+                Log.e("DEBUGCONNECTION", "Error occurred when sending data")
 
                 // Send a failure message back to the activity.
 //                val writeErrorMsg = handler.obtainMessage(MESSAGE_TOAST)
@@ -262,17 +235,16 @@ class BluetoothService {
 //                }
 //                writeErrorMsg.data = bundle
 //                handler.sendMessage(writeErrorMsg)
-                //disconnect()
-                if (reconnectCounter < 2) {
-                    if (reConnect() == true) {
-                        reconnectCounter = 0
-                    } else {
-                        reconnectCounter++
-                    }
+
+                if(!mmThreadIsDesconnecting) {
+                    mmThreadIsDesconnecting = true
+                    disconnect()
                 }
+                //connect(mmDeviceMAC)
+
                 return
             } catch (e: Exception) {
-                Log.e("DEBUGCONNECTION", "Error occurred when sending data", e)
+                Log.e("DEBUGCONNECTION", "Error occurred when sending data")
             }
 
             // Share the sent message with the UI activity.
@@ -282,8 +254,33 @@ class BluetoothService {
 //            writtenMsg.sendToTarget()
         }
 
+        fun connectThread() {
+            mmAdapter = BluetoothAdapter.getDefaultAdapter()
+            mmThreadIsDesconnecting = false
 
-        fun disconnect() {
+            if (!mmAdapter.isEnabled()) {
+                throw Exception("Bluetooth adapter not found or not enabled!");
+            }
+
+            mmDevice = mmAdapter.getRemoteDevice(DeviceMAC)
+            mmSocket = mmDevice.createRfcommSocketToServiceRecord(myUUID)
+
+            try {
+                mmSocket.connect()
+                mmThreadIsConnected = mmSocket.isConnected
+                // Cancel discovery because it otherwise slows down the connection.
+                mmAdapter.cancelDiscovery()
+                mmInStream = mmSocket.inputStream
+                mmOutStream = mmSocket.outputStream
+
+            } catch (e: IOException) {
+                mmThreadIsConnected = mmSocket.isConnected
+                Log.e("DEBUGCONNECTION", "UNABLE TO CONNECT WITH BLUETOOTH DEVICE")
+            }
+        }
+
+
+        fun disconnectThread() {
             try {
                 mmInStream.close()
             } catch (e: IOException) {
@@ -298,11 +295,12 @@ class BluetoothService {
                 mmSocket.close()
             } catch (e: IOException) {
                 e.printStackTrace()
-                Log.e("DEBUGCONNECTION", "Could not close the connect socket", e)
+                Log.e("DEBUGCONNECTION", "Could not close the connect socket")
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.e("DEBUGCONNECTION", "Could not close the connect socket", e)
+                Log.e("DEBUGCONNECTION", "Could not close the connect socket")
             }
+            mmThreadIsConnected = mmSocket.isConnected
         }
     }
 }
