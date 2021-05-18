@@ -99,5 +99,14 @@
     <string name="connect_status_sucessfull">Conectado</string>
     <string name="connect_status_init">Conectar</string>
     <string name="connecting_status">Conectando</string>
+    <string name="settings_fragment_title">Configurações</string>
+
+
+    <string name="forcing_disconnection">Bluetooth Desconectado</string>
+    <string name="fail_connection">Não foi possível se connectar</string>
+
+    <string name="bt_snack_action">Reconectar</string>
+    <string name="calibrate">Calibrar Bússola</string>
+    <string name="reconnect">Reconectar</string>
 
 </resources>

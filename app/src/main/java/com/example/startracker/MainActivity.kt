@@ -68,9 +68,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
             destinationHandler = nd
             if (nd.id == nc.graph.startDestination) {
-                setDrawer_locked()
-            } else {
+                //setDrawer_locked()
                 setDrawer_unLocked()
+            } else {
+                //setDrawer_unLocked()
+                setDrawer_locked()
             }
         }
 
@@ -86,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     //set the back button menu to be displayed or not
     fun setDrawer_locked(){
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        toolbar.setNavigationIcon(null)
+        //toolbar.setNavigationIcon(null)
     }
     fun setDrawer_unLocked(){
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)

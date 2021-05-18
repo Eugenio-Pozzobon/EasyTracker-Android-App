@@ -8,9 +8,4 @@
         android:orderInCategory="102"
         android:title="@string/howtouse_fragment_title"
         android:menuCategory = "secondary"/>
-    <item
-        android:id="@+id/aboutFragment"
-        android:orderInCategory="104"
-        android:title="@string/about_fragment_title"
-        android:menuCategory = "secondary"/>
 </menu>

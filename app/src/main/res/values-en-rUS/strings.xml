@@ -52,7 +52,14 @@
     <string name="sulfix_grausdecimais">(DD)</string>
     <string name="mag_degree">°</string>
     <string name="current_profile_bluetooth_button">Connect</string>
-    <string name="connect_status_sucessfull">Conectado</string>
-    <string name="connect_status_init">Conectar</string>
-    <string name="connecting_status">Conectando</string>
+    <string name="connect_status_sucessfull">Connected</string>
+    <string name="connect_status_init">Connect</string>
+    <string name="connecting_status">Connecting</string>
+    <string name="settings_fragment_title">Settings</string>
+    <string name="forcing_disconnection">Disconnected with device</string>
+    <string name="fail_connection">Unnable to connect with device</string>
+    <string name="bt_snack_action">Reconnect</string>
+    <string name="calibrate">Calibrate Compass</string>
+    <string name="reconnect">Reconnect</string>
+
 </resources>

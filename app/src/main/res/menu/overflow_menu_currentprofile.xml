@@ -21,12 +21,4 @@
         android:id="@+id/howToUseFragment"
         android:orderInCategory="103"
         android:title="@string/howtouse_fragment_title" />
-    <item
-        android:id="@+id/debugFragment"
-        android:orderInCategory="104"
-        android:title="@string/debug_fragment_title" />
-    <item
-        android:id="@+id/aboutFragment"
-        android:orderInCategory="105"
-        android:title="@string/about_fragment_title" />
 </menu>

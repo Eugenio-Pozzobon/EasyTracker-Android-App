@@ -3,12 +3,9 @@ package com.example.startracker.currentprofile
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.os.*
+import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -22,10 +19,15 @@ import com.example.startracker.MainActivity
 import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentCurrentProfileBinding
+import com.google.android.material.snackbar.Snackbar
+import java.lang.Exception
 import kotlin.properties.Delegates
 
 
 class CurrentProfileFragment : Fragment() {
+
+    var forceDisconnection = false
+    lateinit var btSnack:Snackbar
 
     lateinit var binding:FragmentCurrentProfileBinding
     lateinit var currentProfileViewModel: CurrentProfileViewModel
@@ -148,25 +150,48 @@ class CurrentProfileFragment : Fragment() {
 
     private val checkConnection = Observer<Boolean?>{
         if (it == true) {
-            print(true)
-            println(true)
-            connectedWithBluetoothDevice()
+            _connectedWithBluetoothDevice()
         }else if(it == false){
-            println(false)
-            println(false)
-            Toast.makeText(context, "Unnable to connect with device", Toast.LENGTH_SHORT).show()
-            NotConnectedWithBluetoothDevice()
+            _notConnectedWithBluetoothDevice()
+            try {
+                if (forceDisconnection) {
+                    btSnack = Snackbar.make(
+                        requireView(),
+                        getString(R.string.forcing_disconnection),
+                        Snackbar.LENGTH_SHORT
+                    )
+                } else {
+                    btSnack = Snackbar.make(
+                        requireView(),
+                        getString(R.string.fail_connection),
+                        Snackbar.LENGTH_SHORT,
+                    )
+                }
+                btSnack.setAction(getString(R.string.bt_snack_action)) {
+                    reconnect()
+                }
+                btSnack.show()
+            }catch (e: Exception){
+                Log.e("SNACKBARDEBUG", "DEBUG PROBLEM", e)
+            }
         }
     }
 
-    private fun connectedWithBluetoothDevice() {
+    private fun reconnect() {
+        if((activity as MainActivity).hc05.mmIsConnected.value == true) {
+            (activity as MainActivity).hc05.disconnect()
+        }
+        connectWithBluetoothDevice()
+    }
+
+    private fun _connectedWithBluetoothDevice() {
         currentProfileViewModel.onConnect()
         binding.buttonConnect.setBackgroundColor(greenButtonColor)
         binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
         binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
     }
 
-    private fun NotConnectedWithBluetoothDevice() {
+    private fun _notConnectedWithBluetoothDevice() {
         currentProfileViewModel.notConnect()
         binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setBackgroundColor(redButtonColor)
@@ -180,7 +205,7 @@ class CurrentProfileFragment : Fragment() {
                 if (resultCode == Activity.RESULT_OK) {
                     connectWithBluetoothDevice()
                 }else{
-                    NotConnectedWithBluetoothDevice()
+                    _notConnectedWithBluetoothDevice()
                 }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -189,18 +214,24 @@ class CurrentProfileFragment : Fragment() {
     //inflate the overflow menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.overflow_menu, menu)
+        inflater.inflate(R.menu.overflow_menu_currentprofile, menu)
     }
 
     //handle the user selection at overflow menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if(item.itemId == R.id.newProfileFragment){
-            (activity as MainActivity).hc05.disconnect()
+            if((activity as MainActivity).hc05.mmIsConnected.value == true) {
+                (activity as MainActivity).hc05.disconnect()
+                forceDisconnection = true
+            }
         }
 
         if(item.itemId == R.id.loadProfilesFragment){
-            (activity as MainActivity).hc05.disconnect()
+            if((activity as MainActivity).hc05.mmIsConnected.value == true) {
+                (activity as MainActivity).hc05.disconnect()
+                forceDisconnection = true
+            }
         }
 
         return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) ||
@@ -209,10 +240,11 @@ class CurrentProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        forceDisconnection = false
         if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
-            connectedWithBluetoothDevice()
+            _connectedWithBluetoothDevice()
         }else {
-            NotConnectedWithBluetoothDevice()
+            _notConnectedWithBluetoothDevice()
         }
     }
 
