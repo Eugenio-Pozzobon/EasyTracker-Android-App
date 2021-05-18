@@ -53,10 +53,6 @@
                 android:id="@+id/circleAlignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:contentDescription="@string/todo_string"
                 android:src="@drawable/circle_vector"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -65,10 +61,9 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/destination_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="150dp"
                 android:contentDescription="@string/todo_string"
                 android:src="@drawable/circle_vector_yellow_light"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"

@@ -172,7 +172,7 @@ class CurrentProfileFragment : Fragment() {
                 }
                 btSnack.show()
             }catch (e: Exception){
-                Log.e("SNACKBARDEBUG", "DEBUG PROBLEM", e)
+                Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
             }
         }
     }

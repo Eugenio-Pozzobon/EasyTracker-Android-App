@@ -61,5 +61,6 @@
     <string name="bt_snack_action">Reconnect</string>
     <string name="calibrate">Calibrate Compass</string>
     <string name="reconnect">Reconnect</string>
+    <string name="done_connection">Connected!</string>
 
 </resources>

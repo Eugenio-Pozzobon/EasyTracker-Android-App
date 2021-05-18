@@ -75,10 +75,9 @@
                 app:layout_constraintWidth_min="wrap" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/compass"
                 android:layout_width="225dp"
                 android:layout_height="225dp"
-                android:rotation="50"
                 app:layout_constraintBottom_toBottomOf="@+id/divider3"
                 app:layout_constraintEnd_toEndOf="@+id/divider2"
                 app:layout_constraintStart_toStartOf="@+id/divider2"

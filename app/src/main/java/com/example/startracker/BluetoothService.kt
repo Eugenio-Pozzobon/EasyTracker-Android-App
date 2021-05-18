@@ -132,6 +132,27 @@ class BluetoothService {
         }
     }
 
+    fun reconnect(DeviceMAC: String){
+        thread {
+            try {
+                if (_mmIsConnected.value == true) {
+                    RunnableThread.disconnectThread()
+                }
+                mmDeviceMAC = DeviceMAC
+                RunnableThread = ConnectedThread(DeviceMAC, handler)
+                RunnableThread.connectThread()
+                _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
+                if (RunnableThread.mmThreadIsConnected) {
+                    RunnableThread.run()
+                } else {
+                    _mmIsConnected.postValue(false)
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun connecting(DeviceMAC: String) {
         if (_mmIsConnected.value != true) {
             mmDeviceMAC = DeviceMAC

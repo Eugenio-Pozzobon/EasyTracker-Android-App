@@ -89,9 +89,9 @@
 
 
     <string name="end_alignment_title">(4/4) Finalizar e Rastrear</string>
-    <string name="tilt_alignment_title">(3/4) Alinhamento de Elevação</string>
-    <string name="polar_alignment_title">(2/4) Alinhamento de Azimute</string>
-    <string name="level_alignment_title">(1/4) Alinhamento de Nível</string>
+    <string name="tilt_alignment_title">(3/4) Elevação</string>
+    <string name="polar_alignment_title">(2/4) Azimute</string>
+    <string name="level_alignment_title">(1/4) Nível</string>
     <string name="north">N</string>
     <string name="sulfix_grausdecimais">(DD)</string>
     <string name="mag_degree">°</string>
@@ -108,5 +108,6 @@
     <string name="bt_snack_action">Reconectar</string>
     <string name="calibrate">Calibrar Bússola</string>
     <string name="reconnect">Reconectar</string>
+    <string name="done_connection">Conectado!</string>
 
 </resources>
