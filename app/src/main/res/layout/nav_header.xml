@@ -22,6 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/star_tracker_navdriver" />
+        app:srcCompat="@drawable/star_tracker_illustration" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

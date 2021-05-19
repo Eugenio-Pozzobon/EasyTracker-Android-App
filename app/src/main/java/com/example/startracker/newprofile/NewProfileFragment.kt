@@ -132,23 +132,20 @@ class NewProfileFragment : Fragment() {
     }
 
     private fun startBluetooth() {
-        var btOperationState = false
-        btAdapter = BluetoothAdapter.getDefaultAdapter()
-        if(btAdapter.isEnabled){
-            btOperationState = true
-        }else {
-            //turn on bluetooth
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
-        }
-        if(btOperationState){
-            connectBluetoothDevice()
-        }
-    }
 
-    private fun connectBluetoothDevice() {
-        if(true){ //call view model for save data and allow change screen
+        if(BluetoothAdapter.getDefaultAdapter() != null){
+            btAdapter = BluetoothAdapter.getDefaultAdapter()
+
+            if(!btAdapter.isEnabled){
+                //turn on bluetooth
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+            }else{
+                newProfileViewModel.onConnect()
+            }
+        }else{
             newProfileViewModel.onConnect()
+            Log.e("DEBUGBLUETOOTH", "DONT HAVE BLUETOOTH ADAPTER")
         }
     }
 
@@ -156,7 +153,7 @@ class NewProfileFragment : Fragment() {
         when(requestCode){
             REQUEST_ENABLE_BT ->
                 if (resultCode == Activity.RESULT_OK){
-                    connectBluetoothDevice()
+                    newProfileViewModel.onConnect()
                 }
         }
         super.onActivityResult(requestCode, resultCode, data)

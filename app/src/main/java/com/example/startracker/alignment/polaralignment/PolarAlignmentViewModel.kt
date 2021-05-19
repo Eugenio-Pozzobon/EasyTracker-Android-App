@@ -15,8 +15,10 @@ class PolarAlignmentViewModel(
     val database: ProfileDatabaseDao,
     application: Application
 ) : AndroidViewModel(application) {
+
     var gpsData = MutableLiveData<String>()
     var bluetoothMac = MutableLiveData<String>()
+    var declination = MutableLiveData<String>()
 
     private lateinit var lastProfile: Profile
 
@@ -35,6 +37,7 @@ class PolarAlignmentViewModel(
                 lastProfile = getLastProfile(true)!!
                 gpsData.value = lastProfile.gpsData
                 bluetoothMac.value = lastProfile.btAddress
+                declination.value = lastProfile.declination
             }
         }
     }
@@ -46,4 +49,6 @@ class PolarAlignmentViewModel(
         }
         return prof
     }
+
+
 }

@@ -109,5 +109,11 @@
     <string name="calibrate">Calibrar Bússola</string>
     <string name="reconnect">Reconectar</string>
     <string name="done_connection">Conectado!</string>
+    <string name="calibrate_compass_title">Calibrar Bússola</string>
+    <string name="calibrating_compass_title">Calibrando Bússola</string>
+    <string name="calibrate_compass_message">Recomendamos que você realize a calibração da bússola para evitar erros uma vez que você ainda não executou a calibração.
+        \n\nAtenção, você não poderá parar a calibração no meio do processo.</string>
+    <string name="decline_calibrate">Recusar</string>
+    <string name="accept_calibrate">Calibrar</string>
 
 </resources>

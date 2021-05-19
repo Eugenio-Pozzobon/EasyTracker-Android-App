@@ -1,5 +1,8 @@
 package com.example.startracker.alignment.levelalignment
 
+import android.app.Activity
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -68,9 +71,6 @@ class LevelAlignmentFragment : Fragment() {
                 .navigate(R.id.action_levelAlignmentFragment_to_polarAlignmentFragment)
         }
 
-        (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
-        (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
-
         setHasOptionsMenu(true)
 
         return binding.root
@@ -86,7 +86,9 @@ class LevelAlignmentFragment : Fragment() {
                         Snackbar.LENGTH_LONG,
                     )
                     btSnack.setAction(getString(R.string.bt_snack_action)) {
-                        (activity as MainActivity).hc05.reconnect(levelAlignmentViewModel.bluetoothMac.value.toString())
+                        if(startBluetooth()){
+                            reconnect()
+                        }
                     }
                     btSnack.show()
                 }catch (e: java.lang.Exception){
@@ -106,6 +108,41 @@ class LevelAlignmentFragment : Fragment() {
             }
         } catch (e: Exception) {
             Log.e("DEBUGCONNECTION", "Observer in Level Alignment not killed", e)
+        }
+    }
+
+
+    private val REQUEST_ENABLE_BT = 1
+    private fun startBluetooth(): Boolean {
+
+        var btOperationState = false
+        if (BluetoothAdapter.getDefaultAdapter() != null) {
+            val btAdapter = BluetoothAdapter.getDefaultAdapter()
+            if (btAdapter.isEnabled) {
+                btOperationState = true
+            } else {
+                //turn on bluetooth
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+            }
+
+        }
+        return btOperationState
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_ENABLE_BT ->
+                if (resultCode == Activity.RESULT_OK) {
+                    reconnect()
+                }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun reconnect() {
+        if(startBluetooth()) {
+            (activity as MainActivity).hc05.reconnect(levelAlignmentViewModel.bluetoothMac.value.toString())
         }
     }
 
@@ -156,7 +193,7 @@ class LevelAlignmentFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if(item.itemId == R.id.reconnect) {
-            (activity as MainActivity).hc05.reconnect(levelAlignmentViewModel.bluetoothMac.value.toString())
+            reconnect()
             return true
         }
 
@@ -168,5 +205,11 @@ class LevelAlignmentFragment : Fragment() {
         super.onPause()
         (activity as MainActivity).hc05.updatedHandle.removeObserver(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
+        (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
     }
 }

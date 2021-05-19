@@ -43,7 +43,7 @@ fun convertPixelsToDp(px: Float, context: Context): Float {
  */
 @SuppressLint("SimpleDateFormat")
 fun convertLongToDateString(systemTime: Long): String {
-    return SimpleDateFormat("EEEE MMM-dd-yyyy' Time: 'HH:mm")
+    return SimpleDateFormat("'Criado no dia 'dd'/'mm'/'yyyy' às 'HH:mm")
         .format(systemTime).toString()
 }
 

@@ -132,7 +132,7 @@ class BluetoothService {
         }
     }
 
-    fun reconnect(DeviceMAC: String){
+    fun reconnect(DeviceMAC: String) {
         thread {
             try {
                 if (_mmIsConnected.value == true) {
@@ -202,7 +202,12 @@ class BluetoothService {
                 var getTime: Long = System.currentTimeMillis()
                 while (true) {
                     try {
-                        if ((mmInStream.available() > 0) && ((System.currentTimeMillis() - getTime) > 15)) {
+                        //ensure that the buffer is allways clean
+                        var delaytime = 10
+                        if ((mmInStream.available() > 300)) {
+                            delaytime = 1
+                        }
+                        if ((mmInStream.available() > 0) && ((System.currentTimeMillis() - getTime) > delaytime)) {
                             bytes = mmInStream.read(buffer) //read bytes from input buffer
                             readChar = String(buffer, 0, bytes)
                             if (readChar == "\n") {
@@ -219,7 +224,7 @@ class BluetoothService {
                         }
                     } catch (e: IOException) {
                         Log.e("DEBUGCONNECTION", "Input stream was disconnected")
-                        if(!mmThreadIsDesconnecting) {
+                        if (!mmThreadIsDesconnecting) {
                             mmThreadIsDesconnecting = true
                             disconnect()
                         }
@@ -236,7 +241,7 @@ class BluetoothService {
                 }
             }
 
-            if(!mmThreadIsDesconnecting) {
+            if (!mmThreadIsDesconnecting) {
                 mmThreadIsDesconnecting = true
                 disconnect()
             }
@@ -257,7 +262,7 @@ class BluetoothService {
 //                writeErrorMsg.data = bundle
 //                handler.sendMessage(writeErrorMsg)
 
-                if(!mmThreadIsDesconnecting) {
+                if (!mmThreadIsDesconnecting) {
                     mmThreadIsDesconnecting = true
                     disconnect()
                 }
@@ -276,27 +281,32 @@ class BluetoothService {
         }
 
         fun connectThread() {
-            mmAdapter = BluetoothAdapter.getDefaultAdapter()
-            mmThreadIsDesconnecting = false
+            if (BluetoothAdapter.getDefaultAdapter() != null) {
 
-            if (!mmAdapter.isEnabled()) {
-                throw Exception("Bluetooth adapter not found or not enabled!");
-            }
+                mmAdapter = BluetoothAdapter.getDefaultAdapter()
+                mmThreadIsDesconnecting = false
 
-            mmDevice = mmAdapter.getRemoteDevice(DeviceMAC)
-            mmSocket = mmDevice.createRfcommSocketToServiceRecord(myUUID)
+                if (!mmAdapter.isEnabled()) {
+                    throw Exception("Bluetooth adapter not found or not enabled!");
+                }
 
-            try {
-                mmSocket.connect()
-                mmThreadIsConnected = mmSocket.isConnected
-                // Cancel discovery because it otherwise slows down the connection.
-                mmAdapter.cancelDiscovery()
-                mmInStream = mmSocket.inputStream
-                mmOutStream = mmSocket.outputStream
+                mmDevice = mmAdapter.getRemoteDevice(DeviceMAC)
+                mmSocket = mmDevice.createRfcommSocketToServiceRecord(myUUID)
 
-            } catch (e: IOException) {
-                mmThreadIsConnected = mmSocket.isConnected
-                Log.e("DEBUGCONNECTION", "UNABLE TO CONNECT WITH BLUETOOTH DEVICE")
+                try {
+                    mmSocket.connect()
+                    mmThreadIsConnected = mmSocket.isConnected
+                    // Cancel discovery because it otherwise slows down the connection.
+                    mmAdapter.cancelDiscovery()
+                    mmInStream = mmSocket.inputStream
+                    mmOutStream = mmSocket.outputStream
+
+                } catch (e: IOException) {
+                    mmThreadIsConnected = mmSocket.isConnected
+                    Log.e("DEBUGCONNECTION", "UNABLE TO CONNECT WITH BLUETOOTH DEVICE")
+                }
+            } else {
+                Log.e("DEBUGBLUETOOTH", "DONT HAVE BLUETOOTH ADAPTER")
             }
         }
 

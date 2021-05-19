@@ -3,7 +3,7 @@ package com.example.startracker.currentprofile
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import android.os.*
+import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -20,20 +20,19 @@ import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentCurrentProfileBinding
 import com.google.android.material.snackbar.Snackbar
-import java.lang.Exception
 import kotlin.properties.Delegates
 
 
 class CurrentProfileFragment : Fragment() {
 
     var forceDisconnection = false
-    lateinit var btSnack:Snackbar
+    lateinit var btSnack: Snackbar
 
-    lateinit var binding:FragmentCurrentProfileBinding
+    lateinit var binding: FragmentCurrentProfileBinding
     lateinit var currentProfileViewModel: CurrentProfileViewModel
 
-    var btAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-    private val REQUEST_ENABLE_BT=1
+    lateinit var btAdapter: BluetoothAdapter
+    private val REQUEST_ENABLE_BT = 1
 
     var redButtonColor by Delegates.notNull<Int>()
     var greenButtonColor by Delegates.notNull<Int>()
@@ -45,7 +44,8 @@ class CurrentProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // make the data binding for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_current_profile, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_current_profile, container, false)
 
         val application = requireNotNull(this.activity).application
 
@@ -89,13 +89,14 @@ class CurrentProfileFragment : Fragment() {
             }
         })
 
-        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
-            if (it != "") {
-                if(startBluetooth()) {
-                    connectWithBluetoothDevice()
-                }
-            }
-        })
+        //Connect bluetooth device when screen load
+//        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
+//            if (it != "") {
+//                if (startBluetooth()) {
+//                    connectWithBluetoothDevice()
+//                }
+//            }
+//        })
 
         //check if is a new user, so then put at the welcome screen
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
@@ -106,10 +107,14 @@ class CurrentProfileFragment : Fragment() {
             }
         })
 
-        binding.buttonConnect.setOnClickListener(){
-            if(startBluetooth()) {
-                connectWithBluetoothDevice()
-            }
+        binding.buttonConnect.setOnClickListener() {
+//            if (startBluetooth()) {
+//                connectWithBluetoothDevice()
+//            }
+            currentProfileViewModel.onConnect()
+            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors
@@ -129,14 +134,19 @@ class CurrentProfileFragment : Fragment() {
 
 
     private fun startBluetooth(): Boolean {
+
         var btOperationState = false
-        if(btAdapter.isEnabled){
-            btOperationState = true
-        }else {
-            //turn on bluetooth
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+        if (BluetoothAdapter.getDefaultAdapter() != null) {
+            btAdapter = BluetoothAdapter.getDefaultAdapter()
+            if (btAdapter.isEnabled) {
+                btOperationState = true
+            } else {
+                //turn on bluetooth
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+            }
         }
+
         return btOperationState
     }
 
@@ -148,10 +158,10 @@ class CurrentProfileFragment : Fragment() {
         (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
     }
 
-    private val checkConnection = Observer<Boolean?>{
+    private val checkConnection = Observer<Boolean?> {
         if (it == true) {
             _connectedWithBluetoothDevice()
-        }else if(it == false){
+        } else if (it == false) {
             _notConnectedWithBluetoothDevice()
             try {
                 if (forceDisconnection) {
@@ -168,17 +178,19 @@ class CurrentProfileFragment : Fragment() {
                     )
                 }
                 btSnack.setAction(getString(R.string.bt_snack_action)) {
-                    reconnect()
+                    if (startBluetooth()) {
+                        reconnect()
+                    }
                 }
                 btSnack.show()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
             }
         }
     }
 
     private fun reconnect() {
-        if((activity as MainActivity).hc05.mmIsConnected.value == true) {
+        if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
             (activity as MainActivity).hc05.disconnect()
         }
         connectWithBluetoothDevice()
@@ -204,7 +216,7 @@ class CurrentProfileFragment : Fragment() {
             REQUEST_ENABLE_BT ->
                 if (resultCode == Activity.RESULT_OK) {
                     connectWithBluetoothDevice()
-                }else{
+                } else {
                     _notConnectedWithBluetoothDevice()
                 }
         }
@@ -220,15 +232,15 @@ class CurrentProfileFragment : Fragment() {
     //handle the user selection at overflow menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        if(item.itemId == R.id.newProfileFragment){
-            if((activity as MainActivity).hc05.mmIsConnected.value == true) {
+        if (item.itemId == R.id.newProfileFragment) {
+            if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
                 (activity as MainActivity).hc05.disconnect()
                 forceDisconnection = true
             }
         }
 
-        if(item.itemId == R.id.loadProfilesFragment){
-            if((activity as MainActivity).hc05.mmIsConnected.value == true) {
+        if (item.itemId == R.id.loadProfilesFragment) {
+            if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
                 (activity as MainActivity).hc05.disconnect()
                 forceDisconnection = true
             }
@@ -243,7 +255,7 @@ class CurrentProfileFragment : Fragment() {
         forceDisconnection = false
         if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
             _connectedWithBluetoothDevice()
-        }else {
+        } else {
             _notConnectedWithBluetoothDevice()
         }
     }
