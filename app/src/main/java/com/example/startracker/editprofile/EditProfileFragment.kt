@@ -121,7 +121,7 @@ class EditProfileFragment : Fragment() {
         return view
     }
 
-    //check if user allow localization services an get current latitude of the smartphone
+    //check if user allow localization services anD get current latitude of the smartphone
     private fun getLocation(){
         if ((ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)

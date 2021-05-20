@@ -10,12 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * ViewModel for CurrentProfileFragment.
+ */
 class CurrentProfileViewModel(
     val database: ProfileDatabaseDao,
     application: Application
 ) : AndroidViewModel(application) {
 
-    var connectionStatus = MutableLiveData<String>()
     var gpsDataString = MutableLiveData<String>()
     var magDeclinationString = MutableLiveData<String>()
     var gpsData = MutableLiveData<String>()

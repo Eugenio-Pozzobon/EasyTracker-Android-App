@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:viewBindingIgnore="true"
     tools:context=".AboutFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,32 +12,37 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/aboutImage"
-            android:layout_width="0dp"
-            android:layout_height="445dp"
-            android:layout_marginStart="@dimen/big_margin"
-            android:layout_marginTop="@dimen/big_margin"
-            android:layout_marginEnd="@dimen/big_margin"
+            android:id="@+id/about_image"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="32dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/star_tracker_illustration" />
+            app:srcCompat="@drawable/star_tracker_illustration_transparent" />
 
         <TextView
-            android:id="@+id/aboutText"
+            android:id="@+id/about_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/big_margin"
             android:layout_marginTop="@dimen/big_margin"
             android:layout_marginEnd="@dimen/big_margin"
+            android:justificationMode="inter_word"
             android:text="@string/about_us"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColorLink="#CCFFCC"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/aboutImage" />
+            app:layout_constraintTop_toBottomOf="@+id/about_image"
+            tools:targetApi="o" />
+
+<!--
+            android:autoLink="web|email"
+            android:linksClickable="true"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

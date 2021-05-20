@@ -28,13 +28,21 @@
     <string name="ok_button">Check</string>
     <string name="alignment_instruction">Tilt the platform to the left/right/front/back to balance it</string>
     <string name="tilt_instruction">Tilt the platform to the front/back to adjust elevation</string>
-    <string name="congrats_instruction">Congratulations!</string>
+    <string name="congrats_instruction">Congratulations, you aligned your device!</string>
     <string name="end_instruction">" Now, you can start tracking"</string>
-    <string name="start_button">Init Tracker</string>
     <string name="debug_fragment_title">Debug</string>
     <string name="debug_fragment_1">Init Debug</string>
     <string name="about_fragment_title">About</string>
-    <string name="about_us">About App</string>
+    <string name="about_us">This Android app was developed to be useful with the Easy Tracker System.
+        It is developed at the Federal University of Santa Maria, Brazil.
+        \n\nAuthor: Eugênio Pozzobon
+        \nAdvisor: Prof. Rafael Beltrame
+        \n\n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-System#desenvolvimento-de-uma-plataforma-equatorial-para-astrofotografia---easy-tracker-system"
+            >Check the documentation of the electronic system by clicking here</a>
+        \n
+        \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-Android-App#easy-tracker-android-app"
+            >Check the documentation of the android app by clicking here</a>
+    </string>
     <string name="howtouse_fragment_title">Instructions</string>
     <string name="howtouse_fragment_1">" "</string>
     <string name="todo_string">TODO</string>
@@ -70,5 +78,10 @@
     <string name="accept_calibrate">Calibrate</string>
     <string name="blutooth_error_title">Bluetooth Error</string>
     <string name="polar_instruction">Move the platform horizontally to align it with the North pole</string>
+    <string name="end_track_button">Stop Tracking</string>
+    <string name="start_track_button">Start Tracking</string>
+    <string name="track_instruction">" "</string>
+    <string name="calibrating_compass_text1">" "</string>
+    <string name="calibrating_compass_text2">" "</string>
 
 </resources>

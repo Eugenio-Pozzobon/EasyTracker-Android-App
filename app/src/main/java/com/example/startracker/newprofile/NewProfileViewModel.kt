@@ -82,7 +82,7 @@ class NewProfileViewModel(
     val setMagDeclinationError: LiveData<Boolean>
         get() = _setMagDeclinationError
 
-    // Check if all values are valid, i.e., isn't an null or empty string
+    // Check if all values are valid, i.e., isn't a null or empty string
     private fun checkValues(): Boolean {
         if(("null" == (profileName.value.toString())) || ("" == (profileName.value.toString()))){
             _setNameError.value = true

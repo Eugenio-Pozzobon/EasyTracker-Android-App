@@ -68,10 +68,11 @@
 
 
     <!-- end Alignment -->
-    <string name="congrats_instruction">Parabéns!</string>
+    <string name="congrats_instruction">Parabéns, você alinhou seu Dispositivo!</string>
+    <string name="track_instruction">" "</string>
     <string name="end_instruction">Agora você pode iniciar o Rastreamento!</string>
-    <string name="start_button">Iniciar Rastreamento</string>
-
+    <string name="start_track_button">Iniciar Rastreamento</string>
+    <string name="end_track_button">Parar Rastreamento</string>
 
     <!-- Debug -->
     <string name="debug_fragment_title">Debug</string>
@@ -79,7 +80,18 @@
 
     <!-- About -->
     <string name="about_fragment_title">Sobre</string>
-    <string name="about_us">Sobre o Aplicativo</string>
+    <string name="about_us">Este aplicativo foi desenvolvido para ser utilizado juntamente
+        com o Easy Tracker System, desenvolvido na Universidade Federal de Santa Maria.
+        \n
+        \n>Desenvolvedor: Eugênio Pozzobon
+        \nOrientador: Prof. Rafael Beltrame
+        \n
+        \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-System#desenvolvimento-de-uma-plataforma-equatorial-para-astrofotografia---easy-tracker-system"
+            >Cheque a documentação do sistema eletrônico clicando aqui</a>
+        \n
+        \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-Android-App#easy-tracker-android-app"
+            >Cheque a documentação do aplicativo android clicando aqui</a>
+        </string>
 
     <!-- How to Use Fragment -->
     <string name="howtouse_fragment_title">Instruções</string>
@@ -114,11 +126,18 @@
     <string name="done_connection">Conectado!</string>
     <string name="calibrate_compass_title">Calibrar Bússola</string>
     <string name="calibrating_compass_title">Calibrando Bússola</string>
-    <string name="calibrate_compass_message">Recomendamos que você realize a calibração da bússola para evitar erros uma vez que você ainda não executou a calibração.
+    <string name="calibrating_compass_text1">Rotate the platform horizontally for the next</string>
+    <string name="calibrating_compass_text2">seconds.
+        \n\nAttention, do not bring your smartphone, or any other electronic device,
+         near the platform during calibration.</string>
+
+    <string name="calibrate_compass_message">Recomendamos que você realize a calibração da bússola
+        para evitar erros uma vez que você ainda não executou a calibração.
         \n\nAtenção, você não poderá parar a calibração no meio do processo.</string>
     <string name="decline_calibrate">Recusar</string>
     <string name="accept_calibrate">Calibrar</string>
     <string name="blutooth_error_title">Easy Tracker Desconectado</string>
     <string name="forcing_disconnection">Easy Tracker Disconnected</string>
+
 
 </resources>

@@ -11,11 +11,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * ViewModel for PolarAlignmentFragment.
+ */
 class PolarAlignmentViewModel(
     val database: ProfileDatabaseDao,
     application: Application
 ) : AndroidViewModel(application) {
 
+    // data that is updated to fragment use
     var gpsData = MutableLiveData<String>()
     var bluetoothMac = MutableLiveData<String>()
     var declination = MutableLiveData<String>()
@@ -26,15 +30,16 @@ class PolarAlignmentViewModel(
         getLastProfile()
     }
 
+    // get the last profile in the database and update the local variable
     private fun getLastProfile(){
         viewModelScope.launch{
 
-            if(getLastProfile(true) == null) {
+            if(getLastProfileInDatabase() == null) {
                 gpsData.value = ""
                 bluetoothMac.value = ""
 
             }else {
-                lastProfile = getLastProfile(true)!!
+                lastProfile = getLastProfileInDatabase()!!
                 gpsData.value = lastProfile.gpsData
                 bluetoothMac.value = lastProfile.btAddress
                 declination.value = lastProfile.declination
@@ -42,10 +47,11 @@ class PolarAlignmentViewModel(
         }
     }
 
-    private suspend fun getLastProfile(key: Boolean): Profile?{
+    // get the last profile in the database
+    private suspend fun getLastProfileInDatabase(): Profile?{
         var prof: Profile?
         withContext(Dispatchers.IO) {
-            prof = database.getLastProfile(key)
+            prof = database.getLastProfile(true)
         }
         return prof
     }

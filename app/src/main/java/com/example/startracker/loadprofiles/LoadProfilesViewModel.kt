@@ -40,11 +40,11 @@ class LoadProfilesViewModel(
             profileSelected = getProfileWithId(id)
             profileSelected.lastProfile = true
             update(profileSelected)
-            allowLoadToCurrentFragment(id)
+            allowLoadToCurrentFragment()
         }
     }
 
-    private fun allowLoadToCurrentFragment(id: Long){
+    private fun allowLoadToCurrentFragment(){
         Log.i("VIEWMODELDEBUG", "allowLoadToCurrentFragment")
         _navigateToEditProfile.value = true
     }
@@ -89,16 +89,4 @@ class LoadProfilesViewModel(
             clear()
         }
     }
-
-    /**
-     * Called when the ViewModel is dismantled.
-     * At this point, we want to cancel all coroutines;
-     * otherwise we end up with processes that have nowhere to return to
-     * using memory and resources.
-
-    override fun onCleared() {
-    super.onCleared()
-    viewModelJob.cancel()
-    }
-     */
 }

@@ -26,5 +26,4 @@ data class Profile(
 
         @ColumnInfo(name = "start_time_milli")
         val startTimeMilli: Long = System.currentTimeMillis()
-
 )

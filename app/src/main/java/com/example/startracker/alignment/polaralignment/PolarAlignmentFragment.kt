@@ -71,7 +71,6 @@ class PolarAlignmentFragment : Fragment() {
 
         //activate observers in bluetooth data, so now its possible to update UI
         // with bluetooth values and tell user when it get disconnected
-        (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
 
         setHasOptionsMenu(true)
@@ -92,11 +91,12 @@ class PolarAlignmentFragment : Fragment() {
                         .setTitle(resources.getString(R.string.blutooth_error_title))
                         .setMessage(getString(R.string.fail_connection))
                         .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            // Respond to negative button press
+                            dialog.cancel()
                         }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
                             if(startBluetooth()){
                                 reconnect()
                             }
+                            dialog.cancel()
                         }
                         .create()
                     dialogBluetooth.show()
@@ -214,17 +214,19 @@ class PolarAlignmentFragment : Fragment() {
 
 
     // CHECK CHECK CHECK CHECK
+    lateinit var compassDialog: AlertDialog
+    lateinit var compassTimerDialog: AlertDialog
     private fun calibrateCompass() {
 
-        val dialogStart: AlertDialog = AlertDialog.Builder(requireContext())
+        compassDialog = AlertDialog.Builder(requireContext())
             .setTitle(resources.getString(R.string.calibrate_compass_title))
             .setMessage(resources.getString(R.string.calibrate_compass_message))
             .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                // Respond to negative button press
+                dialog.cancel()
             }
             .setPositiveButton(resources.getString(R.string.accept_calibrate)) { dialog, which ->
 
-                val dialog: AlertDialog = AlertDialog.Builder(requireContext())
+                compassTimerDialog = AlertDialog.Builder(requireContext())
                     .setTitle(resources.getString(R.string.calibrate_compass_title))
                     .setMessage("Rotacione a plataforma horizontalmente pelos próximos 30 segundos")
                     .create()
@@ -236,10 +238,12 @@ class PolarAlignmentFragment : Fragment() {
                 val countDown = object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 500) {
                     override fun onTick(millisUntilFinished: Long) {
                         valueCountdown =
-                            (millisUntilFinished / 1000).toInt() + 1 - (AUTO_DISMISS_MILLIS / 1000 - correction)
-                        dialog.setMessage(
-                            "Rotacione a plataforma horizontalmente pelos próximos "
-                                    + valueCountdown.toString() + " segundos"
+                            (millisUntilFinished / 1000).toInt() + 1 -
+                                    (AUTO_DISMISS_MILLIS / 1000 - correction)
+                        compassTimerDialog.setMessage(
+                            getString(R.string.calibrating_compass_text1)
+                                + " " + valueCountdown.toString() + " " +
+                                getString(R.string.calibrating_compass_text2)
                         )
                         if (!(valueCountdown > 0)) {
                             onFinish()
@@ -247,30 +251,30 @@ class PolarAlignmentFragment : Fragment() {
                     }
 
                     override fun onFinish() {
-                        if (dialog.isShowing) {
-                            dialog.dismiss()
+                        if (compassTimerDialog.isShowing) {
+                            compassTimerDialog.dismiss()
                         }
                     }
                 }
-                dialog.setOnShowListener(object : OnShowListener {
+                compassTimerDialog.setOnShowListener(object : OnShowListener {
                     override fun onShow(dialog: DialogInterface) {
                         countDown.start()
                     }
                 })
 
-                dialog.setOnDismissListener {
+                compassTimerDialog.setOnDismissListener {
                     it.cancel()
                     if (valueCountdown > 1) {
                         countDown.cancel()
                         correction = valueCountdown
-                        dialog.cancel()
-                        dialog.show()
+                        compassTimerDialog.cancel()
+                        compassTimerDialog.show()
                     }
                 }
-                dialog.show()
+                compassTimerDialog.show()
             }
             .create()
-        dialogStart.show()
+        compassDialog.show()
     }
 
     //Check Fragment Lifecycle info https://abhiandroid.com/ui/fragment-lifecycle-example-android-studio.html
@@ -278,6 +282,13 @@ class PolarAlignmentFragment : Fragment() {
         super.onPause()
         (activity as MainActivity).hc05.updatedHandle.removeObserver(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //activate observers in bluetooth data, so now its possible to update UI
+        // with bluetooth values and tell user when it get disconnected
+        (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
     }
 
 }

@@ -21,9 +21,15 @@ class PairedDevicesViewModel(
     val onUpdated: LiveData<Boolean>
         get() = _onUpdated
 
-    lateinit var getprofile: Profile
+    //indicate that viewModel has initialized.
+    // Its used just for emulator doesn't crash because it hasn't bluetooth adapter
+    private var _initialized = MutableLiveData<Boolean>()
+    val initialized: LiveData<Boolean>
+        get() = _initialized
 
+    lateinit var getprofile: Profile
     init {
+        _initialized.value = false
         _onUpdated.value = false
         loadProfile()
     }
@@ -32,6 +38,7 @@ class PairedDevicesViewModel(
     private fun loadProfile() {
         viewModelScope.launch {
             getprofile = getLastProfile()
+            _initialized.value = true
         }
     }
 

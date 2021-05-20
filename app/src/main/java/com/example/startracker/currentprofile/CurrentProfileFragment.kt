@@ -92,13 +92,13 @@ class CurrentProfileFragment : Fragment() {
         })
 
         //Connect bluetooth device when screen load
-        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
-            if (it != "") {
-                if (startBluetooth()) {
-                    connectWithBluetoothDevice()
-                }
-            }
-        })
+//        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
+//            if (it != "") {
+//                if (startBluetooth()) {
+//                    connectWithBluetoothDevice()
+//                }
+//            }
+//        })
 
         //check if is a new user, so then put at the welcome screen
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
@@ -111,13 +111,13 @@ class CurrentProfileFragment : Fragment() {
 
         //connect with bluetooth device
         binding.buttonConnect.setOnClickListener() {
-            if (startBluetooth()) {
-                connectWithBluetoothDevice()
-            }
-//            currentProfileViewModel.onConnect()
-//            binding.buttonConnect.setBackgroundColor(greenButtonColor)
-//            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
-//            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+//            if (startBluetooth()) {
+//                connectWithBluetoothDevice()
+//            }
+            currentProfileViewModel.onConnect()
+            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors
@@ -176,7 +176,7 @@ class CurrentProfileFragment : Fragment() {
                         .setTitle(resources.getString(R.string.blutooth_error_title))
                         .setMessage(getString(R.string.fail_connection))
                         .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            // Respond to negative button press
+                            dialog.cancel()
                         }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
                             if(startBluetooth()){
                                 reconnect()

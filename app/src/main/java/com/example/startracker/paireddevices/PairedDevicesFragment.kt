@@ -84,7 +84,11 @@ class PairedDevicesFragment : Fragment() {
 
         } else {
             //if there is no bluetooth adapter, save a null string with address
-            pairedDevicesViewModel.updateLastProfileWithBluetooth("")
+            pairedDevicesViewModel.initialized.observe(viewLifecycleOwner, {
+                if(it == true) {
+                    pairedDevicesViewModel.updateLastProfileWithBluetooth("")
+                }
+            })
             Log.e("DEBUGBLUETOOTH", "DONT HAVE BLUETOOTH ADAPTER")
         }
 

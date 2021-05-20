@@ -28,11 +28,6 @@ import java.util.ArrayList
 
 class NewProfileFragment : Fragment() {
 
-//    private var _binding: FragmentNewProfileBinding? = null
-//    // This property is only valid between onCreateView and
-//    // onDestroyView.
-//    private val binding get() = _binding!!
-
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val locationPermissionCode = 1
 

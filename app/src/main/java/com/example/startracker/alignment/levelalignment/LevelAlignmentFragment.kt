@@ -70,7 +70,6 @@ class LevelAlignmentFragment : Fragment() {
 
         //activate observers in bluetooth data, so now its possible to update UI
         // with bluetooth values and tell user when it get disconnected
-        (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
 
         setHasOptionsMenu(true)
@@ -91,11 +90,12 @@ class LevelAlignmentFragment : Fragment() {
                         .setTitle(resources.getString(R.string.blutooth_error_title))
                         .setMessage(getString(R.string.fail_connection))
                         .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            // Respond to negative button press
+                            dialog.cancel()
                         }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
                             if(startBluetooth()){
                                 reconnect()
                             }
+                            dialog.cancel()
                         }
                         .create()
                     dialogBluetooth.show()
@@ -224,5 +224,11 @@ class LevelAlignmentFragment : Fragment() {
         super.onPause()
         (activity as MainActivity).hc05.updatedHandle.removeObserver(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
+    }
+    override fun onResume() {
+        super.onResume()
+        //activate observers in bluetooth data, so now its possible to update UI
+        // with bluetooth values and tell user when it get disconnected
+        (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
     }
 }

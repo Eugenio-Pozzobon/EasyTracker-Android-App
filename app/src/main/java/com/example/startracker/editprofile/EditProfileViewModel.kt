@@ -10,31 +10,14 @@ import kotlinx.coroutines.*
 
 
 /**
- * ViewModel for NewProfileFragment.
+ * ViewModel for EditProfileFragment.
  */
 class EditProfileViewModel(
     val database: ProfileDatabaseDao,
     application: Application
 ) : AndroidViewModel(application) {
 
-    /**
-     * viewModelJob allows us to cancel all coroutines started by this ViewModel.
-
-    private var viewModelJob = Job()
-
-    /**
-     * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
-     *
-     * Because we pass it [viewModelJob], any coroutine started in this uiScope can be cancelled
-     * by calling `viewModelJob.cancel()`
-     *
-     * By default, all coroutines started in uiScope will launch in [Dispatchers.Main] which is
-     * the main thread on Android. This is a sensible default because most coroutines started by
-     * a [ViewModel] update the UI after performing some processing.
-    */
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-     */
-
+    // editable data
     var gpsData = MutableLiveData<String>()
     var magDeclination = MutableLiveData<String>()
     var bluetoothMac = MutableLiveData<String>()
@@ -43,25 +26,17 @@ class EditProfileViewModel(
     private lateinit var lastProfile: Profile
 
     private var _onEdit = MutableLiveData<Boolean>()
-    //    private var _goToNewProfile = MutableLiveData<Boolean>()
     private var _goToLoadProfiles = MutableLiveData<Boolean>()
 
     val onEdit: LiveData<Boolean>
         get() = _onEdit
 
-//    val goToNewProfile: LiveData<Boolean>
-//        get() = _goToNewProfile
-
     val goToLoadProfiles: LiveData<Boolean>
         get() = _goToLoadProfiles
 
 
-    private fun doneOnEdit() {
-        _onEdit.value = true
-    }
-
+    // init ViewModel and
     init {
-//        _goToNewProfile.value = false
         _goToLoadProfiles.value = false
         _onEdit.value = false
         getLastProfile()
@@ -73,6 +48,7 @@ class EditProfileViewModel(
     }
 
 
+    // get data from last profile and update local profile variable
     private fun getLastProfile(){
         viewModelScope.launch{
             lastProfile = database.getLastProfile(true)!!
@@ -85,19 +61,21 @@ class EditProfileViewModel(
         }
     }
 
+    //update profile in database
     private suspend fun update(profile: Profile) {
         withContext(Dispatchers.IO) {
             database.update(profile)
         }
     }
 
+    // delete last profile in database
     private suspend fun deleteByLastProfile() {
         withContext(Dispatchers.IO) {
             database.deleteLastProfile(true)
         }
     }
 
-//    Checa se os valores estão validadaos
+    // Variables that check if values are ok
     private var _setNameError = MutableLiveData<Boolean>()
     private var _setGpsDataError = MutableLiveData<Boolean>()
     private var _setMagDeclinationError = MutableLiveData<Boolean>()
@@ -109,6 +87,7 @@ class EditProfileViewModel(
     val setMagDeclinationError: LiveData<Boolean>
         get() = _setMagDeclinationError
 
+    // Check if all values are valid, i.e., isn't a null or empty string
     private fun checkValues(): Boolean {
         if(("null" == (profileName.value.toString())) || ("" == (profileName.value.toString()))){
             _setNameError.value = true
@@ -132,7 +111,7 @@ class EditProfileViewModel(
         return true
     }
 
-
+    // a public function that is called when the Edit button gets clicked
     fun onEdit(){
         viewModelScope.launch {
             if (checkValues()) {
@@ -142,14 +121,19 @@ class EditProfileViewModel(
                 lastProfile.gpsData = gpsData.value.toString()
                 lastProfile.declination = magDeclination.value.toString()
 
-                //lastProfile.btAddress = bluetoothMac.value.toString()
-
                 update(lastProfile)
                 doneOnEdit()
             }
         }
     }
 
+    // change variable that is observed in fragment and signalizes
+    // when data is edited on the database
+    private fun doneOnEdit() {
+        _onEdit.value = true
+    }
+
+    // delete current profile and signalize to fragment that it is done
     fun onDelete(){
         viewModelScope.launch {
             deleteByLastProfile()
@@ -157,34 +141,20 @@ class EditProfileViewModel(
         }
     }
 
+    // a variable that indicates to fragment when profile gets  deleted
     private fun doneOnDelete() {
-//        if(true){
-//            _goToNewProfile.value = true
-//        }else{
-            _goToLoadProfiles.value = true
-//        }
+        _goToLoadProfiles.value = true
     }
 
-
+    // a public function that fragment can indicate ViewModel when fragment changes
     fun doneOnChangeScreen() {
 //        _goToNewProfile.value = false
         _goToLoadProfiles.value = false
         _onEdit.value = false
     }
 
+    // public function for fragment update view model when the user get GPS lat
     fun updateGps(latitude:String){
         gpsData.value = latitude
     }
-
-    /**
-     * Called when the ViewModel is dismantled.
-     * At this point, we want to cancel all coroutines;
-     * otherwise we end up with processes that have nowhere to return to
-     * using memory and resources.
-
-    override fun onCleared() {
-    super.onCleared()
-    viewModelJob.cancel()
-    }
-     */
 }
