@@ -48,17 +48,13 @@ class PolarAlignmentFragment : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
-
         val viewModelFactory = PolarAlignmentViewModelFactory(dataSource, application)
 
         polarAlignmentViewModel = ViewModelProvider(this, viewModelFactory).get(
             PolarAlignmentViewModel::class.java
         )
-
         binding.polarAlignmentViewModel = polarAlignmentViewModel
-
         binding.lifecycleOwner = this
 
         redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
@@ -73,6 +69,8 @@ class PolarAlignmentFragment : Fragment() {
                 .navigate(R.id.action_polarAlignmentFragment_to_tiltAlignmentFragment)
         }
 
+        //activate observers in bluetooth data, so now its possible to update UI
+        // with bluetooth values and tell user when it get disconnected
         (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
 
@@ -81,26 +79,32 @@ class PolarAlignmentFragment : Fragment() {
         return binding.root
     }
 
-
+    // Create an observer for check connection with bluetooth state variable in bluetooth service.
+    // If it get false, create an Snackbar AND dialog that would warning user that state.
+    lateinit var dialogBluetooth: AlertDialog
     private val checkConnection = Observer<Boolean?> {
         try {
             if (it != true) {
                 try {
-                    btSnack = Snackbar.make(
-                        requireView(),
-                        getString(R.string.fail_connection),
-                        Snackbar.LENGTH_LONG,
-                    )
-                    btSnack.setAction(getString(R.string.bt_snack_action)) {
-                        if (startBluetooth()) {
-                            reconnect()
+
+                    //indicate if was an disconnection fail or if just cant get connected
+                    dialogBluetooth = AlertDialog.Builder(requireContext())
+                        .setTitle(resources.getString(R.string.blutooth_error_title))
+                        .setMessage(getString(R.string.fail_connection))
+                        .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
+                            // Respond to negative button press
+                        }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
+                            if(startBluetooth()){
+                                reconnect()
+                            }
                         }
-                    }
-                    btSnack.show()
-                } catch (e: java.lang.Exception) {
+                        .create()
+                    dialogBluetooth.show()
+
+                }catch (e: java.lang.Exception){
                     Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
                 }
-            } else if (it == true) {
+            }else if(it == true){
                 try {
                     btSnack = Snackbar.make(
                         requireView(),
@@ -108,7 +112,7 @@ class PolarAlignmentFragment : Fragment() {
                         Snackbar.LENGTH_SHORT,
                     )
                     btSnack.show()
-                } catch (e: java.lang.Exception) {
+                }catch (e: java.lang.Exception){
                     Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
                 }
             }
@@ -117,6 +121,8 @@ class PolarAlignmentFragment : Fragment() {
         }
     }
 
+    // Check if the device has bluetooth and return if it is enable.
+    // If not, call an Intent that is handle in onActivityResult()
     private val REQUEST_ENABLE_BT = 1
     private fun startBluetooth(): Boolean {
 
@@ -135,6 +141,7 @@ class PolarAlignmentFragment : Fragment() {
         return btOperationState
     }
 
+    // This function is android based for review an Activity intent.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_ENABLE_BT ->
@@ -145,12 +152,15 @@ class PolarAlignmentFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    // if bluetooth is turn on, make an reconnection.
     private fun reconnect() {
         if (startBluetooth()) {
             (activity as MainActivity).hc05.reconnect(polarAlignmentViewModel.bluetoothMac.value.toString())
         }
     }
 
+    // handler when hc05 variables get updated, transform it data in X,Y
+    // variables for ploting marker in screen, convert it to DP and make an translation
     private val handlerUpdateObserver = Observer<Boolean> {
         try {
             updateAlignment()
@@ -160,6 +170,8 @@ class PolarAlignmentFragment : Fragment() {
         }
     }
 
+    // Get values from HC05 and convert it for maximun dp of screen.
+    // Calls an conversion for it
     private fun updateAlignment() {
         try {
             declination = polarAlignmentViewModel.declination.value!!.toFloat()
@@ -177,11 +189,13 @@ class PolarAlignmentFragment : Fragment() {
         }
     }
 
+    // inflate overflow menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.overflow_menu_compass, menu)
     }
 
+    //handler options of overflow menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.reconnect) {
@@ -198,6 +212,8 @@ class PolarAlignmentFragment : Fragment() {
                 super.onOptionsItemSelected(item)
     }
 
+
+    // CHECK CHECK CHECK CHECK
     private fun calibrateCompass() {
 
         val dialogStart: AlertDialog = AlertDialog.Builder(requireContext())
@@ -257,6 +273,7 @@ class PolarAlignmentFragment : Fragment() {
         dialogStart.show()
     }
 
+    //Check Fragment Lifecycle info https://abhiandroid.com/ui/fragment-lifecycle-example-android-studio.html
     override fun onPause() {
         super.onPause()
         (activity as MainActivity).hc05.updatedHandle.removeObserver(handlerUpdateObserver)

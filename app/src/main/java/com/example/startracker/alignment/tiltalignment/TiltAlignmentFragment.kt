@@ -37,9 +37,6 @@ class TiltAlignmentFragment : Fragment() {
     lateinit var binding: FragmentTiltAlignmentBinding
     lateinit var tiltAlignmentViewModel: TiltAlignmentViewModel
 
-
-    lateinit var dialogBluetooth: AlertDialog
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -91,7 +88,8 @@ class TiltAlignmentFragment : Fragment() {
     }
 
     // Create an observer for check connection with bluetooth state variable in bluetooth service.
-    // If it get false, create an Snackbar that would warning user that state.
+    // If it get false, create an Snackbar AND dialog that would warning user that state.
+    lateinit var dialogBluetooth: AlertDialog
     private val checkConnection = Observer<Boolean?> {
         try {
             if (it != true) {
@@ -162,7 +160,7 @@ class TiltAlignmentFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    // if bluetooth is connected, disconnect before connection, and make an reconnection.
+    // if bluetooth is turn on, make an reconnection.
     private fun reconnect() {
         if(startBluetooth()) {
             (activity as MainActivity).hc05.reconnect(tiltAlignmentViewModel.bluetoothMac.value.toString())

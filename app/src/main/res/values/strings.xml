@@ -69,7 +69,6 @@
 
     <!-- end Alignment -->
     <string name="congrats_instruction">Parabéns!</string>
-    <string name="phisical_button_instruction">Botão Manual</string>
     <string name="end_instruction">Agora você pode iniciar o Rastreamento!</string>
     <string name="start_button">Iniciar Rastreamento</string>
 
@@ -89,8 +88,6 @@
     <!-- Extra -->
 
     <string name="todo_string">TODO</string>
-    <string name="helper_mag">Para mais informações clique em (?)</string>
-    <string name="helper_gps">Clique no marcador para pegar seu GPS atual.</string>
     <string name="deletar_perfil_button">Deletar Perfil</string>
     <string name="button_confirm_edit">Confirmar Alterações</string>
 
@@ -108,9 +105,8 @@
     <string name="connecting_status">Conectando</string>
     <string name="settings_fragment_title">Configurações</string>
 
-
-    <string name="forcing_disconnection">Bluetooth Desconectado</string>
-    <string name="fail_connection">Não foi possível se connectar</string>
+    <string name="fail_connection">Não foi possível se connectar com o dispositivo.
+        \nVocê deseja se reconectar?</string>
 
     <string name="bt_snack_action">Reconectar</string>
     <string name="calibrate">Calibrar Bússola</string>
@@ -122,6 +118,7 @@
         \n\nAtenção, você não poderá parar a calibração no meio do processo.</string>
     <string name="decline_calibrate">Recusar</string>
     <string name="accept_calibrate">Calibrar</string>
-    <string name="blutooth_error_title">Erro no Bluetooth</string>
+    <string name="blutooth_error_title">Easy Tracker Desconectado</string>
+    <string name="forcing_disconnection">Easy Tracker Disconnected</string>
 
 </resources>

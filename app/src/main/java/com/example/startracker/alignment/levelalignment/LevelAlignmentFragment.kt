@@ -1,6 +1,7 @@
 package com.example.startracker.alignment.levelalignment
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
@@ -79,25 +80,30 @@ class LevelAlignmentFragment : Fragment() {
 
     // Create an observer for check connection with bluetooth state variable in bluetooth service.
     // If it get false, create an Snackbar that would warning user that state.
+    lateinit var dialogBluetooth: AlertDialog
     private val checkConnection = Observer<Boolean?> {
         try {
             if (it != true) {
                 try {
-                    btSnack = Snackbar.make(
-                        requireView(),
-                        getString(R.string.fail_connection),
-                        Snackbar.LENGTH_LONG,
-                    )
-                    btSnack.setAction(getString(R.string.bt_snack_action)) {
-                        if (startBluetooth()) {
-                            reconnect()
+
+                    //indicate if was an disconnection fail or if just cant get connected
+                    dialogBluetooth = AlertDialog.Builder(requireContext())
+                        .setTitle(resources.getString(R.string.blutooth_error_title))
+                        .setMessage(getString(R.string.fail_connection))
+                        .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
+                            // Respond to negative button press
+                        }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
+                            if(startBluetooth()){
+                                reconnect()
+                            }
                         }
-                    }
-                    btSnack.show()
-                } catch (e: java.lang.Exception) {
+                        .create()
+                    dialogBluetooth.show()
+
+                }catch (e: java.lang.Exception){
                     Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
                 }
-            } else if (it == true) {
+            }else if(it == true){
                 try {
                     btSnack = Snackbar.make(
                         requireView(),
@@ -105,7 +111,7 @@ class LevelAlignmentFragment : Fragment() {
                         Snackbar.LENGTH_SHORT,
                     )
                     btSnack.show()
-                } catch (e: java.lang.Exception) {
+                }catch (e: java.lang.Exception){
                     Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
                 }
             }
@@ -146,7 +152,7 @@ class LevelAlignmentFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    // if bluetooth is connected, disconnect before connection, and make an reconnection.
+    // if bluetooth is turn on, make an reconnection.
     private fun reconnect() {
         if (startBluetooth()) {
             (activity as MainActivity).hc05.reconnect(levelAlignmentViewModel.bluetoothMac.value.toString())

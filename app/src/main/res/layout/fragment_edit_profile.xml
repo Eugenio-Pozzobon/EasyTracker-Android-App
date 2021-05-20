@@ -40,7 +40,6 @@
                 android:textColorHint="@color/white"
                 app:helperTextEnabled="true"
                 app:helperTextTextColor="@color/white"
-                app:helperText="@string/helper_mag"
 
                 app:hintTextColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout"
@@ -96,7 +95,6 @@
 
                     app:helperTextEnabled="true"
                     app:helperTextTextColor="@color/white"
-                    app:helperText="@string/helper_gps"
 
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/image_gps_circle"
@@ -151,7 +149,6 @@
                 app:suffixText="@string/mag_degree"
                 android:textColorHint="@color/white"
                 app:helperTextEnabled="true"
-                app:helperText="@string/helper_mag"
                 app:helperTextTextColor="@color/white"
 
                 app:hintTextColor="@color/white"

@@ -1,6 +1,7 @@
 package com.example.startracker.currentprofile
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
@@ -38,6 +39,8 @@ class CurrentProfileFragment : Fragment() {
     var greenButtonColor by Delegates.notNull<Int>()
     var whiteTextColor by Delegates.notNull<Int>()
     var yellowButtonColor by Delegates.notNull<Int>()
+
+    lateinit var dialogBluetooth: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -167,24 +170,21 @@ class CurrentProfileFragment : Fragment() {
             try {
                 //indicate if was an disconnection fail or if just cant get connected
                 if (forceDisconnection) {
-                    btSnack = Snackbar.make(
-                        requireView(),
-                        getString(R.string.forcing_disconnection),
-                        Snackbar.LENGTH_SHORT
-                    )
+                    //don't notify user
                 } else {
-                    btSnack = Snackbar.make(
-                        requireView(),
-                        getString(R.string.fail_connection),
-                        Snackbar.LENGTH_SHORT,
-                    )
+                    dialogBluetooth = AlertDialog.Builder(requireContext())
+                        .setTitle(resources.getString(R.string.blutooth_error_title))
+                        .setMessage(getString(R.string.fail_connection))
+                        .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
+                            // Respond to negative button press
+                        }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
+                            if(startBluetooth()){
+                                reconnect()
+                            }
+                        }
+                        .create()
                 }
-                btSnack.setAction(getString(R.string.bt_snack_action)) {
-                    if (startBluetooth()) {
-                        reconnect()
-                    }
-                }
-                btSnack.show()
+                dialogBluetooth.show()
             } catch (e: Exception) {
                 Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
             }

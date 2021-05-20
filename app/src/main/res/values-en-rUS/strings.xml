@@ -21,17 +21,15 @@
     <string name="name_hint">Name</string>
     <string name="nome_do_perfil_de_localiza_o">Profile Name</string>
     <string name="profile_start_button">Init Alignment</string>
-    <string name="profile_instructions_check">" "</string>
+    <string name="profile_instructions_check">" Check if the values above are correct so then you can start align yout device with north pole"</string>
     <string name="start_aligment">Init Alignment</string>
     <string name="clearProfile">Delete Profile</string>
     <string name="clearProfiles">Delete All Profiles</string>
     <string name="ok_button">Check</string>
-    <string name="alignment_instruction">" "</string>
-    <string name="polar_instruction">" "</string>
-    <string name="tilt_instruction">" "</string>
+    <string name="alignment_instruction">Tilt the platform to the left/right/front/back to balance it</string>
+    <string name="tilt_instruction">Tilt the platform to the front/back to adjust elevation</string>
     <string name="congrats_instruction">Congratulations!</string>
-    <string name="phisical_button_instruction">" "</string>
-    <string name="end_instruction">" "</string>
+    <string name="end_instruction">" Now, you can start tracking"</string>
     <string name="start_button">Init Tracker</string>
     <string name="debug_fragment_title">Debug</string>
     <string name="debug_fragment_1">Init Debug</string>
@@ -40,8 +38,6 @@
     <string name="howtouse_fragment_title">Instructions</string>
     <string name="howtouse_fragment_1">" "</string>
     <string name="todo_string">TODO</string>
-    <string name="helper_mag">" "</string>
-    <string name="helper_gps">" "</string>
     <string name="deletar_perfil_button">Delete Profile</string>
     <string name="button_confirm_edit">Confirm Changes</string>
     <string name="end_alignment_title">(4/4) Start Track</string>
@@ -67,11 +63,12 @@
     <string name="calibrate">Calibrate Compass</string>
     <string name="reconnect">Reconnect</string>
     <string name="done_connection">Connected!</string>
-    <string name="calibrate_compass_title">Calibrar Bússola</string>
-    <string name="calibrating_compass_title">Calibrando Bússola</string>
+    <string name="calibrate_compass_title">Calibrate Compass</string>
+    <string name="calibrating_compass_title">Calibrating Compass</string>
     <string name="calibrate_compass_message">Recomendamos que você realize a calibração da bússola para evitar erros uma vez que você ainda não executou a calibração.</string>
-    <string name="decline_calibrate">Recusar</string>
-    <string name="accept_calibrate">Calibrar</string>
-    <string name="blutooth_error_title">Erro no Bluetooth</string>
+    <string name="decline_calibrate">Decline</string>
+    <string name="accept_calibrate">Calibrate</string>
+    <string name="blutooth_error_title">Bluetooth Error</string>
+    <string name="polar_instruction">Move the platform horizontally to align it with the North pole</string>
 
 </resources>

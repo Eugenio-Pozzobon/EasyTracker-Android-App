@@ -42,7 +42,6 @@
                 android:inputType="numberDecimal"
 
                 android:textColorHint="@color/white"
-                app:helperText="@string/helper_mag"
                 app:helperTextEnabled="true"
                 app:helperTextTextColor="@color/white"
 
@@ -97,7 +96,6 @@
 
                     android:textColorHint="@color/white"
                     app:helperTextEnabled="true"
-                    app:helperText="@string/helper_gps"
                     app:helperTextTextColor="@color/white"
                     app:counterTextColor="@color/white"
                     app:hintTextColor="@color/white"
@@ -155,7 +153,6 @@
                 android:inputType="numberDecimal"
 
                 android:textColorHint="@color/white"
-                app:helperText="@string/helper_mag"
                 app:helperTextEnabled="true"
                 app:helperTextTextColor="@color/white"
 
