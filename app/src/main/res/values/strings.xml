@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Easy Tracker</string>
 
     <!-- Menu Strings -->
@@ -16,8 +16,15 @@
     <!-- Welcome -->
     <string name="welcome_fragment_title">Start Tracker</string>
     <string name="welcome_fragment_button">Iniciar</string>
-    <string name="welcome_fragment_text">Bem vindo ao Aplicativo Rastreador de Estrelas! Você deverá preencher a próxima tela com
-        suas informações de localização, e então você poderá iniciar o rastreio. Em caso de dúvidas, cheque o menu de Instruções. Boa sorte!
+    <string name="welcome_fragment_text">Bem vindo ao Aplicativo! Você deverá preencher a próxima tela com
+        suas informações de localização, e então você poderá iniciar o rastreio de estrelas.
+        \n
+        \nAntes de cemeçar, ligue a plataforma <i>Easy Tracker</i> e ative o bluetooth do seu dispositivo para realizar o pareamento.
+        \n
+        \n<b><i>O nome para parear deverá ser HC-05 e a senha padrão é 1234.</i></b>
+        \n
+        \nApós o pareamento você pode começar a usar este aplicativo clicando no botão abaixo.
+        Em caso de dúvidas, cheque o menu de Instruções. Boa sorte!
     </string>
 
     <!-- New Profile -->
@@ -89,9 +96,9 @@
 
 
     <string name="end_alignment_title">(4/4) Finalizar e Rastrear</string>
-    <string name="tilt_alignment_title">(3/4) Elevação</string>
+    <string name="tilt_alignment_title" tools:ignore="TypographyFractions">(3/4) Elevação</string>
     <string name="polar_alignment_title">(2/4) Azimute</string>
-    <string name="level_alignment_title">(1/4) Nível</string>
+    <string name="level_alignment_title" tools:ignore="TypographyFractions">(1/4) Nível</string>
     <string name="north">N</string>
     <string name="sulfix_grausdecimais">(DD)</string>
     <string name="mag_degree">°</string>
@@ -115,5 +122,6 @@
         \n\nAtenção, você não poderá parar a calibração no meio do processo.</string>
     <string name="decline_calibrate">Recusar</string>
     <string name="accept_calibrate">Calibrar</string>
+    <string name="blutooth_error_title">Erro no Bluetooth</string>
 
 </resources>

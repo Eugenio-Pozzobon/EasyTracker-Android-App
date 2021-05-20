@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/debugFragment"
-        android:name="com.example.startracker.DebugFragment"
+        android:name="com.example.startracker.debug.DebugFragment"
         android:label="Debug"
         tools:layout="@layout/fragment_debug" />
     <fragment

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 
+// File with functions used in all code
 
 /**
  * This method converts dp unit to equivalent pixels, depending on device density.

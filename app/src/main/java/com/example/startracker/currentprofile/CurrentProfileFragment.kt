@@ -43,24 +43,23 @@ class CurrentProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         // make the data binding for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_current_profile, container, false)
 
+        // crate and start view model and it variables.
         val application = requireNotNull(this.activity).application
-
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
-
         val viewModelFactory = CurrentProfileViewModelFactory(dataSource, application)
 
         currentProfileViewModel = ViewModelProvider(this, viewModelFactory).get(
             CurrentProfileViewModel::class.java
         )
-
         binding.currentProfileViewModel = currentProfileViewModel
-
         binding.lifecycleOwner = this
 
+        //get Colors info
         redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
@@ -90,13 +89,13 @@ class CurrentProfileFragment : Fragment() {
         })
 
         //Connect bluetooth device when screen load
-//        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
-//            if (it != "") {
-//                if (startBluetooth()) {
-//                    connectWithBluetoothDevice()
-//                }
-//            }
-//        })
+        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
+            if (it != "") {
+                if (startBluetooth()) {
+                    connectWithBluetoothDevice()
+                }
+            }
+        })
 
         //check if is a new user, so then put at the welcome screen
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
@@ -107,14 +106,15 @@ class CurrentProfileFragment : Fragment() {
             }
         })
 
+        //connect with bluetooth device
         binding.buttonConnect.setOnClickListener() {
-//            if (startBluetooth()) {
-//                connectWithBluetoothDevice()
-//            }
-            currentProfileViewModel.onConnect()
-            binding.buttonConnect.setBackgroundColor(greenButtonColor)
-            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
-            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+            if (startBluetooth()) {
+                connectWithBluetoothDevice()
+            }
+//            currentProfileViewModel.onConnect()
+//            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+//            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+//            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors
@@ -125,14 +125,13 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonStartAlignment.setTextColor(whiteTextColor)
         binding.buttonConnect.text = getString(R.string.connect_status_init)
 
-        // linked bluetooth with view model
-
         setHasOptionsMenu(true)
         return binding.root
 
     }
 
-
+    // Check if the device has bluetooth and return if it is enable.
+    // If not, call an Intent that is handle in onActivityResult()
     private fun startBluetooth(): Boolean {
 
         var btOperationState = false
@@ -158,12 +157,15 @@ class CurrentProfileFragment : Fragment() {
         (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
     }
 
+    // Create an observer for check connection with bluetooth state variable in bluetooth service.
+    // If it get false, create an Snackbar that would warning user that state.
     private val checkConnection = Observer<Boolean?> {
         if (it == true) {
             _connectedWithBluetoothDevice()
         } else if (it == false) {
             _notConnectedWithBluetoothDevice()
             try {
+                //indicate if was an disconnection fail or if just cant get connected
                 if (forceDisconnection) {
                     btSnack = Snackbar.make(
                         requireView(),
@@ -189,6 +191,7 @@ class CurrentProfileFragment : Fragment() {
         }
     }
 
+    // is bluetooth is connected, disconnect before connection, and make an reconnection.
     private fun reconnect() {
         if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
             (activity as MainActivity).hc05.disconnect()
@@ -196,6 +199,8 @@ class CurrentProfileFragment : Fragment() {
         connectWithBluetoothDevice()
     }
 
+    // Indicate to viewModel that hc05 is connected and this would set the "Start Alignment" button as visible.
+    // Modify others buttons as it indicate the connection state.
     private fun _connectedWithBluetoothDevice() {
         currentProfileViewModel.onConnect()
         binding.buttonConnect.setBackgroundColor(greenButtonColor)
@@ -203,6 +208,8 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
     }
 
+    // Indicate to viewModel that hc05 is NOT connected and this would set the "Start Alignment" button as NOT visible.
+    // Modify others buttons as it indicate the connection state
     private fun _notConnectedWithBluetoothDevice() {
         currentProfileViewModel.notConnect()
         binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
@@ -211,6 +218,7 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonConnect.text = getString(R.string.connect_status_init)
     }
 
+    // This function is android based for review an Activity intent.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_ENABLE_BT ->
@@ -223,13 +231,13 @@ class CurrentProfileFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    //inflate the overflow menu
+    // inflate the overflow menu.
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.overflow_menu_currentprofile, menu)
     }
 
-    //handle the user selection at overflow menu
+    //handle the user selection at the menus.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.newProfileFragment) {
@@ -250,6 +258,8 @@ class CurrentProfileFragment : Fragment() {
                 super.onOptionsItemSelected(item)
     }
 
+
+    //Check Fragment Lifecycle info https://abhiandroid.com/ui/fragment-lifecycle-example-android-studio.html
     override fun onResume() {
         super.onResume()
         forceDisconnection = false

@@ -21,19 +21,21 @@ class PairedDevicesViewModel(
     val onUpdated: LiveData<Boolean>
         get() = _onUpdated
 
-    lateinit var getprofile:Profile
+    lateinit var getprofile: Profile
 
-    init{
+    init {
         _onUpdated.value = false
         loadProfile()
     }
 
+    //load last profile updated in database
     private fun loadProfile() {
         viewModelScope.launch {
             getprofile = getLastProfile()
         }
     }
 
+    //insert an new profile
     private suspend fun insert(profile: Profile) {
 
         withContext(Dispatchers.IO) {
@@ -41,6 +43,9 @@ class PairedDevicesViewModel(
         }
     }
 
+    // get last profile and store this info in a local variable
+    // delete last profile when get, because if user back to previous screen,
+    //  it will save an duplicate
     private suspend fun getLastProfile(): Profile {
         var getprofile: Profile
         withContext(Dispatchers.IO) {
@@ -50,12 +55,14 @@ class PairedDevicesViewModel(
         return getprofile
     }
 
+    // delete last profile
     private suspend fun deleteLastProfile() {
         withContext(Dispatchers.IO) {
             database.deleteLastProfile(key = true)
         }
     }
 
+    // update profile local variable and insert it at database
     fun updateLastProfileWithBluetooth(address: String) {
         viewModelScope.launch {
             getprofile.btAddress = address
@@ -64,7 +71,8 @@ class PairedDevicesViewModel(
         }
     }
 
-    fun doneChangeScreen(){
+    //reset viewModel variables when fragment get paused
+    fun doneChangeScreen() {
         _onUpdated.value = false
     }
 }

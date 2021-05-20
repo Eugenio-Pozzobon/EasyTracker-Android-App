@@ -1,13 +1,14 @@
-package com.example.startracker.paireddevices;
+package com.example.startracker.paireddevices
 
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.startracker.database.ProfileDatabaseDao;
+import com.example.startracker.database.ProfileDatabaseDao
 
-import kotlin.Suppress;
+import kotlin.Suppress
 
+//Use the view model factory for start ViewModels with parameters that is the app and profile database
 class PairedDevicesViewModelFactory(
     private val dataSource:ProfileDatabaseDao,
     private val application:Application

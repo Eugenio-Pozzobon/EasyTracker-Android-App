@@ -29,19 +29,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var destinationHandler: NavDestination
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // set the Android Night Mode as default for the app
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
 
+        // get toolbar instance
         toolbar = binding.toolbar
         setSupportActionBar(toolbar)
 
         drawerLayout = binding.drawerLayout
 
+        //Get and setup navcontroller that will make the navigation between fragments
         val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         val navController = navHostFragment.navController
         val graphInflater = navHostFragment.navController.navInflater
@@ -51,21 +55,32 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController)
 
         //change home screen in agreement with the case of new user or not
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+        //TODO: check if this function can be removed
+        navController.addOnDestinationChangedListener { nc: NavController,
+                                                        nd: NavDestination,
+                                                        args: Bundle? ->
             if (nd.id == R.id.currentProfileFragment) {
                 navGraph.startDestination = R.id.currentProfileFragment
                 setDrawer_locked()
             }
         }
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+
+        // check if the screen is for new user, and remove/locking
+        // navigation parts of the app, making it clean
+        navController.addOnDestinationChangedListener { nc: NavController,
+                                                        nd: NavDestination,
+                                                        args: Bundle? ->
             if (nd.id == R.id.welcomeFragment) {
                 navGraph.startDestination = R.id.welcomeFragment
                 setDrawer_locked()
+                toolbar.setNavigationIcon(null)
             }
         }
 
         //set the back button menu to be hide at home screen
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+        navController.addOnDestinationChangedListener { nc: NavController,
+                                                        nd: NavDestination,
+                                                        args: Bundle? ->
             destinationHandler = nd
             if (nd.id == nc.graph.startDestination) {
                 //setDrawer_locked()
@@ -86,11 +101,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     //set the back button menu to be displayed or not
-    fun setDrawer_locked(){
+    fun setDrawer_locked() {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         //toolbar.setNavigationIcon(null)
     }
-    fun setDrawer_unLocked(){
+
+    fun setDrawer_unLocked() {
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
@@ -101,9 +117,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //block native back button for ensure that the new user wont back to the welcome screen manualy and/or replicate the same profile
+    //block native back button for ensure that the new user wont back to
+    // the welcome screen manualy and/or replicate the same profile
     private fun shouldAllowBack(): Boolean {
-        if(destinationHandler.id == R.id.currentProfileFragment){
+        if (destinationHandler.id == R.id.currentProfileFragment) {
             return false
         }
 
@@ -111,15 +128,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Hide Keyboard when user touch outside
+    //https://stackoverflow.com/questions/8697499/
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val view: View? = currentFocus
-        if (view != null && (ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE) && view is EditText
+        if (view != null && (ev.action == MotionEvent.ACTION_UP ||
+                    ev.action == MotionEvent.ACTION_MOVE) && view is EditText
         ) {
             val scrcoords = IntArray(2)
             view.getLocationOnScreen(scrcoords)
             val x: Float = ev.rawX + view.getLeft() - scrcoords[0]
             val y: Float = ev.rawY + view.getTop() - scrcoords[1]
-            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom()) (this.getSystemService(
+            if (x < view.getLeft() || x > view.getRight() || y < view.getTop()
+                || y > view.getBottom()
+            ) (this.getSystemService(
                 Context.INPUT_METHOD_SERVICE
             ) as InputMethodManager).hideSoftInputFromWindow(
                 this.window.decorView.applicationWindowToken, 0

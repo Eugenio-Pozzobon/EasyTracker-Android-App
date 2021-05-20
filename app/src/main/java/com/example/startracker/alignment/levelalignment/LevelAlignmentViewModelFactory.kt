@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.startracker.alignment.levelalignment.LevelAlignmentViewModel
 import com.example.startracker.database.ProfileDatabaseDao
 
+//Use the view model factory for start ViewModels with parameters that is the app and profile database
 class LevelAlignmentViewModelFactory(
     private val dataSource: ProfileDatabaseDao,
     private val application: Application

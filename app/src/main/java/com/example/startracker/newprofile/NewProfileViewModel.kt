@@ -20,25 +20,6 @@ class NewProfileViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    /**
-     * viewModelJob allows us to cancel all coroutines started by this ViewModel.
-
-    private var viewModelJob = Job()
-
-    /**
-     * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
-     *
-     * Because we pass it [viewModelJob], any coroutine started in this uiScope can be cancelled
-     * by calling `viewModelJob.cancel()`
-     *
-     * By default, all coroutines started in uiScope will launch in [Dispatchers.Main] which is
-     * the main thread on Android. This is a sensible default because most coroutines started by
-     * a [ViewModel] update the UI after performing some processing.
-    */
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-     */
-
-
     var profileName = MutableLiveData<String>()
     var gpsData = MutableLiveData<String>()
     var magDeclination = MutableLiveData<String>()
@@ -49,6 +30,7 @@ class NewProfileViewModel(
     val onConnected: LiveData<Boolean>
         get() = _onConnected
 
+    // signalize to view model the current state of fragment
     fun doneOnConnected(){
         _onConnected.value = true
     }
@@ -63,6 +45,8 @@ class NewProfileViewModel(
 
     }
 
+    //update last profile at database making it not more the last profile,
+    // so now the new profile can get this condition
     private suspend fun updateLastProfile(){
         withContext(Dispatchers.IO) {
             val lastProfile = database.getLastProfile(true)
@@ -73,20 +57,20 @@ class NewProfileViewModel(
         }
     }
 
-
+    // update database
     private suspend fun update(profile: Profile) {
         withContext(Dispatchers.IO) {
             database.update(profile)
         }
     }
 
+    // insert new profile in database
     private suspend fun insert(profile: Profile) {
         withContext(Dispatchers.IO) {
             database.insert(profile)
         }
     }
 
-//    Checa se os valores estão validadaos
     private var _setNameError = MutableLiveData<Boolean>()
     private var _setGpsDataError = MutableLiveData<Boolean>()
     private var _setMagDeclinationError = MutableLiveData<Boolean>()
@@ -98,6 +82,7 @@ class NewProfileViewModel(
     val setMagDeclinationError: LiveData<Boolean>
         get() = _setMagDeclinationError
 
+    // Check if all values are valid, i.e., isn't an null or empty string
     private fun checkValues(): Boolean {
         if(("null" == (profileName.value.toString())) || ("" == (profileName.value.toString()))){
             _setNameError.value = true
@@ -121,6 +106,7 @@ class NewProfileViewModel(
         return true
     }
 
+    // handle intent for go to paired devices, saving the current data in database if it is valid
     fun onConnect(){
         viewModelScope.launch {
             if (checkValues()) {
@@ -139,7 +125,7 @@ class NewProfileViewModel(
         }
     }
 
-
+    // public function for fragment update view model when the user get GPS lat
     fun updateGps(latitude: String){
         gpsData.value = latitude
     }

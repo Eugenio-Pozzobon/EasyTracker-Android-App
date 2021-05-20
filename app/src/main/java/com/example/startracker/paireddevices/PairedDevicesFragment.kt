@@ -23,37 +23,31 @@ import java.util.*
 class PairedDevicesFragment : Fragment() {
 
     lateinit var binding: FragmentPairedDevicesBinding
-
     lateinit var pairedDevicesViewModel: PairedDevicesViewModel
-
     lateinit var btAdapter: BluetoothAdapter
     lateinit var btpairedDevices: Set<BluetoothDevice>
-
-    companion object {
-        val EXTRA_ADRESS: String = "Device_address"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_paired_devices, container, false
         )
 
+        // create view model
         val application = requireNotNull(this.activity).application
-
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
-
         val viewModelFactory = PairedDevicesViewModelFactory(dataSource, application)
 
         pairedDevicesViewModel =
             ViewModelProvider(this, viewModelFactory).get(PairedDevicesViewModel::class.java)
-
         binding.lifecycleOwner = this
 
-
+        //check if user has bluetooth, if yes,
+        // get a list of bluetooth paired devices and show this in an list with List Adapter
         if (BluetoothAdapter.getDefaultAdapter() != null) {
             btAdapter = BluetoothAdapter.getDefaultAdapter()
             btpairedDevices = btAdapter.bondedDevices
@@ -66,10 +60,10 @@ class PairedDevicesFragment : Fragment() {
                     Log.i("DEBUGAPP", "" + device)
                 }
             } else {
-                Toast.makeText(context, "No Paired Devices", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "No Paired Devices", Toast.LENGTH_LONG).show()
             }
 
-
+            // create an Array Adapter with simple list item
             val adapter =
                 context?.let {
                     ArrayAdapter(
@@ -79,21 +73,23 @@ class PairedDevicesFragment : Fragment() {
                     )
                 }
 
+            //bind adapter and add a click listener for any item
             binding.deviceList.adapter = adapter
             binding.deviceList.onItemClickListener =
                 AdapterView.OnItemClickListener { _, _, position, _ ->
                     val device: BluetoothDevice = listDevices[position]
                     val address: String = device.address
-                    Log.i("DEBUGAPP", address)
                     pairedDevicesViewModel.updateLastProfileWithBluetooth(address)
                 }
+
         } else {
-            this.findNavController()
-                .navigate(R.id.action_pairedDevicesFragment_to_currentProfileFragment)
-            pairedDevicesViewModel.doneChangeScreen()
+            //if there is no bluetooth adapter, save a null string with address
+            pairedDevicesViewModel.updateLastProfileWithBluetooth("")
             Log.e("DEBUGBLUETOOTH", "DONT HAVE BLUETOOTH ADAPTER")
         }
 
+        // when viewModel confirm that profile has been saved,
+        // change to next screen loading current profile fragment
         pairedDevicesViewModel.onUpdated.observe(viewLifecycleOwner, {
             if (it) {
                 this.findNavController()

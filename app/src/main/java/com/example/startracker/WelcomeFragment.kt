@@ -3,6 +3,7 @@ package com.example.startracker
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.startracker.databinding.FragmentWelcomeBinding
@@ -10,16 +11,18 @@ import com.example.startracker.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
 
-    private var _binding: FragmentWelcomeBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: FragmentWelcomeBinding
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_welcome, container, false
+        )
 
+        //navigate when user click in the init button
         binding.initbutton.setOnClickListener{ v: View ->
             v.findNavController().navigate(R.id.action_welcomeFragment_to_newProfileFragment)
         }
@@ -32,14 +35,10 @@ class WelcomeFragment : Fragment() {
 
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
+        //block user interaction with main nav menu
         (activity as MainActivity?)?.setDrawer_locked()
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }

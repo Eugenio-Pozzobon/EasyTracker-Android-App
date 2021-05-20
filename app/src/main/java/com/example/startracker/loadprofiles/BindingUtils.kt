@@ -5,6 +5,9 @@ import androidx.databinding.BindingAdapter
 import com.example.startracker.convertLongToDateString
 import com.example.startracker.database.Profile
 
+// use bind adapters to Show List of profiles in database.
+// Show Profile Name and Profile Save Data
+
 @BindingAdapter("ProfileName")
 fun TextView.setProfileNameString(item: Profile?) {
     item?.let {

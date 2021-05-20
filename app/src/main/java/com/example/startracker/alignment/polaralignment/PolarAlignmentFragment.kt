@@ -41,7 +41,7 @@ class PolarAlignmentFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_polar_alignment, container, false
@@ -220,7 +220,7 @@ class PolarAlignmentFragment : Fragment() {
                 val countDown = object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 500) {
                     override fun onTick(millisUntilFinished: Long) {
                         valueCountdown =
-                            (millisUntilFinished / 1000).toInt() + 1 - (AUTO_DISMISS_MILLIS / 1000 - correction).toInt()
+                            (millisUntilFinished / 1000).toInt() + 1 - (AUTO_DISMISS_MILLIS / 1000 - correction)
                         dialog.setMessage(
                             "Rotacione a plataforma horizontalmente pelos próximos "
                                     + valueCountdown.toString() + " segundos"
@@ -261,12 +261,6 @@ class PolarAlignmentFragment : Fragment() {
         super.onPause()
         (activity as MainActivity).hc05.updatedHandle.removeObserver(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
-        (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
     }
 
 }

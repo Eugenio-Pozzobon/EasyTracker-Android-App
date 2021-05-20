@@ -1,4 +1,4 @@
-package com.example.startracker.editprofile;
+package com.example.startracker.editprofile
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.startracker.database.ProfileDatabaseDao
 import com.example.startracker.newprofile.EditProfileViewModel
 
+//Use the view model factory for start ViewModels with parameters that is the app and profile database
 @Suppress("UNCHECKED_CAST")
 class EditProfileViewModelFactory (
     private val dataSource:ProfileDatabaseDao,

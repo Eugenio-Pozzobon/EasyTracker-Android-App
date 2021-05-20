@@ -16,33 +16,24 @@ import java.io.OutputStream
 import java.util.*
 import kotlin.concurrent.thread
 
-/**
- * A group of *members*.
- *
- * This class has no useful logic; it's just a documentation example.
- *
- * @param T the type of a member in this group.
- * @property name the name of this group.
- * @constructor Creates an empty group.
- */
 class BluetoothService {
 
     // Defines several constants used when transmitting messages between the
-// service and the UI.
+    // service and the UI.
     val MESSAGE_READ: Int = 0
-    val MESSAGE_WRITE: Int = 1
-    val MESSAGE_TOAST: Int = 2
 
     private var _mmIsConnected = MutableLiveData<Boolean?>()
     val mmIsConnected: LiveData<Boolean?>
         get() = _mmIsConnected
 
+    // raw data get in bluetooth connection
     private var _rawDataRoll: Int = 0
     private var _rawDataPitch: Int = 0
     private var _rawDataYaw: Int = 0
     private var _rawDataCRC: Int = 0
     private var _rawDataError: Boolean = false
 
+    // data converted from bluetooth = raw/10
     private var _dataRoll = MutableLiveData<Float>()
     val dataRoll: LiveData<Float>
         get() = _dataRoll
@@ -58,16 +49,18 @@ class BluetoothService {
     private var _dataError1 = MutableLiveData<Boolean>()
     val dataError1: LiveData<Boolean>
         get() = _dataError1
-// ... (Add other message types here as needed.)
 
     private var _updatedHandle = MutableLiveData<Boolean>()
     val updatedHandle: LiveData<Boolean>
         get() = _updatedHandle
 
+    // buffer read in bluetooth
     var stringBuffer: String = "0,0,0,0"
 
+    // bluetooth address of device
     private var mmDeviceMAC: String = ""
 
+    // thread that read bluetooth buffer data
     lateinit var RunnableThread: ConnectedThread
 
     init {
@@ -75,16 +68,16 @@ class BluetoothService {
         _updatedHandle.value = false
     }
 
-    /**
-     * The Handler that gets information back from the BluetoothService
-     */
+    // The Handler that gets information back from the BluetoothService
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
-            val bundle: Bundle = msg.data;
+            val bundle: Bundle = msg.data
 
+            // get buffer String
             stringBuffer = bundle.getString("key1", stringBuffer)
-
             val dataString = stringBuffer.split(",").toTypedArray()
+
+            // check if buffer array have only 4 values
             if (dataString.size == 4) {
                 try {
                     _rawDataRoll = dataString[0].toInt()
@@ -95,6 +88,8 @@ class BluetoothService {
                 } catch (e: Exception) {
                     Log.e("DEBUGCONNECTION", "Data Values with error", e)
                 }
+                // launch another thread for update UI values IF this values match CRC
+                // CRC is just a sum with the other values
                 thread {
                     if ((_rawDataRoll + _rawDataPitch + _rawDataYaw) == _rawDataCRC) {
                         _dataRoll.postValue(_rawDataRoll.toFloat() / 10)
@@ -108,23 +103,41 @@ class BluetoothService {
     }
 
     /**
-     * Adds a [member] to this group.
-     * @return the new size of the group.
+     * Connect with a bluetooth device specified by your address
+     * Launch this in a separated thread
+     * @param DeviceMAC that is the bluetooth address
      */
     fun connect(DeviceMAC: String) {
         thread {
             try {
-                connecting(DeviceMAC)
+                if (_mmIsConnected.value != true) {
+                    mmDeviceMAC = DeviceMAC
+                    RunnableThread = ConnectedThread(DeviceMAC, handler)
+                    RunnableThread.connectThread()
+                    _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
+                    if (RunnableThread.mmThreadIsConnected) {
+                        RunnableThread.run()
+                    } else {
+                        _mmIsConnected.postValue(false)
+                    }
+                }
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
         }
     }
 
+    /**
+     * Disconnect with the current bluetooth device
+     * Launch this in a separated thread
+     */
     fun disconnect() {
         thread {
             try {
-                disconnecting()
+                if (_mmIsConnected.value == true) {
+                    RunnableThread.disconnectThread()
+                    _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
+                }
                 _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
@@ -132,10 +145,15 @@ class BluetoothService {
         }
     }
 
+    /**
+     * Reconnect with a bluetooth device specified by your address
+     * Launch this in a separated thread
+     * @param DeviceMAC that is the bluetooth address
+     */
     fun reconnect(DeviceMAC: String) {
         thread {
             try {
-                if (_mmIsConnected.value == true) {
+                if (_mmIsConnected.value == true) { //disconect just if it is connected
                     RunnableThread.disconnectThread()
                 }
                 mmDeviceMAC = DeviceMAC
@@ -153,63 +171,57 @@ class BluetoothService {
         }
     }
 
-    private fun connecting(DeviceMAC: String) {
-        if (_mmIsConnected.value != true) {
-            mmDeviceMAC = DeviceMAC
-            RunnableThread = ConnectedThread(DeviceMAC, handler)
-            RunnableThread.connectThread()
-            _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
-            if (RunnableThread.mmThreadIsConnected) {
-                RunnableThread.run()
-            } else {
-                _mmIsConnected.postValue(false)
-            }
-        }
-    }
-
-    private fun disconnecting() {
-        if (_mmIsConnected.value == true) {
-            RunnableThread.disconnectThread()
-            _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
-        }
-    }
-
+    //class that stands for run a thread for read and write in bluetooth device
     inner class ConnectedThread(var DeviceMAC: String, var handler: Handler) : Thread() {
 
+        // bluetooth variables
         private lateinit var mmDevice: BluetoothDevice
         private lateinit var mmAdapter: BluetoothAdapter
-
+        private lateinit var mmInStream: InputStream
+        private lateinit var mmOutStream: OutputStream
         lateinit var mmSocket: BluetoothSocket
+
+        //state of connection
         var mmThreadIsConnected = false
         var mmThreadIsDesconnecting = false
 
         // Unique UUID for this application
+        // https://stackoverflow.com/questions/32130529/
         val myUUID: UUID? = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
-        private lateinit var mmInStream: InputStream
-        private lateinit var mmOutStream: OutputStream
+        // runs the thread for communicate with HC05
         override fun run() {
 
+            // check if it still connected
             if (mmThreadIsConnected == true) {
 
-                // Keep listening to the InputStream until an exception occurs.
                 var getWriteTime: Long = System.currentTimeMillis()
                 val buffer = ByteArray(1)
                 var bytes: Int
-                var readMessage: String = ""
-                var readChar: String = ""
+                var readMessage = ""
+                var readChar: String
 
                 var getTime: Long = System.currentTimeMillis()
                 while (true) {
+                    // Keep listening to the InputStream until an exception occurs.
                     try {
                         //ensure that the buffer is allways clean
+                        //delaytime is the delay that ui wait for read next buffer.
                         var delaytime = 10
                         if ((mmInStream.available() > 300)) {
+                            // if the buffer is overload, i.e, is bigger then 230 bytes,
+                            // reduce the delay so the UI can update faster enough
                             delaytime = 1
                         }
-                        if ((mmInStream.available() > 0) && ((System.currentTimeMillis() - getTime) > delaytime)) {
+                        //if available and also get a delay between reeds
+                        if ((mmInStream.available() > 0) &&
+                            ((System.currentTimeMillis() - getTime) > delaytime)) {
+
                             bytes = mmInStream.read(buffer) //read bytes from input buffer
-                            readChar = String(buffer, 0, bytes)
+                            readChar = String(buffer, 0, bytes) //get Char
+
+                            //if char isnt '\n' then join all char recieved,
+                            // mounting the data string. Stop when '\n' and send it through handler
                             if (readChar == "\n") {
                                 getTime = System.currentTimeMillis()
                                 val readMsg = handler.obtainMessage(MESSAGE_READ)
@@ -224,6 +236,7 @@ class BluetoothService {
                         }
                     } catch (e: IOException) {
                         Log.e("DEBUGCONNECTION", "Input stream was disconnected")
+                        // in case of error, start disconnect if it not started
                         if (!mmThreadIsDesconnecting) {
                             mmThreadIsDesconnecting = true
                             disconnect()
@@ -231,7 +244,9 @@ class BluetoothService {
                         break
                     }
 
+                    // launch another thread to write in output buffer
                     thread {
+                        // send messages with 2Hz of speed
                         if ((System.currentTimeMillis() - getWriteTime) > 500) {
                             getWriteTime = System.currentTimeMillis()
                             write("0".encodeToByteArray())
@@ -239,11 +254,6 @@ class BluetoothService {
                     }
 
                 }
-            }
-
-            if (!mmThreadIsDesconnecting) {
-                mmThreadIsDesconnecting = true
-                disconnect()
             }
         }
 
@@ -254,32 +264,19 @@ class BluetoothService {
             } catch (e: IOException) {
                 Log.e("DEBUGCONNECTION", "Error occurred when sending data")
 
-                // Send a failure message back to the activity.
-//                val writeErrorMsg = handler.obtainMessage(MESSAGE_TOAST)
-//                val bundle = Bundle().apply {
-//                    putString("toast", "Couldn't send data to the other device")
-//                }
-//                writeErrorMsg.data = bundle
-//                handler.sendMessage(writeErrorMsg)
-
                 if (!mmThreadIsDesconnecting) {
                     mmThreadIsDesconnecting = true
                     disconnect()
                 }
-                //connect(mmDeviceMAC)
 
                 return
             } catch (e: Exception) {
                 Log.e("DEBUGCONNECTION", "Error occurred when sending data")
             }
-
-            // Share the sent message with the UI activity.
-//            val writtenMsg = handler.obtainMessage(
-//                MESSAGE_WRITE, -1, -1, mmBuffer
-//            )
-//            writtenMsg.sendToTarget()
         }
 
+        // This function check if the phone has bt adapter
+        // and then connect with device using the UUID
         fun connectThread() {
             if (BluetoothAdapter.getDefaultAdapter() != null) {
 
@@ -287,7 +284,7 @@ class BluetoothService {
                 mmThreadIsDesconnecting = false
 
                 if (!mmAdapter.isEnabled()) {
-                    throw Exception("Bluetooth adapter not found or not enabled!");
+                    throw Exception("Bluetooth adapter not found or not enabled!")
                 }
 
                 mmDevice = mmAdapter.getRemoteDevice(DeviceMAC)
@@ -310,19 +307,19 @@ class BluetoothService {
             }
         }
 
-
+        // disconnect stream, socket and bluetooth device
         fun disconnectThread() {
-            try {
+            try { // close input
                 mmInStream.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            try {
+            try { // close output
                 mmOutStream.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            try {
+            try { // close socket
                 mmSocket.close()
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -331,6 +328,7 @@ class BluetoothService {
                 e.printStackTrace()
                 Log.e("DEBUGCONNECTION", "Could not close the connect socket")
             }
+            // update state
             mmThreadIsConnected = mmSocket.isConnected
         }
     }

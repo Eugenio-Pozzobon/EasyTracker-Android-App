@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.startracker.alignment.polaralignment.PolarAlignmentViewModel
 import com.example.startracker.database.ProfileDatabaseDao
 
+//Use the view model factory for start ViewModels with parameters that is the app and profile database
 class PolarAlignmentViewModelFactory(
     private val dataSource: ProfileDatabaseDao,
     private val application: Application

@@ -49,19 +49,18 @@ class NewProfileFragment : Fragment() {
         val binding: FragmentNewProfileBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_new_profile, container, false)
 
+
+        // crate and start view model and it variables.
         val application = requireNotNull(this.activity).application
-
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
-
         val viewModelFactory = NewProfileViewModelFactory(dataSource, application)
 
-        newProfileViewModel = ViewModelProvider(this, viewModelFactory).get(NewProfileViewModel::class.java)
-
+        newProfileViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(NewProfileViewModel::class.java)
         binding.newProfileViewModel = newProfileViewModel
-
         binding.lifecycleOwner = this
 
-        //handle if the user didnt filled name text input
+        //handle if the user didn't filled name text input
         newProfileViewModel.setNameError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.textProfileName.setError("*")
@@ -72,7 +71,7 @@ class NewProfileFragment : Fragment() {
             }
         })
 
-        //handle if the user didnt filled gps text input
+        //handle if the user didn't filled gps text input
         newProfileViewModel.setGpsDataError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.gpsNumber.error = "*"
@@ -83,7 +82,7 @@ class NewProfileFragment : Fragment() {
             }
         })
 
-        //handle if the user didnt filled declination text input
+        //handle if the user didn't filled declination text input
         newProfileViewModel.setMagDeclinationError.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 binding.declinationNumber.error = "*"
@@ -94,9 +93,8 @@ class NewProfileFragment : Fragment() {
             }
         })
 
-        setHasOptionsMenu(true)
 
-        //change buttons collors as design guidlines
+        //change buttons colors as design guidelines
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
         //val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
@@ -126,13 +124,14 @@ class NewProfileFragment : Fragment() {
             startBluetooth()
         }
 
-        val view = binding.root
-        return view
+        setHasOptionsMenu(true)
+        return binding.root
 
     }
 
+    // Check if the device has bluetooth and return if it is enable.
+    // If not, call an Intent that is handle in onActivityResult()
     private fun startBluetooth() {
-
         if(BluetoothAdapter.getDefaultAdapter() != null){
             btAdapter = BluetoothAdapter.getDefaultAdapter()
 
@@ -149,6 +148,7 @@ class NewProfileFragment : Fragment() {
         }
     }
 
+    // This function is android based for review an Activity intent.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when(requestCode){
             REQUEST_ENABLE_BT ->

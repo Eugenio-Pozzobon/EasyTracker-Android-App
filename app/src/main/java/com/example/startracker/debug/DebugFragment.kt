@@ -1,4 +1,4 @@
-package com.example.startracker
+package com.example.startracker.debug
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +15,7 @@ class DebugFragment : Fragment() {
     get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         _binding = FragmentDebugBinding.inflate(inflater, container, false)
         return binding.root

@@ -18,7 +18,8 @@ class HowToUseFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_how_to_use, container, false)
     }
 
-    //Make the menu back button return for the previous screen and not return for the home screen as its default
+    //Make the menu back button return for the previous screen and
+    // not return for the home screen as its default
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
