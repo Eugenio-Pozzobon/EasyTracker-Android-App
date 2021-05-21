@@ -80,7 +80,7 @@ class PolarAlignmentFragment : Fragment() {
 
     // Create an observer for check connection with bluetooth state variable in bluetooth service.
     // If it get false, create an Snackbar AND dialog that would warning user that state.
-    lateinit var dialogBluetooth: AlertDialog
+    private lateinit var dialogBluetooth: AlertDialog
     private val checkConnection = Observer<Boolean?> {
         try {
             if (it != true) {
@@ -91,12 +91,9 @@ class PolarAlignmentFragment : Fragment() {
                         .setTitle(resources.getString(R.string.blutooth_error_title))
                         .setMessage(getString(R.string.fail_connection))
                         .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            dialog.cancel()
-                        }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
-                            if(startBluetooth()){
-                                reconnect()
-                            }
-                            dialog.cancel()
+                            dialog.dismiss()
+                        }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
+                            reconnect()
                         }
                         .create()
                     dialogBluetooth.show()
@@ -155,7 +152,19 @@ class PolarAlignmentFragment : Fragment() {
     // if bluetooth is turn on, make an reconnection.
     private fun reconnect() {
         if (startBluetooth()) {
-            (activity as MainActivity).hc05.reconnect(polarAlignmentViewModel.bluetoothMac.value.toString())
+            btSnack = Snackbar.make(
+                requireView(),
+                getString(R.string.reconnecting),
+                Snackbar.LENGTH_LONG,
+            )
+            btSnack.show()
+            (activity as MainActivity).hc05.reconnect()
+            if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+                (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+            }
+        }
+        if (dialogBluetooth.isShowing) {
+            dialogBluetooth.dismiss()
         }
     }
 
@@ -188,30 +197,6 @@ class PolarAlignmentFragment : Fragment() {
             rotate = 0F
         }
     }
-
-    // inflate overflow menu
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.overflow_menu_compass, menu)
-    }
-
-    //handler options of overflow menu
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        if (item.itemId == R.id.reconnect) {
-            reconnect()
-            return true
-        }
-
-        if (item.itemId == R.id.calibrate_compass) {
-            calibrateCompass()
-            return true
-        }
-
-        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) ||
-                super.onOptionsItemSelected(item)
-    }
-
 
     // CHECK CHECK CHECK CHECK
     lateinit var compassDialog: AlertDialog
@@ -275,6 +260,29 @@ class PolarAlignmentFragment : Fragment() {
             }
             .create()
         compassDialog.show()
+    }
+
+    // inflate overflow menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.overflow_menu_compass, menu)
+    }
+
+    //handler options of overflow menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.reconnect) {
+            reconnect()
+            return true
+        }
+
+        if (item.itemId == R.id.calibrate_compass) {
+            calibrateCompass()
+            return true
+        }
+
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) ||
+                super.onOptionsItemSelected(item)
     }
 
     //Check Fragment Lifecycle info https://abhiandroid.com/ui/fragment-lifecycle-example-android-studio.html

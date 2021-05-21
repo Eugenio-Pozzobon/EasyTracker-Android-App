@@ -132,7 +132,7 @@ class BluetoothService {
      * Launch this in a separated thread
      */
     fun disconnect() {
-        thread {
+        thread{
             try {
                 if (_mmIsConnected.value == true) {
                     RunnableThread.disconnectThread()
@@ -148,16 +148,14 @@ class BluetoothService {
     /**
      * Reconnect with a bluetooth device specified by your address
      * Launch this in a separated thread
-     * @param DeviceMAC that is the bluetooth address
      */
-    fun reconnect(DeviceMAC: String) {
-        thread {
+    fun reconnect() {
+        thread{
             try {
                 if (_mmIsConnected.value == true) { //disconect just if it is connected
                     RunnableThread.disconnectThread()
                 }
-                mmDeviceMAC = DeviceMAC
-                RunnableThread = ConnectedThread(DeviceMAC, handler)
+                RunnableThread = ConnectedThread(mmDeviceMAC, handler)
                 RunnableThread.connectThread()
                 _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
                 if (RunnableThread.mmThreadIsConnected) {
@@ -215,7 +213,8 @@ class BluetoothService {
                         }
                         //if available and also get a delay between reeds
                         if ((mmInStream.available() > 0) &&
-                            ((System.currentTimeMillis() - getTime) > delaytime)) {
+                            ((System.currentTimeMillis() - getTime) > delaytime)
+                        ) {
 
                             bytes = mmInStream.read(buffer) //read bytes from input buffer
                             readChar = String(buffer, 0, bytes) //get Char
@@ -283,7 +282,7 @@ class BluetoothService {
                 mmAdapter = BluetoothAdapter.getDefaultAdapter()
                 mmThreadIsDesconnecting = false
 
-                if (!mmAdapter.isEnabled()) {
+                if (!mmAdapter.isEnabled) {
                     throw Exception("Bluetooth adapter not found or not enabled!")
                 }
 

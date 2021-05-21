@@ -88,7 +88,7 @@ class TiltAlignmentFragment : Fragment() {
 
     // Create an observer for check connection with bluetooth state variable in bluetooth service.
     // If it get false, create an Snackbar AND dialog that would warning user that state.
-    lateinit var dialogBluetooth: AlertDialog
+    private lateinit var dialogBluetooth: AlertDialog
     private val checkConnection = Observer<Boolean?> {
         try {
             if (it != true) {
@@ -99,12 +99,9 @@ class TiltAlignmentFragment : Fragment() {
                         .setTitle(resources.getString(R.string.blutooth_error_title))
                         .setMessage(getString(R.string.fail_connection))
                         .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            dialog.cancel()
-                        }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
-                            if(startBluetooth()){
-                                reconnect()
-                            }
-                            dialog.cancel()
+                            dialog.dismiss()
+                        }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
+                            reconnect()
                         }
                         .create()
                     dialogBluetooth.show()
@@ -162,8 +159,20 @@ class TiltAlignmentFragment : Fragment() {
 
     // if bluetooth is turn on, make an reconnection.
     private fun reconnect() {
-        if(startBluetooth()) {
-            (activity as MainActivity).hc05.reconnect(tiltAlignmentViewModel.bluetoothMac.value.toString())
+        if (startBluetooth()) {
+            btSnack = Snackbar.make(
+                requireView(),
+                getString(R.string.reconnecting),
+                Snackbar.LENGTH_LONG,
+            )
+            btSnack.show()
+            (activity as MainActivity).hc05.reconnect()
+            if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+                (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+            }
+        }
+        if (dialogBluetooth.isShowing) {
+            dialogBluetooth.dismiss()
         }
     }
 
@@ -241,7 +250,7 @@ class TiltAlignmentFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if(item.itemId == R.id.reconnect) {
-            (activity as MainActivity).hc05.reconnect(tiltAlignmentViewModel.bluetoothMac.value.toString())
+            reconnect()
             return true
         }
 

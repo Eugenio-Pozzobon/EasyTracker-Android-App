@@ -129,16 +129,4 @@ class NewProfileViewModel(
     fun updateGps(latitude: String){
         gpsData.value = latitude
     }
-
-    /**
-     * Called when the ViewModel is dismantled.
-     * At this point, we want to cancel all coroutines;
-     * otherwise we end up with processes that have nowhere to return to
-     * using memory and resources.
-
-    override fun onCleared() {
-    super.onCleared()
-    viewModelJob.cancel()
-    }
-     */
 }

@@ -73,7 +73,8 @@
     <string name="done_connection">Connected!</string>
     <string name="calibrate_compass_title">Calibrate Compass</string>
     <string name="calibrating_compass_title">Calibrating Compass</string>
-    <string name="calibrate_compass_message">Recomendamos que você realize a calibração da bússola para evitar erros uma vez que você ainda não executou a calibração.</string>
+    <string name="calibrate_compass_message">We recommend that you make the compass calibration to ensure
+        that the values are correct once you have not calibrated</string>
     <string name="decline_calibrate">Decline</string>
     <string name="accept_calibrate">Calibrate</string>
     <string name="blutooth_error_title">Bluetooth Error</string>
@@ -83,5 +84,7 @@
     <string name="track_instruction">" "</string>
     <string name="calibrating_compass_text1">" "</string>
     <string name="calibrating_compass_text2">" "</string>
+    <string name="see_profile">See profile</string>
+    <string name="reconnecting">Reconnecting</string>
 
 </resources>

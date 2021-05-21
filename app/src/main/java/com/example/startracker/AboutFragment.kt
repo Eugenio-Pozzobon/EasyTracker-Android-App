@@ -23,7 +23,9 @@ class AboutFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        requireView().findViewById<TextView>(R.id.about_text).movementMethod = LinkMovementMethod.getInstance()
+        // this allow user click in web links inside textView
+        requireView().findViewById<TextView>(R.id.about_text)
+            .movementMethod = LinkMovementMethod.getInstance()
     }
 
 }

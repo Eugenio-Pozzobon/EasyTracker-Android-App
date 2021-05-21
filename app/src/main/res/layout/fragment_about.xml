@@ -13,9 +13,8 @@
 
         <ImageView
             android:id="@+id/about_image"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="425dp"
+            android:layout_height="425dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,10 +38,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/about_image"
             tools:targetApi="o" />
-
-<!--
-            android:autoLink="web|email"
-            android:linksClickable="true"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

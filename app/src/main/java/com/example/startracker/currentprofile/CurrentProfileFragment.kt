@@ -40,7 +40,7 @@ class CurrentProfileFragment : Fragment() {
     var whiteTextColor by Delegates.notNull<Int>()
     var yellowButtonColor by Delegates.notNull<Int>()
 
-    lateinit var dialogBluetooth: AlertDialog
+    private lateinit var dialogBluetooth:AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +61,16 @@ class CurrentProfileFragment : Fragment() {
         )
         binding.currentProfileViewModel = currentProfileViewModel
         binding.lifecycleOwner = this
+
+        dialogBluetooth = AlertDialog.Builder(requireContext())
+            .setTitle(resources.getString(R.string.blutooth_error_title))
+            .setMessage(getString(R.string.fail_connection))
+            .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
+                dialog.dismiss()
+            }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
+                reconnect()
+            }
+            .create()
 
         //get Colors info
         redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
@@ -92,13 +102,13 @@ class CurrentProfileFragment : Fragment() {
         })
 
         //Connect bluetooth device when screen load
-//        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
-//            if (it != "") {
-//                if (startBluetooth()) {
-//                    connectWithBluetoothDevice()
-//                }
-//            }
-//        })
+        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
+            if (it != "") {
+                if (startBluetooth()) {
+                    connectWithBluetoothDevice()
+                }
+            }
+        })
 
         //check if is a new user, so then put at the welcome screen
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
@@ -111,13 +121,13 @@ class CurrentProfileFragment : Fragment() {
 
         //connect with bluetooth device
         binding.buttonConnect.setOnClickListener() {
-//            if (startBluetooth()) {
-//                connectWithBluetoothDevice()
-//            }
-            currentProfileViewModel.onConnect()
-            binding.buttonConnect.setBackgroundColor(greenButtonColor)
-            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
-            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+            if (startBluetooth()) {
+                connectWithBluetoothDevice()
+            }
+//            currentProfileViewModel.onConnect()
+//            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+//            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+//            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors
@@ -127,6 +137,7 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonStartAlignment.setBackgroundColor(redButtonColor)
         binding.buttonStartAlignment.setTextColor(whiteTextColor)
         binding.buttonConnect.text = getString(R.string.connect_status_init)
+
 
         setHasOptionsMenu(true)
         return binding.root
@@ -144,6 +155,8 @@ class CurrentProfileFragment : Fragment() {
                 btOperationState = true
             } else {
                 //turn on bluetooth
+                // remove observer otherwise it will duplicate warnings when it get connected
+                (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
                 val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
             }
@@ -171,20 +184,9 @@ class CurrentProfileFragment : Fragment() {
                 //indicate if was an disconnection fail or if just cant get connected
                 if (forceDisconnection) {
                     //don't notify user
-                } else {
-                    dialogBluetooth = AlertDialog.Builder(requireContext())
-                        .setTitle(resources.getString(R.string.blutooth_error_title))
-                        .setMessage(getString(R.string.fail_connection))
-                        .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            dialog.cancel()
-                        }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
-                            if(startBluetooth()){
-                                reconnect()
-                            }
-                        }
-                        .create()
+                }else {
+                    dialogBluetooth.show()
                 }
-                dialogBluetooth.show()
             } catch (e: Exception) {
                 Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
             }
@@ -192,11 +194,21 @@ class CurrentProfileFragment : Fragment() {
     }
 
     // is bluetooth is connected, disconnect before connection, and make an reconnection.
+    private var reconnecting = false
     private fun reconnect() {
-        if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
-            (activity as MainActivity).hc05.disconnect()
+        reconnecting = true
+        if (startBluetooth()) {
+            reconnecting = false
+            binding.buttonConnect.text = getString(R.string.connecting_status)
+            binding.buttonConnect.setBackgroundColor(yellowButtonColor)
+            (activity as MainActivity).hc05.reconnect()
+            if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+                (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+            }
+            if (dialogBluetooth.isShowing) {
+                dialogBluetooth.dismiss()
+            }
         }
-        connectWithBluetoothDevice()
     }
 
     // Indicate to viewModel that hc05 is connected and this would set the "Start Alignment" button as visible.
@@ -223,7 +235,11 @@ class CurrentProfileFragment : Fragment() {
         when (requestCode) {
             REQUEST_ENABLE_BT ->
                 if (resultCode == Activity.RESULT_OK) {
-                    connectWithBluetoothDevice()
+                    if(reconnecting) {
+                        reconnect()
+                    }else{
+                        connectWithBluetoothDevice()
+                    }
                 } else {
                     _notConnectedWithBluetoothDevice()
                 }
@@ -242,15 +258,15 @@ class CurrentProfileFragment : Fragment() {
 
         if (item.itemId == R.id.newProfileFragment) {
             if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
-                (activity as MainActivity).hc05.disconnect()
                 forceDisconnection = true
+                (activity as MainActivity).hc05.disconnect()
             }
         }
 
         if (item.itemId == R.id.loadProfilesFragment) {
             if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
-                (activity as MainActivity).hc05.disconnect()
                 forceDisconnection = true
+                (activity as MainActivity).hc05.disconnect()
             }
         }
 
@@ -270,4 +286,8 @@ class CurrentProfileFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
+    }
 }

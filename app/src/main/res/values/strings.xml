@@ -138,6 +138,8 @@
     <string name="accept_calibrate">Calibrar</string>
     <string name="blutooth_error_title">Easy Tracker Desconectado</string>
     <string name="forcing_disconnection">Easy Tracker Disconnected</string>
+    <string name="see_profile">Ver perfil</string>
+    <string name="reconnecting">Reconectando</string>
 
 
 </resources>

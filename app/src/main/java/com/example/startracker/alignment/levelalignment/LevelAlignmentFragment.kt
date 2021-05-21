@@ -22,6 +22,7 @@ import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentLevelAlignmentBinding
 import com.example.startracker.mapFloat
 import com.google.android.material.snackbar.Snackbar
+import kotlin.concurrent.thread
 
 class LevelAlignmentFragment : Fragment() {
 
@@ -79,7 +80,7 @@ class LevelAlignmentFragment : Fragment() {
 
     // Create an observer for check connection with bluetooth state variable in bluetooth service.
     // If it get false, create an Snackbar that would warning user that state.
-    lateinit var dialogBluetooth: AlertDialog
+    private lateinit var dialogBluetooth: AlertDialog
     private val checkConnection = Observer<Boolean?> {
         try {
             if (it != true) {
@@ -90,12 +91,9 @@ class LevelAlignmentFragment : Fragment() {
                         .setTitle(resources.getString(R.string.blutooth_error_title))
                         .setMessage(getString(R.string.fail_connection))
                         .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            dialog.cancel()
-                        }.setPositiveButton(getString(R.string.bt_snack_action)) {dialog, which ->
-                            if(startBluetooth()){
-                                reconnect()
-                            }
-                            dialog.cancel()
+                            dialog.dismiss()
+                        }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
+                            reconnect()
                         }
                         .create()
                     dialogBluetooth.show()
@@ -155,7 +153,19 @@ class LevelAlignmentFragment : Fragment() {
     // if bluetooth is turn on, make an reconnection.
     private fun reconnect() {
         if (startBluetooth()) {
-            (activity as MainActivity).hc05.reconnect(levelAlignmentViewModel.bluetoothMac.value.toString())
+            btSnack = Snackbar.make(
+                requireView(),
+                getString(R.string.reconnecting),
+                Snackbar.LENGTH_LONG,
+            )
+            btSnack.show()
+            (activity as MainActivity).hc05.reconnect()
+            if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+                (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+            }
+        }
+        if (dialogBluetooth.isShowing) {
+            dialogBluetooth.dismiss()
         }
     }
 
