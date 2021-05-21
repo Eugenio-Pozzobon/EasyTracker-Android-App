@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.startracker.MainActivity">
+
+    <item
+        android:id="@+id/reconnect"
+        android:orderInCategory="100"
+        android:title="@string/reconnect"/>
+    <item
+        android:id="@+id/currentProfileFragment"
+        android:orderInCategory="101"
+        android:title="@string/see_profile"/>
+    <item
+        android:id="@+id/howToUseFragment"
+        android:orderInCategory="102"
+        android:title="@string/howtouse_fragment_title"
+        android:menuCategory = "secondary"/>
+</menu>
