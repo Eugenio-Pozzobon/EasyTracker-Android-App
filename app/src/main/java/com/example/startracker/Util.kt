@@ -43,8 +43,8 @@ fun convertPixelsToDp(px: Float, context: Context): Float {
  * HH:mm - Hours and minutes in 24hr format
  */
 @SuppressLint("SimpleDateFormat")
-fun convertLongToDateString(systemTime: Long): String {
-    return SimpleDateFormat("'Criado no dia 'dd'/'mm'/'yyyy' às 'HH:mm")
+fun convertLongToDateString(systemTime: Long, patern:String): String {
+    return SimpleDateFormat(patern)
         .format(systemTime).toString()
 }
 

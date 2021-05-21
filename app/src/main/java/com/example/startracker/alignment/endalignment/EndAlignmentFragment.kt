@@ -1,22 +1,28 @@
 package com.example.startracker.alignment.endalignment
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.startracker.MainActivity
 import com.example.startracker.R
+import com.example.startracker.convertLongToDateString
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentEndAlignmentBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlin.properties.Delegates
 
 class EndAlignmentFragment : Fragment() {
@@ -25,13 +31,15 @@ class EndAlignmentFragment : Fragment() {
     var greenButtonColor by Delegates.notNull<Int>()
     var whiteTextColor by Delegates.notNull<Int>()
 
-    lateinit var endAlignmentViewModel:EndAlignmentViewModel
+    lateinit var endAlignmentViewModel: EndAlignmentViewModel
+    lateinit var binding: FragmentEndAlignmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
 
-        val binding: FragmentEndAlignmentBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_end_alignment, container, false
         )
 
@@ -50,34 +58,87 @@ class EndAlignmentFragment : Fragment() {
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
 
+        endAlignmentViewModel.updateTextTimer(getString(R.string.tracking_timer) + " 00:00:00")
+
         setButtonEnable(binding.startTrackingButton)
-        binding.startTrackingButton.setOnClickListener(){
-            setButtonDisable(binding.startTrackingButton)
-            setButtonEnable(binding.endTrackingButton)
+        binding.startTrackingButton.setOnClickListener() {
+            if((activity as MainActivity).hc05.mmIsConnected.value == true) {
+                setButtonDisable(binding.startTrackingButton)
+                setButtonEnable(binding.endTrackingButton)
+                binding.startTrackingButton.text = getString(R.string.tracking)
+                (activity as MainActivity).hc05.updateWriteBuffer("s")
+            }else{
+                btSnack = Snackbar.make(
+                    requireView(),
+                    getString(R.string.reconnect_to_go),
+                    Snackbar.LENGTH_SHORT,
+                )
+                btSnack.show()
+            }
         }
 
 
         setButtonDisable(binding.endTrackingButton)
-        binding.endTrackingButton.setOnClickListener(){
+        binding.endTrackingButton.setOnClickListener() {
             setButtonEnable(binding.startTrackingButton)
             setButtonDisable(binding.endTrackingButton)
-            this.findNavController().navigate(R.id.action_endAligmentFragment_to_currentProfileFragment)
+            binding.startTrackingButton.text = getString(R.string.start_track_button)
+            (activity as MainActivity).hc05.updateWriteBuffer("n")
         }
 
+        (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+
+        dialogBluetooth = AlertDialog.Builder(requireContext())
+            .setTitle(resources.getString(R.string.blutooth_error_title))
+            .setMessage(getString(R.string.fail_connection))
+            .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
+                dialog.dismiss()
+            }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
+                reconnect()
+            }
+            .create()
 
         setHasOptionsMenu(true)
         return binding.root
     }
-    private fun setButtonEnable(button: Button){
-        button.setBackgroundColor(greenButtonColor)
-        button.setTextColor(whiteTextColor)
-        button.isEnabled = true
-    }
 
-    private fun setButtonDisable(button: Button){
-        button.setBackgroundColor(redButtonColor)
-        button.setTextColor(whiteTextColor)
-        button.isEnabled = false
+    // Create an observer for check connection with bluetooth state variable in bluetooth service.
+    // If it get false, create an Snackbar AND dialog that would warning user that state.
+    private lateinit var dialogBluetooth: AlertDialog
+    private lateinit var btSnack: Snackbar
+    private val checkConnection = Observer<Boolean?> {
+        try {
+            if (it != true) {
+                try {
+                    //indicate if was an disconnection fail or if just cant get connected
+                    dialogBluetooth.show()
+
+                } catch (e: java.lang.Exception) {
+                    Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
+                }
+            } else if (it == true) {
+                try {
+                    btSnack = Snackbar.make(
+                        requireView(),
+                        getString(R.string.done_connection),
+                        Snackbar.LENGTH_SHORT,
+                    )
+                    btSnack.show()
+                } catch (e: java.lang.Exception) {
+                    Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("DEBUGCONNECTION", "Observer in Level Alignment not killed", e)
+        }
+
+        if (isTracking) {
+            countDown.cancel()
+            endAlignmentViewModel.updateTextTimer(getString(R.string.tracking_bt_problem))
+            setButtonEnable(binding.startTrackingButton)
+            setButtonDisable(binding.endTrackingButton)
+            binding.startTrackingButton.text = getString(R.string.start_track_button)
+        }
     }
 
     // Check if the device has bluetooth and return if it is enable.
@@ -114,8 +175,64 @@ class EndAlignmentFragment : Fragment() {
     // if bluetooth is turn on, make an reconnection.
     private fun reconnect() {
         if (startBluetooth()) {
+            btSnack = Snackbar.make(
+                requireView(),
+                getString(R.string.reconnecting),
+                Snackbar.LENGTH_LONG,
+            )
+            btSnack.show()
             (activity as MainActivity).hc05.reconnect()
+            if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+                (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+            }
         }
+        if (dialogBluetooth.isShowing) {
+            dialogBluetooth.dismiss()
+        }
+    }
+
+    var isTracking = false
+    var taskTime: Long = 0L
+    var taskInitTime: Long = 0L
+    var stringTime = ""
+    val AUTO_DISMISS_MILLIS = 7200000
+    val countDown = object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 1000) {
+        override fun onTick(millisUntilFinished: Long) {
+            taskTime = System.currentTimeMillis() - taskInitTime + 3*3600*1000
+            //display hours correctly
+            stringTime = getString(R.string.tracking_timer) + convertLongToDateString(
+                taskTime,
+                "' 'HH:mm:ss"
+            )
+            endAlignmentViewModel.updateTextTimer(stringTime)
+            if (!(millisUntilFinished > 0)) {
+                onFinish()
+            }
+        }
+
+        override fun onFinish() {
+        }
+    }
+    private val timerTrackingObserver = Observer<Boolean> {
+        isTracking = it
+        if (it) {
+            taskInitTime = System.currentTimeMillis()
+            countDown.start()
+        } else {
+            countDown.cancel()
+        }
+    }
+
+    private fun setButtonEnable(button: Button) {
+        button.setBackgroundColor(greenButtonColor)
+        button.setTextColor(whiteTextColor)
+        button.isEnabled = true
+    }
+
+    private fun setButtonDisable(button: Button) {
+        button.setBackgroundColor(redButtonColor)
+        button.setTextColor(whiteTextColor)
+        button.isEnabled = false
     }
 
     // inflate overflow menu
@@ -131,11 +248,24 @@ class EndAlignmentFragment : Fragment() {
             return true
         }
         if (item.itemId == R.id.currentProfileFragment) {
-            this.findNavController().navigate(R.id.action_endAligmentFragment_to_currentProfileFragment)
+            this.findNavController()
+                .navigate(R.id.action_endAligmentFragment_to_currentProfileFragment)
             return true
         }
         return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) ||
                 super.onOptionsItemSelected(item)
     }
 
+    override fun onPause() {
+        super.onPause()
+        (activity as MainActivity).hc05.trackingStars.removeObserver(timerTrackingObserver)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).hc05.trackingStars.observeForever(timerTrackingObserver)
+        if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+            (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+        }
+    }
 }

@@ -18,6 +18,6 @@ fun TextView.setProfileNameString(item: Profile?) {
 @BindingAdapter("ProfileData")
 fun TextView.setProfileDataString(item: Profile?) {
     item?.let {
-        text = convertLongToDateString(it.startTimeMilli)
+        text = convertLongToDateString(it.startTimeMilli, "'Criado no dia 'dd'/'mm'/'yyyy' às 'HH:mm")
     }
 }

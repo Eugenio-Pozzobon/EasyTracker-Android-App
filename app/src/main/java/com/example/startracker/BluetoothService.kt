@@ -26,6 +26,14 @@ class BluetoothService {
     val mmIsConnected: LiveData<Boolean?>
         get() = _mmIsConnected
 
+    private var _calibratingCompass = MutableLiveData<Boolean>()
+    val calibratingCompass: LiveData<Boolean>
+        get() = _calibratingCompass
+
+    private var _trackingStars = MutableLiveData<Boolean>()
+    val trackingStars: LiveData<Boolean>
+        get() = _trackingStars
+
     // raw data get in bluetooth connection
     private var _rawDataRoll: Int = 0
     private var _rawDataPitch: Int = 0
@@ -66,6 +74,8 @@ class BluetoothService {
     init {
         _mmIsConnected.value = null
         _updatedHandle.value = false
+        _trackingStars.value = false
+        _calibratingCompass.value = false
     }
 
     // The Handler that gets information back from the BluetoothService
@@ -96,6 +106,22 @@ class BluetoothService {
                         _dataPitch.postValue(_rawDataPitch.toFloat() / 10)
                         _dataYaw.postValue(_rawDataYaw.toFloat() / 10)
                         _updatedHandle.postValue(!_updatedHandle.value!!)
+                        _calibratingCompass.postValue(false)
+                    }
+                }
+            }else if(dataString.size == 2){
+                thread {
+                    if (dataString[0] == dataString[1]) {
+                        if (dataString[0] == "c") {
+                            _calibratingCompass.postValue(true)
+                            updateWriteBuffer("0")
+                        }else if(dataString[0] == "s"){
+                            _trackingStars.postValue(true)
+                            updateWriteBuffer("0")
+                        }else if(dataString[0] == "n"){
+                            _trackingStars.postValue(false)
+                            updateWriteBuffer("0")
+                        }
                     }
                 }
             }
@@ -169,6 +195,10 @@ class BluetoothService {
         }
     }
 
+    fun updateWriteBuffer(buffer: String){
+        RunnableThread.writeBuffer = buffer
+    }
+
     //class that stands for run a thread for read and write in bluetooth device
     inner class ConnectedThread(var DeviceMAC: String, var handler: Handler) : Thread() {
 
@@ -178,6 +208,7 @@ class BluetoothService {
         private lateinit var mmInStream: InputStream
         private lateinit var mmOutStream: OutputStream
         lateinit var mmSocket: BluetoothSocket
+        var writeBuffer = "0"
 
         //state of connection
         var mmThreadIsConnected = false
@@ -206,7 +237,7 @@ class BluetoothService {
                         //ensure that the buffer is allways clean
                         //delaytime is the delay that ui wait for read next buffer.
                         var delaytime = 10
-                        if ((mmInStream.available() > 300)) {
+                        if ((mmInStream.available() > 1000)) {
                             // if the buffer is overload, i.e, is bigger then 230 bytes,
                             // reduce the delay so the UI can update faster enough
                             delaytime = 1
@@ -248,7 +279,7 @@ class BluetoothService {
                         // send messages with 2Hz of speed
                         if ((System.currentTimeMillis() - getWriteTime) > 500) {
                             getWriteTime = System.currentTimeMillis()
-                            write("0".encodeToByteArray())
+                            write(writeBuffer.encodeToByteArray())
                         }
                     }
 

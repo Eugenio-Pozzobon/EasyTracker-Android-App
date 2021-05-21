@@ -86,5 +86,9 @@
     <string name="calibrating_compass_text2">" "</string>
     <string name="see_profile">See profile</string>
     <string name="reconnecting">Reconnecting</string>
+    <string name="tracking">…tracking…</string>
+    <string name="tracking_bt_problem">Timer Interrupted</string>
+    <string name="tracking_timer">Duração do rastreio:</string>
+    <string name="reconnect_to_go">Reconnect to continue!</string>
 
 </resources>

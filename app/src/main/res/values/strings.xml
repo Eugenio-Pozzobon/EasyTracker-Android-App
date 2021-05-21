@@ -126,10 +126,10 @@
     <string name="done_connection">Conectado!</string>
     <string name="calibrate_compass_title">Calibrar Bússola</string>
     <string name="calibrating_compass_title">Calibrando Bússola</string>
-    <string name="calibrating_compass_text1">Rotate the platform horizontally for the next</string>
-    <string name="calibrating_compass_text2">seconds.
-        \n\nAttention, do not bring your smartphone, or any other electronic device,
-         near the platform during calibration.</string>
+    <string name="calibrating_compass_text1">Rotacione horizontalmente a plataforma pelos próximos</string>
+    <string name="calibrating_compass_text2">segundos.
+        \n\nAtenção, não aproxime seu smartphone, ou qualquer outro eletrônico,
+        perto da plataforma, durante a calibração.</string>
 
     <string name="calibrate_compass_message">Recomendamos que você realize a calibração da bússola
         para evitar erros uma vez que você ainda não executou a calibração.
@@ -140,6 +140,10 @@
     <string name="forcing_disconnection">Easy Tracker Disconnected</string>
     <string name="see_profile">Ver perfil</string>
     <string name="reconnecting">Reconectando</string>
+    <string name="tracking">…rastreando…</string>
+    <string name="tracking_bt_problem">Timer Interrompido</string>
+    <string name="tracking_timer">Duração do rastreio:</string>
+    <string name="reconnect_to_go">Reconecte para prosseguir!</string>
 
 
 </resources>

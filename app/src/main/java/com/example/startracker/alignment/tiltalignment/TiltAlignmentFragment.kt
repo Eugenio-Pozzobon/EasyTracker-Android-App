@@ -82,6 +82,16 @@ class TiltAlignmentFragment : Fragment() {
         // with bluetooth values and tell user when it get disconnected
         (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
 
+        dialogBluetooth = AlertDialog.Builder(requireContext())
+            .setTitle(resources.getString(R.string.blutooth_error_title))
+            .setMessage(getString(R.string.fail_connection))
+            .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
+                dialog.dismiss()
+            }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
+                reconnect()
+            }
+            .create()
+
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -95,15 +105,6 @@ class TiltAlignmentFragment : Fragment() {
                 try {
 
                     //indicate if was an disconnection fail or if just cant get connected
-                    dialogBluetooth = AlertDialog.Builder(requireContext())
-                        .setTitle(resources.getString(R.string.blutooth_error_title))
-                        .setMessage(getString(R.string.fail_connection))
-                        .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            dialog.dismiss()
-                        }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
-                            reconnect()
-                        }
-                        .create()
                     dialogBluetooth.show()
 
                 }catch (e: java.lang.Exception){
@@ -269,5 +270,8 @@ class TiltAlignmentFragment : Fragment() {
         //activate observers in bluetooth data, so now its possible to update UI
         // with bluetooth values and tell user when it get disconnected
         (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
+        if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+            (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+        }
     }
 }

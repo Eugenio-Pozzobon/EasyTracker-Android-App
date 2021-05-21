@@ -34,7 +34,6 @@ class PolarAlignmentFragment : Fragment() {
     private var rotate: Float = 0F
     private var declination: Float = 0F
 
-    lateinit var btSnack: Snackbar
     lateinit var binding: FragmentPolarAlignmentBinding
     lateinit var polarAlignmentViewModel: PolarAlignmentViewModel
 
@@ -73,6 +72,16 @@ class PolarAlignmentFragment : Fragment() {
         // with bluetooth values and tell user when it get disconnected
         (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
 
+        dialogBluetooth = AlertDialog.Builder(requireContext())
+            .setTitle(resources.getString(R.string.blutooth_error_title))
+            .setMessage(getString(R.string.fail_connection))
+            .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
+                dialog.dismiss()
+            }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
+                reconnect()
+            }
+            .create()
+
         setHasOptionsMenu(true)
 
         return binding.root
@@ -81,21 +90,13 @@ class PolarAlignmentFragment : Fragment() {
     // Create an observer for check connection with bluetooth state variable in bluetooth service.
     // If it get false, create an Snackbar AND dialog that would warning user that state.
     private lateinit var dialogBluetooth: AlertDialog
+    private lateinit var btSnack: Snackbar
     private val checkConnection = Observer<Boolean?> {
         try {
             if (it != true) {
                 try {
 
                     //indicate if was an disconnection fail or if just cant get connected
-                    dialogBluetooth = AlertDialog.Builder(requireContext())
-                        .setTitle(resources.getString(R.string.blutooth_error_title))
-                        .setMessage(getString(R.string.fail_connection))
-                        .setNegativeButton(resources.getString(R.string.decline_calibrate)) { dialog, which ->
-                            dialog.dismiss()
-                        }.setPositiveButton(getString(R.string.bt_snack_action)) { dialog, which ->
-                            reconnect()
-                        }
-                        .create()
                     dialogBluetooth.show()
 
                 }catch (e: java.lang.Exception){
@@ -216,7 +217,7 @@ class PolarAlignmentFragment : Fragment() {
                     .setMessage("Rotacione a plataforma horizontalmente pelos próximos 30 segundos")
                     .create()
 
-
+                (activity as MainActivity).hc05.updateWriteBuffer("c")
                 var valueCountdown = 30
                 var correction = valueCountdown
                 val AUTO_DISMISS_MILLIS = valueCountdown * 1000
@@ -297,6 +298,9 @@ class PolarAlignmentFragment : Fragment() {
         //activate observers in bluetooth data, so now its possible to update UI
         // with bluetooth values and tell user when it get disconnected
         (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
+        if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+            (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+        }
     }
 
 }
