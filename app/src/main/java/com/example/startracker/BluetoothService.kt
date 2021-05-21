@@ -30,9 +30,7 @@ class BluetoothService {
     val calibratingCompass: LiveData<Boolean>
         get() = _calibratingCompass
 
-    private var _trackingStars = MutableLiveData<Boolean>()
-    val trackingStars: LiveData<Boolean>
-        get() = _trackingStars
+    var trackingStars = MutableLiveData<Boolean>().apply { value = (false)}
 
     // raw data get in bluetooth connection
     private var _rawDataRoll: Int = 0
@@ -74,7 +72,6 @@ class BluetoothService {
     init {
         _mmIsConnected.value = null
         _updatedHandle.value = false
-        _trackingStars.value = false
         _calibratingCompass.value = false
     }
 
@@ -116,10 +113,10 @@ class BluetoothService {
                             _calibratingCompass.postValue(true)
                             updateWriteBuffer("0")
                         }else if(dataString[0] == "s"){
-                            _trackingStars.postValue(true)
+                            trackingStars.postValue(true)
                             updateWriteBuffer("0")
                         }else if(dataString[0] == "n"){
-                            _trackingStars.postValue(false)
+                            trackingStars.postValue(false)
                             updateWriteBuffer("0")
                         }
                     }

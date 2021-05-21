@@ -23,7 +23,7 @@ import com.example.startracker.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     var hc05 = BluetoothService()
-    private lateinit var toolbar: Toolbar
+    lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var binding: ActivityMainBinding
     private lateinit var destinationHandler: NavDestination
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             if (nd.id == R.id.welcomeFragment) {
                 navGraph.startDestination = R.id.welcomeFragment
                 setDrawer_locked()
-                toolbar.setNavigationIcon(null)
+                toolbar.navigationIcon = null
             }
         }
 

@@ -98,7 +98,6 @@ class PolarAlignmentFragment : Fragment() {
 
                     //indicate if was an disconnection fail or if just cant get connected
                     dialogBluetooth.show()
-
                 }catch (e: java.lang.Exception){
                     Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
                 }

@@ -20,8 +20,6 @@ class PolarAlignmentViewModel(
 ) : AndroidViewModel(application) {
 
     // data that is updated to fragment use
-    var gpsData = MutableLiveData<String>()
-    var bluetoothMac = MutableLiveData<String>()
     var declination = MutableLiveData<String>()
 
     private lateinit var lastProfile: Profile
@@ -35,13 +33,10 @@ class PolarAlignmentViewModel(
         viewModelScope.launch{
 
             if(getLastProfileInDatabase() == null) {
-                gpsData.value = ""
-                bluetoothMac.value = ""
+                declination.value = ""
 
             }else {
                 lastProfile = getLastProfileInDatabase()!!
-                gpsData.value = lastProfile.gpsData
-                bluetoothMac.value = lastProfile.btAddress
                 declination.value = lastProfile.declination
             }
         }
@@ -55,6 +50,5 @@ class PolarAlignmentViewModel(
         }
         return prof
     }
-
 
 }

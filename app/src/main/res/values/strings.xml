@@ -68,9 +68,14 @@
 
 
     <!-- end Alignment -->
-    <string name="congrats_instruction">Parabéns, você alinhou seu Dispositivo!</string>
-    <string name="track_instruction">" "</string>
-    <string name="end_instruction">Agora você pode iniciar o Rastreamento!</string>
+    <string name="congrats_instruction">Parabéns, você alinhou seu dispositivo. Agora, você pode iniciar o rastreamento!</string>
+    <string name="end_instruction">
+        Para ativar/desativar o sistema, você pode manualmente precionar o botão vermelho localizado na parte inferior do Easy Tracker.
+
+        \n\nRecomendamos, no entanto, que você faça o controle precionando os botões abaixo, dessa forma você não corre o risco de desalinhar o sistema.
+
+        \n\nConsulte o menu instruções para mais informações e boa sorte. Clear Skies!
+    </string>
     <string name="start_track_button">Iniciar Rastreamento</string>
     <string name="end_track_button">Parar Rastreamento</string>
 
@@ -80,10 +85,10 @@
 
     <!-- About -->
     <string name="about_fragment_title">Sobre</string>
-    <string name="about_us">Este aplicativo foi desenvolvido para ser utilizado juntamente
+    <string name="about_us">Este aplicativo foi criado para ser utilizado juntamente
         com o Easy Tracker System, desenvolvido na Universidade Federal de Santa Maria.
         \n
-        \n>Desenvolvedor: Eugênio Pozzobon
+        \nDesenvolvedor: Eugênio Pozzobon
         \nOrientador: Prof. Rafael Beltrame
         \n
         \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-System#desenvolvimento-de-uma-plataforma-equatorial-para-astrofotografia---easy-tracker-system"
@@ -117,7 +122,7 @@
     <string name="connecting_status">Conectando</string>
     <string name="settings_fragment_title">Configurações</string>
 
-    <string name="fail_connection">Não foi possível se connectar com o dispositivo.
+    <string name="fail_connection">Não foi possível se conectar com o dispositivo.
         \nVocê deseja se reconectar?</string>
 
     <string name="bt_snack_action">Reconectar</string>
@@ -143,6 +148,8 @@
     <string name="tracking">…rastreando…</string>
     <string name="tracking_bt_problem">Timer Interrompido</string>
     <string name="tracking_timer">Duração do rastreio:</string>
+
+    <string name="tracking_start_timer">Rastreio iniciado às:</string>
     <string name="reconnect_to_go">Reconecte para prosseguir!</string>
 
 

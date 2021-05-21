@@ -58,7 +58,8 @@ class EndAlignmentFragment : Fragment() {
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
 
-        endAlignmentViewModel.updateTextTimer(getString(R.string.tracking_timer) + " 00:00:00")
+        endAlignmentViewModel.updateTextTimer(getString(R.string.tracking_start_timer) +
+                " 00:00:00\n" + getString(R.string.tracking_timer) + " 00:00:00")
 
         setButtonEnable(binding.startTrackingButton)
         binding.startTrackingButton.setOnClickListener() {
@@ -99,6 +100,8 @@ class EndAlignmentFragment : Fragment() {
             .create()
 
         setHasOptionsMenu(true)
+//        (activity as MainActivity).setDrawer_locked()
+//        (activity as MainActivity).toolbar.navigationIcon = null
         return binding.root
     }
 
@@ -195,15 +198,16 @@ class EndAlignmentFragment : Fragment() {
     var taskTime: Long = 0L
     var taskInitTime: Long = 0L
     var stringTime = ""
-    val AUTO_DISMISS_MILLIS = 7200000
+    val AUTO_DISMISS_MILLIS = 9100000 //2h:30
     val countDown = object : CountDownTimer(AUTO_DISMISS_MILLIS.toLong(), 1000) {
         override fun onTick(millisUntilFinished: Long) {
             taskTime = System.currentTimeMillis() - taskInitTime + 3*3600*1000
             //display hours correctly
-            stringTime = getString(R.string.tracking_timer) + convertLongToDateString(
-                taskTime,
-                "' 'HH:mm:ss"
-            )
+            stringTime = getString(R.string.tracking_start_timer) +
+                    convertLongToDateString(taskInitTime,"' 'HH:mm")+
+                    "\n" + getString(R.string.tracking_timer) +
+                    convertLongToDateString(taskTime,"' 'HH:mm:ss")
+
             endAlignmentViewModel.updateTextTimer(stringTime)
             if (!(millisUntilFinished > 0)) {
                 onFinish()
@@ -219,6 +223,7 @@ class EndAlignmentFragment : Fragment() {
             taskInitTime = System.currentTimeMillis()
             countDown.start()
         } else {
+            countDown.onFinish()
             countDown.cancel()
         }
     }
@@ -263,9 +268,16 @@ class EndAlignmentFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        (activity as MainActivity).hc05.trackingStars.value = false
         (activity as MainActivity).hc05.trackingStars.observeForever(timerTrackingObserver)
         if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
             (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countDown.onFinish()
+        countDown.cancel()
     }
 }

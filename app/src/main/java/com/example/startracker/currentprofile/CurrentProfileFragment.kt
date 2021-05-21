@@ -26,7 +26,6 @@ import kotlin.properties.Delegates
 
 class CurrentProfileFragment : Fragment() {
 
-    var forceDisconnection = false
     lateinit var btSnack: Snackbar
 
     lateinit var binding: FragmentCurrentProfileBinding
@@ -40,7 +39,7 @@ class CurrentProfileFragment : Fragment() {
     var whiteTextColor by Delegates.notNull<Int>()
     var yellowButtonColor by Delegates.notNull<Int>()
 
-    private lateinit var dialogBluetooth:AlertDialog
+    private lateinit var dialogBluetooth: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +77,9 @@ class CurrentProfileFragment : Fragment() {
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
         yellowButtonColor = ContextCompat.getColor(requireContext(), R.color.yellow_button)
 
+        connecting = false
+        reconnecting = false
+
         //handle if user want to start alignment process
         currentProfileViewModel.screenChange.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
@@ -102,13 +104,13 @@ class CurrentProfileFragment : Fragment() {
         })
 
         //Connect bluetooth device when screen load
-        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
-            if (it != "") {
-                if (startBluetooth()) {
-                    connectWithBluetoothDevice()
-                }
-            }
-        })
+//        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
+//            if (it != "") {
+//                if (startBluetooth()) {
+//                    connectWithBluetoothDevice()
+//                }
+//            }
+//        })
 
         //check if is a new user, so then put at the welcome screen
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
@@ -121,13 +123,17 @@ class CurrentProfileFragment : Fragment() {
 
         //connect with bluetooth device
         binding.buttonConnect.setOnClickListener() {
-            if (startBluetooth()) {
-                connectWithBluetoothDevice()
-            }
-//            currentProfileViewModel.onConnect()
-//            binding.buttonConnect.setBackgroundColor(greenButtonColor)
-//            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
-//            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+//            if (((activity as MainActivity).hc05.mmIsConnected.value) == true) {
+//                _connectedWithBluetoothDevice()
+//            } else {
+//                if (startBluetooth()) {
+//                    connectWithBluetoothDevice()
+//                }
+//            }
+            currentProfileViewModel.onConnect()
+            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors
@@ -155,8 +161,6 @@ class CurrentProfileFragment : Fragment() {
                 btOperationState = true
             } else {
                 //turn on bluetooth
-                // remove observer otherwise it will duplicate warnings when it get connected
-                (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
                 val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
             }
@@ -166,11 +170,17 @@ class CurrentProfileFragment : Fragment() {
     }
 
 
+    private var connecting = false
     private fun connectWithBluetoothDevice() {
-        binding.buttonConnect.text = getString(R.string.connecting_status)
-        binding.buttonConnect.setBackgroundColor(yellowButtonColor)
-        (activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString())
-        (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+        if((activity as MainActivity).hc05.mmIsConnected.value != true){
+            connecting = true
+            binding.buttonConnect.text = getString(R.string.connecting_status)
+            binding.buttonConnect.setBackgroundColor(yellowButtonColor)
+            (activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString())
+            if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+                (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+            }
+        }
     }
 
     // Create an observer for check connection with bluetooth state variable in bluetooth service.
@@ -178,15 +188,11 @@ class CurrentProfileFragment : Fragment() {
     private val checkConnection = Observer<Boolean?> {
         if (it == true) {
             _connectedWithBluetoothDevice()
-        } else if (it == false) {
+        } else if (it == false && (!reconnecting && !connecting)) {
             _notConnectedWithBluetoothDevice()
             try {
                 //indicate if was an disconnection fail or if just cant get connected
-                if (forceDisconnection) {
-                    //don't notify user
-                }else {
-                    dialogBluetooth.show()
-                }
+                dialogBluetooth.show()
             } catch (e: Exception) {
                 Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
             }
@@ -196,17 +202,18 @@ class CurrentProfileFragment : Fragment() {
     // is bluetooth is connected, disconnect before connection, and make an reconnection.
     private var reconnecting = false
     private fun reconnect() {
-        reconnecting = true
-        if (startBluetooth()) {
-            reconnecting = false
+        if((activity as MainActivity).hc05.mmIsConnected.value != true) {
+            reconnecting = true
             binding.buttonConnect.text = getString(R.string.connecting_status)
             binding.buttonConnect.setBackgroundColor(yellowButtonColor)
-            (activity as MainActivity).hc05.reconnect()
-            if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
-                (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
-            }
-            if (dialogBluetooth.isShowing) {
-                dialogBluetooth.dismiss()
+            if (startBluetooth()) {
+                (activity as MainActivity).hc05.reconnect()
+                if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+                    (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+                }
+                if (dialogBluetooth.isShowing) {
+                    dialogBluetooth.dismiss()
+                }
             }
         }
     }
@@ -218,6 +225,8 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonConnect.setBackgroundColor(greenButtonColor)
         binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
         binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+        connecting = false
+        reconnecting = false
     }
 
     // Indicate to viewModel that hc05 is NOT connected and this would set the "Start Alignment" button as NOT visible.
@@ -228,6 +237,8 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonConnect.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setTextColor(whiteTextColor)
         binding.buttonConnect.text = getString(R.string.connect_status_init)
+        connecting = false
+        reconnecting = false
     }
 
     // This function is android based for review an Activity intent.
@@ -235,13 +246,15 @@ class CurrentProfileFragment : Fragment() {
         when (requestCode) {
             REQUEST_ENABLE_BT ->
                 if (resultCode == Activity.RESULT_OK) {
-                    if(reconnecting) {
+                    if (reconnecting) {
                         reconnect()
-                    }else{
+                    } else if (connecting){
                         connectWithBluetoothDevice()
                     }
                 } else {
-                    _notConnectedWithBluetoothDevice()
+                    if(!reconnecting && !connecting) {
+                        _notConnectedWithBluetoothDevice()
+                    }
                 }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -255,21 +268,6 @@ class CurrentProfileFragment : Fragment() {
 
     //handle the user selection at the menus.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        if (item.itemId == R.id.newProfileFragment) {
-            if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
-                forceDisconnection = true
-                (activity as MainActivity).hc05.disconnect()
-            }
-        }
-
-        if (item.itemId == R.id.loadProfilesFragment) {
-            if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
-                forceDisconnection = true
-                (activity as MainActivity).hc05.disconnect()
-            }
-        }
-
         return NavigationUI.onNavDestinationSelected(item, requireView().findNavController()) ||
                 super.onOptionsItemSelected(item)
     }
@@ -278,11 +276,12 @@ class CurrentProfileFragment : Fragment() {
     //Check Fragment Lifecycle info https://abhiandroid.com/ui/fragment-lifecycle-example-android-studio.html
     override fun onResume() {
         super.onResume()
-        forceDisconnection = false
         if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
             _connectedWithBluetoothDevice()
         } else {
-            _notConnectedWithBluetoothDevice()
+            if(!reconnecting && !connecting) {
+                _notConnectedWithBluetoothDevice()
+            }
         }
     }
 

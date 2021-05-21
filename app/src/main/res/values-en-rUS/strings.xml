@@ -28,12 +28,14 @@
     <string name="ok_button">Check</string>
     <string name="alignment_instruction">Tilt the platform to the left/right/front/back to balance it</string>
     <string name="tilt_instruction">Tilt the platform to the front/back to adjust elevation</string>
-    <string name="congrats_instruction">Congratulations, you aligned your device!</string>
-    <string name="end_instruction">" Now, you can start tracking"</string>
+    <string name="congrats_instruction">Congratulations, you aligned your device. Now, you can start tracking!</string>
+    <string name="end_instruction">"To activate/deactivate the system, you can manually press the red button located at the bottom of the Easy Tracker.
+        \nWe recommend, however, that you do the control by pressing the buttons below, so that you do not run the risk of misaligning the system.
+        \nSee the instructions menu for more information and good luck. Clear sky!</string>
     <string name="debug_fragment_title">Debug</string>
     <string name="debug_fragment_1">Init Debug</string>
     <string name="about_fragment_title">About</string>
-    <string name="about_us">This Android app was developed to be useful with the Easy Tracker System.
+    <string name="about_us">This Android app was created to be useful with the Easy Tracker System.
         It is developed at the Federal University of Santa Maria, Brazil.
         \n\nAuthor: Eugênio Pozzobon
         \nAdvisor: Prof. Rafael Beltrame
@@ -81,14 +83,14 @@
     <string name="polar_instruction">Move the platform horizontally to align it with the North pole</string>
     <string name="end_track_button">Stop Tracking</string>
     <string name="start_track_button">Start Tracking</string>
-    <string name="track_instruction">" "</string>
     <string name="calibrating_compass_text1">" "</string>
     <string name="calibrating_compass_text2">" "</string>
     <string name="see_profile">See profile</string>
     <string name="reconnecting">Reconnecting</string>
     <string name="tracking">…tracking…</string>
     <string name="tracking_bt_problem">Timer Interrupted</string>
-    <string name="tracking_timer">Duração do rastreio:</string>
+    <string name="tracking_timer">Tracking duration:</string>
     <string name="reconnect_to_go">Reconnect to continue!</string>
+    <string name="tracking_start_timer">Tracking started at:</string>
 
 </resources>
