@@ -93,4 +93,22 @@
     <string name="reconnect_to_go">Reconnect to continue!</string>
     <string name="tracking_start_timer">Tracking started at:</string>
 
+
+    <!--    FAQ QUESTIONS AND ANSWERS -->
+    <string name="faq1">1. Como pegar as coordenadas GPS de outro lugar:</string>
+    <string name="faq2">2. O que é declinação magnética:</string>
+    <string name="faq3">3. Como pegar a declinação magnética:</string>
+    <string name="faq4">4. Falhas de conexão com o sistema:</string>
+
+    <string name="faq_ans1">Acesse o Google Maps e mantenha precionado na localização que deseja até exibir um marcador.
+        Cheque as informações da barra inferior para copiar as informações de latitude e longitude.</string>
+
+    <string name="faq_ans2">Declinação magnética é a diferença entre o norte magnético e o norte geográfico real do planeta.
+        Ela existe devido as inúmeras interferências que o campo magnético sofre e o valor é diferente para cada região do planeta.</string>
+
+    <string name="faq_ans3">Para calcular a Declinação magnética na localização que deseja, acesse <a href="https://www.ngdc.noaa.gov/geomag/calculators/magcalc.shtml?"
+        >este link</a> e preencha com suas informações.</string>
+
+    <string name="faq_ans4">Em caso de problemas de conexão recomenda-se reiniciar o aplicativo e reiniciar o sistema eletrônico.</string>
+
 </resources>

@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_debug" />
     <fragment
         android:id="@+id/howToUseFragment"
-        android:name="com.example.startracker.HowToUseFragment"
+        android:name="com.example.startracker.howtouse.HowToUseFragment"
         android:label="FAQ"
         tools:layout="@layout/fragment_how_to_use" />
     <fragment
