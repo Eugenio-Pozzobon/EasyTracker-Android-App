@@ -9,6 +9,10 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import com.example.startracker.R
 import java.util.HashMap
+
+/*
+ * @param
+ */
 class CustomExpandableListAdapter internal constructor(
     private val context: Context,
     private val titleList: List<String>,
@@ -28,6 +32,7 @@ class CustomExpandableListAdapter internal constructor(
         convertView: View?,
         parent: ViewGroup
     ): View {
+        //inflate child view
         var convertView = convertView
         val expandedListText = getChild(listPosition, expandedListPosition) as String
         if (convertView == null) {
@@ -58,6 +63,7 @@ class CustomExpandableListAdapter internal constructor(
         convertView: View?,
         parent: ViewGroup
     ): View {
+        //inflate group view
         var convertView = convertView
         val listTitle = getGroup(listPosition) as String
         if (convertView == null) {
@@ -66,7 +72,7 @@ class CustomExpandableListAdapter internal constructor(
             convertView = layoutInflater.inflate(R.layout.faq_list_row_group, null)
         }
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.textViewGroup)
-        listTitleTextView.setTypeface(null, Typeface.BOLD)
+        listTitleTextView.setTypeface(null, Typeface.BOLD) // make text bold
         listTitleTextView.text = listTitle
         return convertView
     }

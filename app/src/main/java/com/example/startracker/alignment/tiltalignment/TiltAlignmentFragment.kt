@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -15,12 +16,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.startracker.MainActivity
-import com.example.startracker.R
-import com.example.startracker.convertDpToPixel
+import com.example.startracker.*
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentTiltAlignmentBinding
-import com.example.startracker.mapFloat
 import com.google.android.material.snackbar.Snackbar
 
 class TiltAlignmentFragment : Fragment() {
@@ -32,7 +30,7 @@ class TiltAlignmentFragment : Fragment() {
     private var circleMarginX: Float = 0F
     private var circleMarginY: Float = 0F
     private var mapFinalAngle: Float = 0F
-
+    private var finalGpsAngle: Float = 0F
     lateinit var btSnack:Snackbar
     lateinit var binding: FragmentTiltAlignmentBinding
     lateinit var tiltAlignmentViewModel: TiltAlignmentViewModel
@@ -45,6 +43,7 @@ class TiltAlignmentFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_tilt_alignment, container, false
         )
+        ivVectorImage = binding.circleAlignment
 
         val application = requireNotNull(this.activity).application
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
@@ -195,17 +194,19 @@ class TiltAlignmentFragment : Fragment() {
     // use an provide angle for change the yellow destination marker in screen
     private fun addDestinationAngle(finalAngle:Float){
         try {
+
+            finalGpsAngle = finalAngle
             val valueMax = 90F
             val valueMin: Float = -90F
 
             val paddingMax = 115.0F
             val paddingMin: Float = -115.0F
 
-            mapFinalAngle = mapFloat(finalAngle, valueMin, valueMax, paddingMin, paddingMax)
-
-            if (mapFinalAngle < 0){
-                mapFinalAngle = - mapFinalAngle
+            if (finalGpsAngle < 0){
+                finalGpsAngle = - finalGpsAngle
             }
+
+            mapFinalAngle = mapFloat(finalGpsAngle, valueMin, valueMax, paddingMin, paddingMax)
 
             binding.destinationCircle.translationY =
                 convertDpToPixel(mapFinalAngle, requireContext())
@@ -216,6 +217,7 @@ class TiltAlignmentFragment : Fragment() {
 
     // Get values from HC05 and convert it for maximun dp of screen.
     // Calls an conversion for it
+    lateinit var ivVectorImage: ImageView
     private fun updateAlignment() {
         try {
             val pitch: Float? = (activity as MainActivity).hc05.dataPitch.value
@@ -227,14 +229,18 @@ class TiltAlignmentFragment : Fragment() {
             val paddingMax = 115.0F
             val paddingMin: Float = -115.0F
 
-            if (((pitch!! <= mapFinalAngle + 0.2) && (pitch >= mapFinalAngle - 0.2)) && ((roll!! <=  0.2) && (roll >= -0.2))) {
+            if (((pitch!! <= (finalGpsAngle + errorMargin)) && (pitch >= (finalGpsAngle - errorMargin)))
+                && ((roll!! <=  errorMargin) && (roll >= -errorMargin))) {
                 binding.okButton.setBackgroundColor(greenButtonColor)
+                ivVectorImage.setColorFilter(greenButtonColor)
+                println(true)
             } else {
                 binding.okButton.setBackgroundColor(redButtonColor)
+                ivVectorImage.setColorFilter(redButtonColor)
             }
 
-            circleMarginX = mapFloat(-pitch, valueMin, valueMax, paddingMin, paddingMax)
-            circleMarginY = mapFloat(roll!!, valueMin, valueMax, paddingMin, paddingMax)
+            circleMarginX = mapFloat(roll!!, valueMin, valueMax, paddingMin, paddingMax)
+            circleMarginY = mapFloat(pitch, valueMin, valueMax, paddingMin, paddingMax)
         } catch (e: Exception) {
             circleMarginX = 0F
             circleMarginY = 0F

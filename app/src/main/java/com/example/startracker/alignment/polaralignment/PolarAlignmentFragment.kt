@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import com.example.startracker.MainActivity
 import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentPolarAlignmentBinding
+import com.example.startracker.errorMargin
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -45,6 +47,7 @@ class PolarAlignmentFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_polar_alignment, container, false
         )
+        ivVectorImage = binding.compass
 
         val application = requireNotNull(this.activity).application
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
@@ -181,18 +184,21 @@ class PolarAlignmentFragment : Fragment() {
 
     // Get values from HC05 and convert it for maximun dp of screen.
     // Calls an conversion for it
+    lateinit var ivVectorImage: ImageView
     private fun updateAlignment() {
         try {
             declination = polarAlignmentViewModel.declination.value!!.toFloat()
-            val yaw: Float? = (activity as MainActivity).hc05.dataYaw.value
+            val yaw: Float? = (activity as MainActivity).hc05.dataYaw.value?.minus(declination)
 
-            if (((yaw!! <= 0.2) && (yaw >= -0.2))) {
+            if (((yaw!! <= errorMargin) || (yaw >= (360-errorMargin)))) {
                 binding.okButton.setBackgroundColor(greenButtonColor)
+                ivVectorImage.setColorFilter(greenButtonColor)
             } else {
                 binding.okButton.setBackgroundColor(redButtonColor)
+                ivVectorImage.setColorFilter(redButtonColor)
             }
 
-            rotate = yaw - declination
+            rotate = yaw
         } catch (e: Exception) {
             rotate = 0F
         }
