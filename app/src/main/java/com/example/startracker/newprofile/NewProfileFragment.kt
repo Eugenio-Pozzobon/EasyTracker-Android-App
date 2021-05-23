@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.GeomagneticField
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -164,7 +165,13 @@ class NewProfileFragment : Fragment() {
             fusedLocationProviderClient.lastLocation
                 .addOnSuccessListener { location : Location? ->
                     if (location != null) {
+                        val geoField = GeomagneticField(
+                            location.latitude.toFloat(),
+                            location.longitude.toFloat(),
+                            location.altitude.toFloat(), System.currentTimeMillis())
+
                         newProfileViewModel.updateGps(location.latitude.toString())
+                        newProfileViewModel.updateDeclination(geoField.declination.toString())
                     }
                 }
         }

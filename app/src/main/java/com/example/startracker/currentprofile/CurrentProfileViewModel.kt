@@ -81,7 +81,7 @@ class CurrentProfileViewModel(
             }else {
                 lastProfile = getLastProfile(true)!!
                 _profileName.value = lastProfile.profileName
-                gpsDataString.value = "Latitude: " + lastProfile.gpsData
+                gpsDataString.value = "Latitude: " + lastProfile.gpsData + "°"
                 magDeclinationString.value = "Declinação Magnética: " + lastProfile.declination + "°"
                 gpsData.value = lastProfile.gpsData
                 magDeclination.value = lastProfile.declination

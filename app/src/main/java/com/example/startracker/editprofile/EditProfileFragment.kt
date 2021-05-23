@@ -2,6 +2,7 @@ package com.example.startracker.editprofile
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.hardware.GeomagneticField
 import android.location.Location
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -131,7 +132,13 @@ class EditProfileFragment : Fragment() {
             fusedLocationProviderClient.lastLocation
                 .addOnSuccessListener { location : Location? ->
                     if (location != null) {
+                        val geoField = GeomagneticField(
+                            location.latitude.toFloat(),
+                            location.longitude.toFloat(),
+                            location.altitude.toFloat(), System.currentTimeMillis())
+
                         editProfileViewModel.updateGps(location.latitude.toString())
+                        editProfileViewModel.updateDeclination(geoField.declination.toString())
                     }
                 }
         }

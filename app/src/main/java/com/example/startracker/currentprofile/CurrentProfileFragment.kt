@@ -104,13 +104,13 @@ class CurrentProfileFragment : Fragment() {
         })
 
         //Connect bluetooth device when screen load
-//        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
-//            if (it != "") {
-//                if (startBluetooth()) {
-//                    connectWithBluetoothDevice()
-//                }
-//            }
-//        })
+        currentProfileViewModel.bluetoothMac.observe(viewLifecycleOwner, {
+            if (it != "") {
+                if (startBluetooth()) {
+                    connectWithBluetoothDevice()
+                }
+            }
+        })
 
         //check if is a new user, so then put at the welcome screen
         currentProfileViewModel.newUserDetected.observe(viewLifecycleOwner, {
@@ -123,17 +123,17 @@ class CurrentProfileFragment : Fragment() {
 
         //connect with bluetooth device
         binding.buttonConnect.setOnClickListener() {
-//            if (((activity as MainActivity).hc05.mmIsConnected.value) == true) {
-//                _connectedWithBluetoothDevice()
-//            } else {
-//                if (startBluetooth()) {
-//                    connectWithBluetoothDevice()
-//                }
-//            }
-            currentProfileViewModel.onConnect()
-            binding.buttonConnect.setBackgroundColor(greenButtonColor)
-            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
-            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+            if (((activity as MainActivity).hc05.mmIsConnected.value) == true) {
+                _connectedWithBluetoothDevice()
+            } else {
+                if (startBluetooth()) {
+                    connectWithBluetoothDevice()
+                }
+            }
+//            currentProfileViewModel.onConnect()
+//            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+//            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+//            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors

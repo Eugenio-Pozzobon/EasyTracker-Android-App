@@ -157,4 +157,7 @@ class EditProfileViewModel(
     fun updateGps(latitude:String){
         gpsData.value = latitude
     }
+    fun updateDeclination(declination: String){
+        magDeclination.value = declination
+    }
 }
