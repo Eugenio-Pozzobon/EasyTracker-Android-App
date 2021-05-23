@@ -127,6 +127,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+            <ImageView
+                android:id="@+id/to_right_arrow"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/text_north"
+                app:layout_constraintStart_toStartOf="@+id/divider2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/rotate_right" />
+
+            <ImageView
+                android:id="@+id/to_left_arrow"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="@+id/divider2"
+                app:layout_constraintStart_toEndOf="@+id/text_north"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/rotate_left" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

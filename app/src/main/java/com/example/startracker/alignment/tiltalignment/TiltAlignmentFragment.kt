@@ -6,11 +6,13 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -35,6 +37,47 @@ class TiltAlignmentFragment : Fragment() {
     lateinit var binding: FragmentTiltAlignmentBinding
     lateinit var tiltAlignmentViewModel: TiltAlignmentViewModel
 
+    lateinit var leftArrow:ImageView
+    lateinit var rightArrow:ImageView
+    lateinit var upArrow:ImageView
+    lateinit var downArrow:ImageView
+
+    var isPositioned = false
+    var lastState = false
+    private val countDownArrow = object : CountDownTimer(3600 * 24 * 1000, 250) {
+        override fun onTick(millisUntilFinished: Long) {
+            lastState = !lastState
+            if (!lastState && !isPositioned) {
+                if (pitch!! > (finalGpsAngle + errorMargin) ) {
+                    upArrow.isVisible = true
+                } else if (pitch!! < (finalGpsAngle-errorMargin) ) {
+                    downArrow.isVisible = true
+                }else{
+                    upArrow.isVisible = false
+                    downArrow.isVisible = false
+                }
+
+                if (roll!! > errorMargin ) {
+                    leftArrow.isVisible = true
+                } else if (roll!! < -errorMargin ) {
+                    rightArrow.isVisible = true
+                }else{
+                    leftArrow.isVisible = false
+                    rightArrow.isVisible = false
+                }
+            }else{
+                leftArrow.isVisible = false
+                rightArrow.isVisible = false
+                upArrow.isVisible = false
+                downArrow.isVisible = false
+            }
+        }
+
+        override fun onFinish() {
+
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +87,10 @@ class TiltAlignmentFragment : Fragment() {
             inflater, R.layout.fragment_tilt_alignment, container, false
         )
         ivVectorImage = binding.circleAlignment
+        leftArrow = binding.leftArrow
+        rightArrow = binding.rightArrow
+        upArrow = binding.topArrow
+        downArrow = binding.bottomArrow
 
         val application = requireNotNull(this.activity).application
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
@@ -218,10 +265,12 @@ class TiltAlignmentFragment : Fragment() {
     // Get values from HC05 and convert it for maximun dp of screen.
     // Calls an conversion for it
     lateinit var ivVectorImage: ImageView
+    var pitch: Float? = 0F
+    var roll: Float? = 0F
     private fun updateAlignment() {
         try {
-            val pitch: Float? = (activity as MainActivity).hc05.dataPitch.value
-            val roll: Float? = (activity as MainActivity).hc05.dataRoll.value
+            pitch = (activity as MainActivity).hc05.dataPitch.value
+            roll = (activity as MainActivity).hc05.dataRoll.value
 
             val valueMax = 90F
             val valueMin: Float = -90F
@@ -229,18 +278,19 @@ class TiltAlignmentFragment : Fragment() {
             val paddingMax = 115.0F
             val paddingMin: Float = -115.0F
 
-            if (((pitch!! <= (finalGpsAngle + errorMargin)) && (pitch >= (finalGpsAngle - errorMargin)))
-                && ((roll!! <=  errorMargin) && (roll >= -errorMargin))) {
+            if (((pitch!! <= (finalGpsAngle + errorMargin)) && (pitch!! >= (finalGpsAngle - errorMargin)))
+                && ((roll!! <=  errorMargin) && (roll!! >= -errorMargin))) {
                 binding.okButton.setBackgroundColor(greenButtonColor)
                 ivVectorImage.setColorFilter(greenButtonColor)
-                println(true)
+                isPositioned = true
             } else {
                 binding.okButton.setBackgroundColor(redButtonColor)
                 ivVectorImage.setColorFilter(redButtonColor)
+                isPositioned = false
             }
 
             circleMarginX = mapFloat(roll!!, valueMin, valueMax, paddingMin, paddingMax)
-            circleMarginY = mapFloat(pitch, valueMin, valueMax, paddingMin, paddingMax)
+            circleMarginY = mapFloat(pitch!!, valueMin, valueMax, paddingMin, paddingMax)
         } catch (e: Exception) {
             circleMarginX = 0F
             circleMarginY = 0F
@@ -270,6 +320,9 @@ class TiltAlignmentFragment : Fragment() {
         super.onPause()
         (activity as MainActivity).hc05.updatedHandle.removeObserver(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
+
+        countDownArrow.onFinish()
+        countDownArrow.cancel()
     }
     override fun onResume() {
         super.onResume()
@@ -279,5 +332,6 @@ class TiltAlignmentFragment : Fragment() {
         if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
             (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
         }
+        countDownArrow.start()
     }
 }

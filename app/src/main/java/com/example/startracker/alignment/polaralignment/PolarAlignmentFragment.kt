@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -39,6 +40,30 @@ class PolarAlignmentFragment : Fragment() {
     lateinit var binding: FragmentPolarAlignmentBinding
     lateinit var polarAlignmentViewModel: PolarAlignmentViewModel
 
+    lateinit var leftArrow:ImageView
+    lateinit var rightArrow:ImageView
+    var isPositioned = false
+    var lastState = false
+    private val countDownArrow = object : CountDownTimer(3600 * 24 * 1000, 250) {
+        override fun onTick(millisUntilFinished: Long) {
+            lastState = !lastState
+            if (!lastState && !isPositioned) {
+                if (rotate < 180) {
+                    leftArrow.isVisible = true
+                } else {
+                    rightArrow.isVisible = true
+                }
+            }else{
+                leftArrow.isVisible = false
+                rightArrow.isVisible = false
+            }
+        }
+
+        override fun onFinish() {
+
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +73,8 @@ class PolarAlignmentFragment : Fragment() {
             inflater, R.layout.fragment_polar_alignment, container, false
         )
         ivVectorImage = binding.compass
+        leftArrow = binding.toLeftArrow
+        rightArrow = binding.toRightArrow
 
         val application = requireNotNull(this.activity).application
         val dataSource = ProfileDatabase.getInstance(application).profileDatabaseDao
@@ -101,10 +128,10 @@ class PolarAlignmentFragment : Fragment() {
 
                     //indicate if was an disconnection fail or if just cant get connected
                     dialogBluetooth.show()
-                }catch (e: java.lang.Exception){
+                } catch (e: java.lang.Exception) {
                     Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
                 }
-            }else if(it == true){
+            } else if (it == true) {
                 try {
                     btSnack = Snackbar.make(
                         requireView(),
@@ -112,7 +139,7 @@ class PolarAlignmentFragment : Fragment() {
                         Snackbar.LENGTH_SHORT,
                     )
                     btSnack.show()
-                }catch (e: java.lang.Exception){
+                } catch (e: java.lang.Exception) {
                     Log.e("SNACKBARDEBUG", "SNACKBAR PROBLEM", e)
                 }
             }
@@ -162,7 +189,7 @@ class PolarAlignmentFragment : Fragment() {
             )
             btSnack.show()
             (activity as MainActivity).hc05.reconnect()
-            if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+            if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
                 (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
             }
         }
@@ -188,14 +215,24 @@ class PolarAlignmentFragment : Fragment() {
     private fun updateAlignment() {
         try {
             declination = polarAlignmentViewModel.declination.value!!.toFloat()
-            val yaw: Float? = (activity as MainActivity).hc05.dataYaw.value?.minus(declination)
+            var yaw: Float? = (activity as MainActivity).hc05.dataYaw.value?.minus(declination)
 
-            if (((yaw!! <= errorMargin) || (yaw >= (360-errorMargin)))) {
+            if(yaw !! > 360){
+                yaw = yaw-360
+            }
+
+            if(yaw < 0){
+                yaw = yaw+360
+            }
+
+            if (((yaw <= errorMargin) || (yaw >= (360 - errorMargin)))) {
                 binding.okButton.setBackgroundColor(greenButtonColor)
                 ivVectorImage.setColorFilter(greenButtonColor)
+                isPositioned = true
             } else {
                 binding.okButton.setBackgroundColor(redButtonColor)
                 ivVectorImage.setColorFilter(redButtonColor)
+                isPositioned = false
             }
 
             rotate = yaw
@@ -233,8 +270,8 @@ class PolarAlignmentFragment : Fragment() {
                                     (AUTO_DISMISS_MILLIS / 1000 - correction)
                         compassTimerDialog.setMessage(
                             getString(R.string.calibrating_compass_text1)
-                                + " " + valueCountdown.toString() + " " +
-                                getString(R.string.calibrating_compass_text2)
+                                    + " " + valueCountdown.toString() + " " +
+                                    getString(R.string.calibrating_compass_text2)
                         )
                         if (!(valueCountdown > 0)) {
                             onFinish()
@@ -296,6 +333,8 @@ class PolarAlignmentFragment : Fragment() {
         super.onPause()
         (activity as MainActivity).hc05.updatedHandle.removeObserver(handlerUpdateObserver)
         (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
+        countDownArrow.onFinish()
+        countDownArrow.cancel()
     }
 
     override fun onResume() {
@@ -303,9 +342,10 @@ class PolarAlignmentFragment : Fragment() {
         //activate observers in bluetooth data, so now its possible to update UI
         // with bluetooth values and tell user when it get disconnected
         (activity as MainActivity).hc05.updatedHandle.observeForever(handlerUpdateObserver)
-        if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+        if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
             (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
         }
+        countDownArrow.start()
     }
 
 }

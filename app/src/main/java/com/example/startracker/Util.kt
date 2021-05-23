@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 // File with functions used in all code
 
 //sensor error margin for user get screen green
-var errorMargin = 2
+var errorMargin = 0.5
 
 /**
  * This method converts dp unit to equivalent pixels, depending on device density.

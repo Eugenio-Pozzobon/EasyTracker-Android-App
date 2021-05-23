@@ -16,6 +16,5 @@
         android:justificationMode="inter_word"
         android:textColorLink="#CCFFCC"
         android:textSize="16sp"
-        tools:ignore="RtlHardcoded,RtlSymmetry"
-        tools:targetApi="o" />
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
 </LinearLayout>
