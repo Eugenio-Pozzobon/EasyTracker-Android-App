@@ -45,30 +45,34 @@ class LevelAlignmentFragment : Fragment() {
     var lastState = false
     private val countDownArrow = object : CountDownTimer(3600 * 24 * 1000, 250) {
         override fun onTick(millisUntilFinished: Long) {
-            lastState = !lastState
-            if (!lastState && !isPositioned) {
-                if (pitch!! > errorMargin ) {
-                    upArrow.isVisible = true
-                } else if (pitch!! < -errorMargin ) {
-                    downArrow.isVisible = true
-                }else{
+            try {
+                lastState = !lastState
+                if (!lastState && !isPositioned) {
+                    if (pitch!! > errorMargin) {
+                        upArrow.isVisible = true
+                    } else if (pitch!! < -errorMargin) {
+                        downArrow.isVisible = true
+                    } else {
+                        upArrow.isVisible = false
+                        downArrow.isVisible = false
+                    }
+
+                    if (roll!! > errorMargin) {
+                        leftArrow.isVisible = true
+                    } else if (roll!! < -errorMargin) {
+                        rightArrow.isVisible = true
+                    } else {
+                        leftArrow.isVisible = false
+                        rightArrow.isVisible = false
+                    }
+                } else {
+                    leftArrow.isVisible = false
+                    rightArrow.isVisible = false
                     upArrow.isVisible = false
                     downArrow.isVisible = false
                 }
-
-                if (roll!! > errorMargin ) {
-                    leftArrow.isVisible = true
-                } else if (roll!! < -errorMargin ) {
-                    rightArrow.isVisible = true
-                }else{
-                    leftArrow.isVisible = false
-                    rightArrow.isVisible = false
-                }
-            }else{
-                leftArrow.isVisible = false
-                rightArrow.isVisible = false
-                upArrow.isVisible = false
-                downArrow.isVisible = false
+            }catch (e: java.lang.Exception){
+                Log.e("LEVELALIGN", "TICK PROBLEM LEVEL ALIGNMENT", e)
             }
         }
 

@@ -222,9 +222,15 @@ class EndAlignmentFragment : Fragment() {
         if (it) {
             taskInitTime = System.currentTimeMillis()
             countDown.start()
+            setButtonDisable(binding.startTrackingButton)
+            setButtonEnable(binding.endTrackingButton)
+            binding.startTrackingButton.text = getString(R.string.tracking)
         } else {
             countDown.onFinish()
             countDown.cancel()
+            setButtonEnable(binding.startTrackingButton)
+            setButtonDisable(binding.endTrackingButton)
+            binding.startTrackingButton.text = getString(R.string.start_track_button)
         }
     }
 

@@ -81,6 +81,7 @@ class BluetoothService {
             val bundle: Bundle = msg.data
 
             // get buffer String
+            println(stringBuffer)
             stringBuffer = bundle.getString("key1", stringBuffer)
             val dataString = stringBuffer.split(",").toTypedArray()
 
@@ -99,6 +100,7 @@ class BluetoothService {
                 // CRC is just a sum with the other values
                 thread {
                     if ((_rawDataRoll + _rawDataPitch + _rawDataYaw) == _rawDataCRC) {
+                        //updateWriteBuffer("0")
                         _dataRoll.postValue(_rawDataRoll.toFloat() / 10)
                         _dataPitch.postValue(_rawDataPitch.toFloat() / 10)
                         _dataYaw.postValue(_rawDataYaw.toFloat() / 10)
@@ -109,15 +111,15 @@ class BluetoothService {
             }else if(dataString.size == 2){
                 thread {
                     if (dataString[0] == dataString[1]) {
-                        if (dataString[0] == "c") {
-                            _calibratingCompass.postValue(true)
-                            updateWriteBuffer("0")
-                        }else if(dataString[0] == "s"){
+                        if(dataString[0] == "s"){
                             trackingStars.postValue(true)
-                            updateWriteBuffer("0")
+                            updateWriteBuffer("1")
                         }else if(dataString[0] == "n"){
                             trackingStars.postValue(false)
-                            updateWriteBuffer("0")
+                            updateWriteBuffer("2")
+                        }else if (dataString[0] == "c") {
+                            _calibratingCompass.postValue(true)
+                            updateWriteBuffer("3")
                         }
                     }
                 }

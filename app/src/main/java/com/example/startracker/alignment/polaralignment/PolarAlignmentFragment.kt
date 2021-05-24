@@ -46,16 +46,20 @@ class PolarAlignmentFragment : Fragment() {
     var lastState = false
     private val countDownArrow = object : CountDownTimer(3600 * 24 * 1000, 250) {
         override fun onTick(millisUntilFinished: Long) {
-            lastState = !lastState
-            if (!lastState && !isPositioned) {
-                if (rotate < 180) {
-                    leftArrow.isVisible = true
-                } else {
-                    rightArrow.isVisible = true
+            try{
+                lastState = !lastState
+                if (!lastState && !isPositioned) {
+                    if (rotate < 180) {
+                        leftArrow.isVisible = true
+                    } else {
+                        rightArrow.isVisible = true
+                    }
+                }else{
+                    leftArrow.isVisible = false
+                    rightArrow.isVisible = false
                 }
-            }else{
-                leftArrow.isVisible = false
-                rightArrow.isVisible = false
+            }catch (e: java.lang.Exception){
+                Log.e("POLARALIGN", "TICK PROBLEM LEVEL ALIGNMENT", e)
             }
         }
 
