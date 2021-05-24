@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,6 @@ import kotlin.properties.Delegates
 
 class CurrentProfileFragment : Fragment() {
 
-    lateinit var btSnack: Snackbar
 
     lateinit var binding: FragmentCurrentProfileBinding
     lateinit var currentProfileViewModel: CurrentProfileViewModel
@@ -171,14 +171,18 @@ class CurrentProfileFragment : Fragment() {
 
 
     private var connecting = false
+    private var connectingTime = System.currentTimeMillis()
     private fun connectWithBluetoothDevice() {
         if((activity as MainActivity).hc05.mmIsConnected.value != true){
             connecting = true
             binding.buttonConnect.text = getString(R.string.connecting_status)
             binding.buttonConnect.setBackgroundColor(yellowButtonColor)
             (activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString())
+            connectingTime = System.currentTimeMillis()
+            countDownBluetooth.start()
             if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
                 (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+                println("!!!OBSERVING!!!")
             }
         }
     }
@@ -188,7 +192,7 @@ class CurrentProfileFragment : Fragment() {
     private val checkConnection = Observer<Boolean?> {
         if (it == true) {
             _connectedWithBluetoothDevice()
-        } else if (it == false && (!reconnecting && !connecting)) {
+        } else if ((!reconnecting && !connecting)) {
             _notConnectedWithBluetoothDevice()
             try {
                 //indicate if was an disconnection fail or if just cant get connected
@@ -208,6 +212,8 @@ class CurrentProfileFragment : Fragment() {
             binding.buttonConnect.setBackgroundColor(yellowButtonColor)
             if (startBluetooth()) {
                 (activity as MainActivity).hc05.reconnect()
+                connectingTime = System.currentTimeMillis()
+                countDownBluetooth.start()
                 if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
                     (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
                 }
@@ -218,7 +224,8 @@ class CurrentProfileFragment : Fragment() {
         }
     }
 
-    // Indicate to viewModel that hc05 is connected and this would set the "Start Alignment" button as visible.
+    // Indicate to viewModel that hc05 is connected and
+    // this would set the "Start Alignment" button as visible.
     // Modify others buttons as it indicate the connection state.
     private fun _connectedWithBluetoothDevice() {
         currentProfileViewModel.onConnect()
@@ -227,9 +234,12 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         connecting = false
         reconnecting = false
+        countDownBluetooth.onFinish()
+        countDownBluetooth.cancel()
     }
 
-    // Indicate to viewModel that hc05 is NOT connected and this would set the "Start Alignment" button as NOT visible.
+    // Indicate to viewModel that hc05 is NOT connected and
+    // this would set the "Start Alignment" button as NOT visible.
     // Modify others buttons as it indicate the connection state
     private fun _notConnectedWithBluetoothDevice() {
         currentProfileViewModel.notConnect()
@@ -239,6 +249,8 @@ class CurrentProfileFragment : Fragment() {
         binding.buttonConnect.text = getString(R.string.connect_status_init)
         connecting = false
         reconnecting = false
+        countDownBluetooth.onFinish()
+        countDownBluetooth.cancel()
     }
 
     // This function is android based for review an Activity intent.
@@ -272,10 +284,23 @@ class CurrentProfileFragment : Fragment() {
                 super.onOptionsItemSelected(item)
     }
 
+    // this countdown check if bluetooth is connected, and reset values of connection state
+    private val countDownBluetooth =
+        object : CountDownTimer(3600 * 24 * 1000, 5000) {
+        override fun onTick(millisUntilFinished: Long) {
+            if((activity as MainActivity).hc05.mmIsConnected.value == false
+                && (System.currentTimeMillis()-connectingTime)>5000){
 
+                _notConnectedWithBluetoothDevice()
+            }
+        }
+        override fun onFinish() {
+        }
+    }
     //Check Fragment Lifecycle info https://abhiandroid.com/ui/fragment-lifecycle-example-android-studio.html
     override fun onResume() {
         super.onResume()
+        countDownBluetooth.start()
         if ((activity as MainActivity).hc05.mmIsConnected.value == true) {
             _connectedWithBluetoothDevice()
         } else {
@@ -288,5 +313,7 @@ class CurrentProfileFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         (activity as MainActivity).hc05.mmIsConnected.removeObserver(checkConnection)
+        countDownBluetooth.onFinish()
+        countDownBluetooth.cancel()
     }
 }

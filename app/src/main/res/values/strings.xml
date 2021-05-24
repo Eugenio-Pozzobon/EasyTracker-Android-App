@@ -19,9 +19,9 @@
     <string name="welcome_fragment_text">Bem vindo ao Aplicativo! Você deverá preencher a próxima tela com
         suas informações de localização, e então você poderá iniciar o rastreio de estrelas.
         \n
-        \nAntes de cemeçar, ligue a plataforma <i>Easy Tracker</i> e ative o bluetooth do seu dispositivo para realizar o pareamento.
+        \nAntes de começar, ligue a plataforma <i>Easy Tracker</i> e ative o bluetooth do seu dispositivo para realizar o pareamento.
         \n
-        \n<b><i>O nome para parear deverá ser HC-05 e a senha padrão é 1234.</i></b>
+        \n<b>O nome para parear deverá ser <i>HC-05</i> e a senha padrão é <i>1234</i>.</b>
         \n
         \nApós o pareamento você pode começar a usar este aplicativo clicando no botão abaixo.
         Em caso de dúvidas, cheque o menu de Instruções. Boa sorte!
@@ -168,5 +168,7 @@
     <string name="faq_ans3">Para calcular a Declinação magnética na localização que deseja, clique aqui e preencha com suas informações.</string>
 
     <string name="faq_ans4">Em caso de problemas de conexão recomenda-se reiniciar o aplicativo e reiniciar o sistema eletrônico. Se o problema persistir, aperte o botão presente no HC-05 por 1 segundo.</string>
+    <string name="gps_verbose">O App está usando sua localização atual para efetuar os cálculos de declinação magnética!</string>
+    <string name="gps_marker_call">Você pode clicar no marcador rotativo para pegar sua localização atual automaticamente.</string>
 
 </resources>

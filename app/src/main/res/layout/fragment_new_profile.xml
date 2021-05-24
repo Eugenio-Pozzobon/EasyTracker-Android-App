@@ -120,11 +120,12 @@
                     android:layout_height="45dp"
                     android:layout_marginStart="8dp"
                     android:contentDescription="@string/todo_string"
-                    android:src="@drawable/gps_circle_vector"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/gps_number"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+<!--                android:src="@drawable/gps_circle_vector"-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -175,6 +176,8 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="7dp"
                 android:contentDescription="@string/todo_string"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
                 android:src="@drawable/question_vector"
                 app:layout_constraintBottom_toBottomOf="@+id/declination_number"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout"

@@ -31,4 +31,9 @@
     <style name="Theme.MyApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+<!--    <style name="Theme.MyApplication.Animation">-->
+<!--        <item name="android:tint">@color/white</item>-->
+<!--    </style>-->
+
 </resources>

@@ -110,5 +110,7 @@
         >este link</a> e preencha com suas informações.</string>
 
     <string name="faq_ans4">Em caso de problemas de conexão recomenda-se reiniciar o aplicativo e reiniciar o sistema eletrônico.</string>
+    <string name="gps_verbose">The App is using your current GPS location to execute the magnetic declination calculation!</string>
+    <string name="gps_marker_call">You can click on the rotation marker to get your current latitude</string>
 
 </resources>

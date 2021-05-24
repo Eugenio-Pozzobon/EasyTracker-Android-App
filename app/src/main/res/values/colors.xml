@@ -7,7 +7,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#80D3D3D3</color>
-    <color name="grey_bold">#969696</color>
+    <color name="grey_bold">#FFBBBBBB</color>
     <color name="yellow_light">#AAFFFF00</color>
     <color name="yellow_button">#BEA329</color>
 </resources>
