@@ -1,29 +1,22 @@
 package com.example.startracker.newprofile
 
 import android.Manifest
-import android.R.color
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
-import android.content.res.Resources
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.hardware.GeomagneticField
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
+import androidx.core.widget.TextViewCompat.getCompoundDrawablesRelative
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -105,6 +98,10 @@ class NewProfileFragment : Fragment() {
             }
         })
 
+        binding.imageQuestionVector.setOnClickListener(){
+            this.findNavController().navigate(R.id.action_newProfileFragment_to_howToUseFragment)
+        }
+
 
         //change buttons colors as design guidelines
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
@@ -117,16 +114,10 @@ class NewProfileFragment : Fragment() {
         //start animation drawable
         val imageView = binding.imageGpsCircle
         imageView.setBackgroundResource(R.drawable.gps_circle_animation)
-
-        imageView.setImageResource(R.drawable.gps_circle_vector)
         gpsAnimation = imageView.background as AnimatedVectorDrawable
 
         binding.buttonConnect.setBackgroundColor(redButtonColor)
         binding.buttonConnect.setTextColor(whiteColor)
-
-        binding.imageQuestionVector.setOnClickListener(){
-            this.findNavController().navigate(R.id.action_newProfileFragment_to_howToUseFragment)
-        }
 
         //get user current localization if clicked at marker button
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
@@ -138,6 +129,7 @@ class NewProfileFragment : Fragment() {
             countDownAnimated.onFinish()
             countDownAnimated.cancel()
             imageView.background = null
+            imageView.setImageResource(R.drawable.gps_circle_vector)
         }
 
         newProfileViewModel.onConnected.observe(viewLifecycleOwner, {
@@ -149,9 +141,12 @@ class NewProfileFragment : Fragment() {
             }
         })
 
-        binding.buttonConnect.setOnClickListener(){
-            startBluetooth()
-        }
+        newProfileViewModel.startConnection.observe(viewLifecycleOwner, {
+
+            if (it) {
+                startBluetooth()
+            }
+        })
 
         setHasOptionsMenu(true)
         return binding.root
@@ -218,6 +213,7 @@ class NewProfileFragment : Fragment() {
                             getString(R.string.gps_verbose),
                             Snackbar.LENGTH_SHORT,
                         )
+                        gpsSnack.setTextColor(Color.WHITE)
                         gpsSnack.show()
                     }
                 }

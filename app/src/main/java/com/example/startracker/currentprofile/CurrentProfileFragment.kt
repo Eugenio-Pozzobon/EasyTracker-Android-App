@@ -308,6 +308,10 @@ class CurrentProfileFragment : Fragment() {
                 _notConnectedWithBluetoothDevice()
             }
         }
+        if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
+            (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
+            println("!!!OBSERVING!!!")
+        }
     }
 
     override fun onPause() {

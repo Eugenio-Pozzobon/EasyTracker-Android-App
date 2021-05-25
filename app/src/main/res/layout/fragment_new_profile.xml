@@ -179,6 +179,7 @@
                 android:scaleX="0.8"
                 android:scaleY="0.8"
                 android:src="@drawable/question_vector"
+                android:alpha="0.7"
                 app:layout_constraintBottom_toBottomOf="@+id/declination_number"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout"
                 app:layout_constraintStart_toEndOf="@+id/declination_number"
@@ -192,6 +193,7 @@
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/todo_string"
                 android:src="@drawable/bluetooth_vector"
+                android:onClick="@{() -> newProfileViewModel.onStartConnection()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/declination_number" />
@@ -205,6 +207,9 @@
                 android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="20sp"
+                android:onClick="@{() -> newProfileViewModel.onStartConnection()}"
+                app:icon="@drawable/button_icon_settings_bluetooth_bitmap"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_bluetooth" />

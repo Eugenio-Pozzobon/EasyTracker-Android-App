@@ -2,18 +2,26 @@
 <set>
     <objectAnimator
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:duration="1000"
+        android:duration="600"
         android:propertyName="fillColor"
-        android:valueFrom="#555"
-        android:valueTo="#fff"
+        android:valueFrom="#F00"
+        android:valueTo="#FF0"
         />
     <objectAnimator
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:startOffset="1000"
-        android:duration="1000"
+        android:duration="600"
         android:propertyName="fillColor"
-        android:valueFrom="#fff"
-        android:valueTo="#555"
+        android:valueFrom="#FF0"
+        android:valueTo="#3F0"
+        />
+    <objectAnimator
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:startOffset="2200"
+        android:duration="200"
+        android:propertyName="fillColor"
+        android:valueFrom="#0F0"
+        android:valueTo="#F00"
         />
 <!--    <objectAnimator-->
 <!--        xmlns:android="http://schemas.android.com/apk/res/android"-->

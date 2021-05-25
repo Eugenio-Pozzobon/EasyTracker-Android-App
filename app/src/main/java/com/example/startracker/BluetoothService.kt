@@ -81,7 +81,7 @@ class BluetoothService {
             val bundle: Bundle = msg.data
 
             // get buffer String
-            println(stringBuffer)
+            // println(stringBuffer)
             stringBuffer = bundle.getString("key1", stringBuffer)
             val dataString = stringBuffer.split(",").toTypedArray()
 

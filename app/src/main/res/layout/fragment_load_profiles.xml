@@ -6,7 +6,6 @@
     <!-- Data to make available to the XML via data binding. In this case,
          the whole ViewModel, so that we can access the LiveData,
          click handlers, and state variables. -->
-
     <data>
         <variable
             name="loadProfilesViewModel"
@@ -35,6 +34,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/button_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/new_profile_menu"
+            app:icon="@drawable/new_vector"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/button_clear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
             android:id="@+id/button_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,21 +54,13 @@
             android:enabled="@{loadProfilesViewModel.clearButtonVisible}"
             android:onClick="@{() -> loadProfilesViewModel.onClear()}"
             android:text="@string/clearProfiles"
+            app:icon="@drawable/button_icon_delete_forever_24"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/button_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/new_profile_menu"
-            app:layout_constraintBottom_toTopOf="@+id/button_clear"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- With data binding and LiveData, we can track the buttons' visibility states
              from the ViewModel. The click handler is in the ViewModel as well, and

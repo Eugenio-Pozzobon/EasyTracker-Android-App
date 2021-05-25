@@ -25,19 +25,30 @@ class NewProfileViewModel(
     var magDeclination = MutableLiveData<String>()
     var bluetoothMac = MutableLiveData<String>()
 
+    private var _startConnection = MutableLiveData<Boolean>()
     private var _onConnected = MutableLiveData<Boolean>()
 
+    val startConnection: LiveData<Boolean>
+        get() = _startConnection
     val onConnected: LiveData<Boolean>
         get() = _onConnected
 
+    fun onStartConnection(){
+        viewModelScope.launch {
+            _startConnection.value = true
+        }
+    }
     // signalize to view model the current state of fragment
     fun doneOnConnected(){
-        _onConnected.value = true
+        viewModelScope.launch {
+            _onConnected.value = true
+        }
     }
 
     fun doneOnChangeScreen() {
         viewModelScope.launch {
             _onConnected.value = false
+            _startConnection.value = false
         }
     }
 

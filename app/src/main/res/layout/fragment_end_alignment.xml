@@ -65,6 +65,8 @@
                 android:text="@string/start_track_button"
                 android:textAllCaps="false"
                 android:textSize="20sp"
+                app:icon="@drawable/button_icon_not_started_24"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -91,6 +93,8 @@
                 android:text="@string/end_track_button"
                 android:textAllCaps="false"
                 android:textSize="20sp"
+                app:icon="@drawable/button_icon_stop_circle_24"
+                app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_time" />

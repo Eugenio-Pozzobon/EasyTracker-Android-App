@@ -91,11 +91,9 @@
         \nDesenvolvedor: Eugênio Pozzobon
         \nOrientador: Prof. Rafael Beltrame
         \n
-        \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-System#desenvolvimento-de-uma-plataforma-equatorial-para-astrofotografia---easy-tracker-system"
-            >Cheque a documentação do sistema eletrônico clicando aqui</a>
+        \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-System#desenvolvimento-de-uma-plataforma-equatorial-para-astrofotografia---easy-tracker-system">Cheque a documentação do sistema eletrônico clicando aqui</a>
         \n
-        \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-Android-App#easy-tracker-android-app"
-            >Cheque a documentação do aplicativo android clicando aqui</a>
+        \n<a href="https://github.com/Eugenio-Pozzobon/Easy-Tracker-Android-App#easy-tracker-android-app">Cheque a documentação do aplicativo android clicando aqui</a>
         </string>
 
     <!-- How to Use Fragment -->
@@ -153,7 +151,7 @@
     <string name="reconnect_to_go">Reconecte para prosseguir!</string>
 
 
-<!--    FAQ QUESTIONS AND ANSWERS -->
+    <!--    FAQ QUESTIONS AND ANSWERS -->
     <string name="faq1">1. Como pegar as coordenadas GPS de outro lugar:</string>
     <string name="faq2">2. O que é declinação magnética:</string>
     <string name="faq3">3. Como pegar a declinação magnética:</string>
@@ -170,5 +168,7 @@
     <string name="faq_ans4">Em caso de problemas de conexão recomenda-se reiniciar o aplicativo e reiniciar o sistema eletrônico. Se o problema persistir, aperte o botão presente no HC-05 por 1 segundo.</string>
     <string name="gps_verbose">O App está usando sua localização atual para efetuar os cálculos de declinação magnética!</string>
     <string name="gps_marker_call">Você pode clicar no marcador rotativo para pegar sua localização atual automaticamente.</string>
+    <string name="paired_fragment_title">Dispositivos Pareados</string>
+
 
 </resources>
