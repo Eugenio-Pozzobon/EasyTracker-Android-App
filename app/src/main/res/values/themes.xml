@@ -21,6 +21,19 @@
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:navigationBarColor">@color/black</item>
+
+        <!--        Alert Dialog styles-->
+        <item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>
+
+        <!--        Snackbar styles-->
+        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
+        <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
+        <item name="snackbarTextViewStyle">@style/Widget.App.SnackbarTextViewStyle</item>
+
+    </style>
+
+    <style name="LaunchTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/star_tracker_illustration</item>
     </style>
 
     <style name="Theme.MyApplication.NoActionBar">
@@ -28,12 +41,20 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.MyApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.MyApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-<!--    <style name="Theme.MyApplication.Animation">-->
-<!--        <item name="android:tint">@color/white</item>-->
-<!--    </style>-->
+
+    <style name="MyAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <!--        check https://stackoverflow.com/questions/2422562/how-to-change-theme-for-alertdialog-->
+        <!-- Used for the buttons -->
+        <item name="android:buttonBarButtonStyle">@style/MyBorderlessButton</item>
+        <item name="colorAccent">@color/white</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Used for the background -->
+        <item name="android:background">#88000000</item>
+    </style>
 
 </resources>
