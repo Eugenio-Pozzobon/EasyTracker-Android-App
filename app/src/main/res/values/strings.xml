@@ -42,7 +42,10 @@
 
     <!-- Start Profile -->
     <string name="profile_start_button">Iniciar Alinhamento</string>
-    <string name="profile_instructions_check">Cheque se os valores acima estão corretos e então você poderá iniciar o alinhamento do seu dispositivo.</string>
+    <string name="profile_instructions_check">
+        Cheque se os valores acima estão corretos e então você
+        poderá iniciar o alinhamento do seu dispositivo.
+    </string>
     <string name="start_aligment">Iniciar Alinhamento</string>
 
     <!-- Edit Profile -->

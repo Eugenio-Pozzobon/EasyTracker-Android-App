@@ -182,7 +182,6 @@ class CurrentProfileFragment : Fragment() {
             countDownBluetooth.start()
             if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
                 (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
-                println("!!!OBSERVING!!!")
             }
         }
     }
@@ -307,10 +306,6 @@ class CurrentProfileFragment : Fragment() {
             if(!reconnecting && !connecting) {
                 _notConnectedWithBluetoothDevice()
             }
-        }
-        if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
-            (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
-            println("!!!OBSERVING!!!")
         }
     }
 
