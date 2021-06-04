@@ -219,7 +219,7 @@ class PolarAlignmentFragment : Fragment() {
     private fun updateAlignment() {
         try {
             declination = polarAlignmentViewModel.declination.value!!.toFloat()
-            var yaw: Float? = (activity as MainActivity).hc05.dataYaw.value?.minus(declination)
+            var yaw: Float? = (activity as MainActivity).hc05.dataYaw.value?.plus(declination)
 
             if(yaw !! > 360){
                 yaw = yaw-360
