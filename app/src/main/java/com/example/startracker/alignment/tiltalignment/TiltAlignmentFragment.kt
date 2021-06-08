@@ -253,9 +253,10 @@ class TiltAlignmentFragment : Fragment() {
             val paddingMax = 115.0F
             val paddingMin: Float = -115.0F
 
-            if (finalGpsAngle < 0){
-                finalGpsAngle = - finalGpsAngle
-            }
+//            if (finalGpsAngle < 0){
+//                finalGpsAngle = - finalGpsAngle
+//            }
+//            finalGpsAngle = 90-finalGpsAngle
 
             mapFinalAngle = mapFloat(finalGpsAngle, valueMin, valueMax, paddingMin, paddingMax)
 
