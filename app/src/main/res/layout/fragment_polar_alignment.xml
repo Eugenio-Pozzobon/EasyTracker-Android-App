@@ -149,6 +149,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/rotate_left" />
 
+            <ImageView
+                android:id="@+id/topview"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:rotation="360"
+                app:layout_constraintBottom_toTopOf="@+id/divider"
+                app:layout_constraintEnd_toEndOf="@+id/divider2"
+                app:layout_constraintStart_toStartOf="@+id/divider2"
+                app:layout_constraintTop_toBottomOf="@+id/text_north"
+                app:srcCompat="@drawable/ic_top_view" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

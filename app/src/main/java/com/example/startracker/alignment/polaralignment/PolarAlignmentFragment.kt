@@ -208,6 +208,7 @@ class PolarAlignmentFragment : Fragment() {
         try {
             updateAlignment()
             binding.compass.rotation = rotate
+            binding.topview.rotation = 180+rotate
         } catch (e: Exception) {
             Log.e("DEBUGCONNECTION", "Observer in Level Alignment not killed", e)
         }
