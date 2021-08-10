@@ -174,7 +174,7 @@
                 android:id="@+id/image_question_vector"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="8dp"
                 android:contentDescription="@string/todo_string"
                 android:scaleX="0.8"
                 android:scaleY="0.8"

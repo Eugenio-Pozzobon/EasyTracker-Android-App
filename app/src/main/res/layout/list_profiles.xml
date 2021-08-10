@@ -27,7 +27,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/yellow"
+            android:textColor="@color/cyan_brand_desaturated"
             android:textSize="18sp"
             app:ProfileName="@{profile}"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -42,7 +42,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/yellow"
+            android:textColor="@color/cyan_brand_desaturated"
             android:textSize="14sp"
             app:ProfileData="@{profile}"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -56,7 +56,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:background="@color/grey"
+            android:background="@color/orange_brand"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_data" />
@@ -66,11 +66,11 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginEnd="24dp"
-            android:alpha="0.9"
+            android:src="@drawable/button_icon_navigate_next_24"
+            android:contentDescription="@string/todo_string"
             app:layout_constraintBottom_toBottomOf="@+id/profile_data"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/profile_name"
-            app:srcCompat="@drawable/button_icon_navigate_next_24" />
+            app:layout_constraintTop_toTopOf="@+id/profile_name"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

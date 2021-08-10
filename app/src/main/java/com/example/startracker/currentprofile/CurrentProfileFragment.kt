@@ -21,7 +21,6 @@ import com.example.startracker.MainActivity
 import com.example.startracker.R
 import com.example.startracker.database.ProfileDatabase
 import com.example.startracker.databinding.FragmentCurrentProfileBinding
-import com.google.android.material.snackbar.Snackbar
 import kotlin.properties.Delegates
 
 
@@ -72,10 +71,10 @@ class CurrentProfileFragment : Fragment() {
             .create()
 
         //get Colors info
-        redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
-        greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
+        redButtonColor = ContextCompat.getColor(requireContext(), R.color.press_button)
+        greenButtonColor = ContextCompat.getColor(requireContext(), R.color.button_ok)
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
-        yellowButtonColor = ContextCompat.getColor(requireContext(), R.color.yellow_button)
+        yellowButtonColor = ContextCompat.getColor(requireContext(), R.color.button_loading)
 
         connecting = false
         reconnecting = false
@@ -123,17 +122,17 @@ class CurrentProfileFragment : Fragment() {
 
         //connect with bluetooth device
         binding.buttonConnect.setOnClickListener() {
-            if (((activity as MainActivity).hc05.mmIsConnected.value) == true) {
-                _connectedWithBluetoothDevice()
-            } else {
-                if (startBluetooth()) {
-                    connectWithBluetoothDevice()
-                }
-            }
-//            currentProfileViewModel.onConnect()
-//            binding.buttonConnect.setBackgroundColor(greenButtonColor)
-//            binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
-//            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+//            if (((activity as MainActivity).hc05.mmIsConnected.value) == true) {
+//                _connectedWithBluetoothDevice()
+//            } else {
+//                if (startBluetooth()) {
+//                    connectWithBluetoothDevice()
+//                }
+//            }
+            //binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+            currentProfileViewModel.onConnect()
+            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors
@@ -229,7 +228,7 @@ class CurrentProfileFragment : Fragment() {
     private fun _connectedWithBluetoothDevice() {
         currentProfileViewModel.onConnect()
         binding.buttonConnect.setBackgroundColor(greenButtonColor)
-        binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
+        //binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
         binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         connecting = false
         reconnecting = false

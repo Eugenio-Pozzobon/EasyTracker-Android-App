@@ -98,7 +98,7 @@ class EditProfileFragment : Fragment() {
         setHasOptionsMenu(true)
 
         //change buttons collors as design guidlines
-        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.press_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
         binding.buttonDelete.setBackgroundColor(redButtonColor)

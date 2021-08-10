@@ -1,7 +1,9 @@
 package com.example.startracker
 
 
+import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -29,14 +31,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var destinationHandler: NavDestination
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // set the Android Night Mode as default for the app
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         setTheme(R.style.Theme_MyApplication_NoActionBar)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // set the Android Night Mode as default for the app
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
 
         // get toolbar instance
         toolbar = binding.toolbar
@@ -148,5 +149,15 @@ class MainActivity : AppCompatActivity() {
             )
         }
         return super.dispatchTouchEvent(ev)
+    }
+
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {} // Night mode is not active, we're using the light theme
+            Configuration.UI_MODE_NIGHT_YES -> {} // Night mode is active, we're using dark theme
+        }
     }
 }

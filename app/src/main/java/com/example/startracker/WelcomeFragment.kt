@@ -27,7 +27,7 @@ class WelcomeFragment : Fragment() {
             v.findNavController().navigate(R.id.action_welcomeFragment_to_newProfileFragment)
         }
 
-        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.press_button)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
         binding.initbutton.setBackgroundColor(redButtonColor)

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/darker_gray"
+    android:background="@color/grey_bold"
     android:padding="16dp">
     <TextView
         android:id="@+id/textViewChild"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:background="@android:color/darker_gray"
+        android:background="@color/grey_bold"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:justificationMode="inter_word"
         android:textColorLink="#CCFFCC"

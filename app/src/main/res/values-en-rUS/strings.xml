@@ -19,10 +19,10 @@
     <string name="add_profile_bluetooth">Bluetooth Connection</string>
     <string name="add_profile_bluetooth_button">Connect</string>
     <string name="name_hint">Name</string>
-    <string name="nome_do_perfil_de_localiza_o">Profile Name</string>
-    <string name="profile_start_button">Init Alignment</string>
+    <string name="nome_do_perfil_de_localiza_o">Localization Name</string>
+    <string name="profile_start_button">Align</string>
     <string name="profile_instructions_check">" Check if the values above are correct so then you can start align yout device with north pole"</string>
-    <string name="start_aligment">Init Alignment</string>
+    <string name="start_aligment">Align</string>
     <string name="clearProfile">Delete Profile</string>
     <string name="clearProfiles">Delete All Profiles</string>
     <string name="ok_button">Check</string>

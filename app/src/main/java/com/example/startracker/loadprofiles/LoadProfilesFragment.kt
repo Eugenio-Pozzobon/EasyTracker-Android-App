@@ -53,8 +53,8 @@ class LoadProfilesFragment : Fragment() {
             }
         })
 
-        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
-        val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.press_button)
+        val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.button_ok)
         val whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
         binding.buttonClear.setBackgroundColor(redButtonColor)

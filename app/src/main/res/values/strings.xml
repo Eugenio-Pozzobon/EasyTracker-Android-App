@@ -38,15 +38,15 @@
     <string name="add_profile_bluetooth_button">Selecionar Dispositivo</string>
     <string name="current_profile_bluetooth_button">Conectar</string>
     <string name="name_hint">Nome</string>
-    <string name="nome_do_perfil_de_localiza_o">Nome do Perfil de Localização:</string>
+    <string name="nome_do_perfil_de_localiza_o">Nome do Local:</string>
 
     <!-- Start Profile -->
-    <string name="profile_start_button">Iniciar Alinhamento</string>
+    <string name="profile_start_button">Alinhar</string>
     <string name="profile_instructions_check">
         Cheque se os valores acima estão corretos e então você
         poderá iniciar o alinhamento do seu dispositivo.
     </string>
-    <string name="start_aligment">Iniciar Alinhamento</string>
+    <string name="start_aligment">Alinhar</string>
 
     <!-- Edit Profile -->
 

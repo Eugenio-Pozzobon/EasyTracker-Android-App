@@ -53,8 +53,8 @@ class EndAlignmentFragment : Fragment() {
         binding.endAlignmentViewModel = endAlignmentViewModel
         binding.lifecycleOwner = this
 
-        redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
-        greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
+        redButtonColor = ContextCompat.getColor(requireContext(), R.color.bad_align_state)
+        greenButtonColor = ContextCompat.getColor(requireContext(), R.color.align_state)
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
 

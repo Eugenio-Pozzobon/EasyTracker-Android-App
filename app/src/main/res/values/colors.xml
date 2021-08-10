@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="align_state">#3B913B</color>
-    <color name="green_button">#3B913B</color>
-    <color name="red_button">#FFC94032</color>
-    <color name="yellow">#FFFFFF00</color>
+    <color name="align_state">#4CAF50</color>
+    <color name="bad_align_state">#CF6679</color>
+
+    <color name="button_ok">#2259a4b3</color>
+    <color name="press_button">#995900</color>
+
+    <color name="red_error">#CF6679</color>
+
+    <color name="orange_brand">#995900</color>
+    <color name="orange_brand_dark">#663600</color>
+    <color name="orange_brand_2">#cc7900</color>
+<!--    orange_brand_2 used for buttons -->
+
+
+    <color name="cyan_brand">#00d6ff</color>
+    <color name="cyan_brand_desaturated">#59a4b3</color>
+    <color name="cyan_brand_dark">#1a6e80</color>
+
+
+    <color name="orange_brand_3">#fc9500</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#80D3D3D3</color>
-    <color name="grey_bold">#FFBBBBBB</color>
-    <color name="yellow_light">#AAFFFF00</color>
-    <color name="yellow_button">#BEA329</color>
+
+    <color name="grey">#FFDDDDDD</color>
+    <color name="grey_bold">#FF555555</color>
+
+    <color name="yellow">#f9db22</color>
+    <color name="yellow_light">#F7f14a</color>
+    <color name="button_loading">#aa995900</color>
 </resources>

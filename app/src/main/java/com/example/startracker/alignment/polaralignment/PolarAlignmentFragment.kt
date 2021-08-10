@@ -90,8 +90,8 @@ class PolarAlignmentFragment : Fragment() {
         binding.polarAlignmentViewModel = polarAlignmentViewModel
         binding.lifecycleOwner = this
 
-        redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
-        greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
+        redButtonColor = ContextCompat.getColor(requireContext(), R.color.bad_align_state)
+        greenButtonColor = ContextCompat.getColor(requireContext(), R.color.align_state)
         whiteTextColor = ContextCompat.getColor(requireContext(), R.color.white)
 
         binding.okButton.setBackgroundColor(redButtonColor)
@@ -351,6 +351,7 @@ class PolarAlignmentFragment : Fragment() {
             (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
         }
         countDownArrow.start()
+        // calibrateCompass()
     }
 
 }

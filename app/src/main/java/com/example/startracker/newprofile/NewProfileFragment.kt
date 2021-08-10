@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.hardware.GeomagneticField
 import android.location.Location
@@ -16,7 +15,6 @@ import android.util.Log
 import android.view.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TextViewCompat.getCompoundDrawablesRelative
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -104,7 +102,7 @@ class NewProfileFragment : Fragment() {
 
 
         //change buttons colors as design guidelines
-        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.red_button)
+        val redButtonColor = ContextCompat.getColor(requireContext(), R.color.press_button)
         //val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.green_button)
         whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
         blackColor = ContextCompat.getColor(requireContext(), R.color.black)
