@@ -122,17 +122,17 @@ class CurrentProfileFragment : Fragment() {
 
         //connect with bluetooth device
         binding.buttonConnect.setOnClickListener() {
-//            if (((activity as MainActivity).hc05.mmIsConnected.value) == true) {
-//                _connectedWithBluetoothDevice()
-//            } else {
-//                if (startBluetooth()) {
-//                    connectWithBluetoothDevice()
-//                }
-//            }
+            if (((activity as MainActivity).hc05.mmIsConnected.value) == true) {
+                _connectedWithBluetoothDevice()
+            } else {
+                if (startBluetooth()) {
+                    connectWithBluetoothDevice()
+                }
+            }
             //binding.buttonStartAlignment.setBackgroundColor(greenButtonColor)
-            binding.buttonConnect.setBackgroundColor(greenButtonColor)
-            currentProfileViewModel.onConnect()
-            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
+//            binding.buttonConnect.setBackgroundColor(greenButtonColor)
+//            currentProfileViewModel.onConnect()
+//            binding.buttonConnect.text = getString(R.string.connect_status_sucessfull)
         }
 
         //change buttons and text colors
