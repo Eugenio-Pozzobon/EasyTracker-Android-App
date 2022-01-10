@@ -6,22 +6,22 @@
     app:startDestination="@id/currentProfileFragment">
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.startracker.AboutFragment"
+        android:name="com.epp.easytracker.AboutFragment"
         android:label="Sobre"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/debugFragment"
-        android:name="com.example.startracker.debug.DebugFragment"
+        android:name="com.epp.easytracker.debug.DebugFragment"
         android:label="Debug"
         tools:layout="@layout/fragment_debug" />
     <fragment
         android:id="@+id/howToUseFragment"
-        android:name="com.example.startracker.howtouse.HowToUseFragment"
+        android:name="com.epp.easytracker.howtouse.HowToUseFragment"
         android:label="FAQ"
         tools:layout="@layout/fragment_how_to_use" />
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.startracker.WelcomeFragment"
+        android:name="com.epp.easytracker.WelcomeFragment"
         android:label="Bem vindo!"
         tools:layout="@layout/fragment_welcome">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/newProfileFragment"
-        android:name="com.example.startracker.newprofile.NewProfileFragment"
+        android:name="com.epp.easytracker.newprofile.NewProfileFragment"
         android:label="Adicionar Perfil"
         tools:layout="@layout/fragment_new_profile">
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/currentProfileFragment"
-        android:name="com.example.startracker.currentprofile.CurrentProfileFragment"
+        android:name="com.epp.easytracker.currentprofile.CurrentProfileFragment"
         android:label="Perfil X"
         app:defaultNavHost="true"
         tools:layout="@layout/fragment_current_profile">
@@ -87,7 +87,7 @@
     </fragment>
     <fragment
         android:id="@+id/loadProfilesFragment"
-        android:name="com.example.startracker.loadprofiles.LoadProfilesFragment"
+        android:name="com.epp.easytracker.loadprofiles.LoadProfilesFragment"
         android:label="Carregar Perfil">
         <action
             android:id="@+id/action_loadProfilesFragment_to_newProfileFragment"
@@ -107,7 +107,7 @@
     </fragment>
     <fragment
         android:id="@+id/levelAlignmentFragment"
-        android:name="com.example.startracker.alignment.levelalignment.LevelAlignmentFragment"
+        android:name="com.epp.easytracker.alignment.levelalignment.LevelAlignmentFragment"
         android:label="@string/level_alignment_title"
         tools:layout="@layout/fragment_level_alignment">
         <action
@@ -122,7 +122,7 @@
     </fragment>
     <fragment
         android:id="@+id/polarAlignmentFragment"
-        android:name="com.example.startracker.alignment.polaralignment.PolarAlignmentFragment"
+        android:name="com.epp.easytracker.alignment.polaralignment.PolarAlignmentFragment"
         android:label="@string/polar_alignment_title"
         tools:layout="@layout/fragment_polar_alignment">
         <action
@@ -136,7 +136,7 @@
     </fragment>
     <fragment
         android:id="@+id/tiltAlignmentFragment"
-        android:name="com.example.startracker.alignment.tiltalignment.TiltAlignmentFragment"
+        android:name="com.epp.easytracker.alignment.tiltalignment.TiltAlignmentFragment"
         android:label="@string/tilt_alignment_title"
         tools:layout="@layout/fragment_tilt_alignment">
         <action
@@ -150,7 +150,7 @@
     </fragment>
     <fragment
         android:id="@+id/endAligmentFragment"
-        android:name="com.example.startracker.alignment.endalignment.EndAlignmentFragment"
+        android:name="com.epp.easytracker.alignment.endalignment.EndAlignmentFragment"
         android:label="@string/end_alignment_title"
         tools:layout="@layout/fragment_end_alignment">
         <action
@@ -163,7 +163,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.startracker.editprofile.EditProfileFragment"
+        android:name="com.epp.easytracker.editprofile.EditProfileFragment"
         android:label="Editar Perfil">
         <action
             android:id="@+id/action_editProfileFragment_to_currentProfileFragment"
@@ -190,7 +190,7 @@
     </fragment>
     <fragment
         android:id="@+id/pairedDevicesFragment"
-        android:name="com.example.startracker.paireddevices.PairedDevicesFragment"
+        android:name="com.epp.easytracker.paireddevices.PairedDevicesFragment"
         android:label="@string/paired_fragment_title">
         <action
             android:id="@+id/action_pairedDevicesFragment_to_currentProfileFragment"

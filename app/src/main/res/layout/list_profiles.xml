@@ -6,11 +6,11 @@
     <data>
         <variable
             name="profile"
-            type="com.example.startracker.database.Profile" />
+            type="com.epp.easytracker.database.Profile" />
 
         <variable
             name="clickListener"
-            type="com.example.startracker.loadprofiles.ProfileListener" />
+            type="com.epp.easytracker.loadprofiles.ProfileListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

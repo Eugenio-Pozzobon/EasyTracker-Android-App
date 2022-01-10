@@ -9,7 +9,7 @@
     <data>
         <variable
             name="polarAlignmentViewModel"
-            type="com.example.startracker.alignment.polaralignment.PolarAlignmentViewModel" />
+            type="com.epp.easytracker.alignment.polaralignment.PolarAlignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

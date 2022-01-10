@@ -9,7 +9,7 @@
     <data>
         <variable
             name="loadProfilesViewModel"
-            type="com.example.startracker.loadprofiles.LoadProfilesViewModel"
+            type="com.epp.easytracker.loadprofiles.LoadProfilesViewModel"
             />
     </data>
 

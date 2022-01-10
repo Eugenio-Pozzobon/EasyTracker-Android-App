@@ -1,0 +1,17 @@
+Log de renderização do Adobe After Effects v17.0.6 Windows 64 para o projeto“Animacao.aep”
+
+Renderização iniciada em 07/09/2021 às 07:17:38
+
+  07/09/2021 07:17:38: iniciando composição “Camada 2/icon_animação”.
+
+  Saída para: C:\Users\eugen\OneDrive\Área de Trabalho\Camada 2-icon_animação.avi    07/09/2021 07:17:49: composição concluída “Camada 2/icon_animação”.
+
+
+  07/09/2021 07:17:49: iniciando composição “Camada 2/icon_animação”.
+
+  Saída para: C:\Users\eugen\OneDrive\Área de Trabalho\Camada 2-icon_animação_1.avi    07/09/2021 07:17:56: composição concluída “Camada 2/icon_animação”.
+
+
+  Tempo total decorrido: 18 segundos
+Log fechado em 07/09/2021 às 07:17:56
+

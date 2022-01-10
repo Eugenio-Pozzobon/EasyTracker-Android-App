@@ -10,7 +10,7 @@
     <data>
         <variable
             name="newProfileViewModel"
-            type="com.example.startracker.newprofile.NewProfileViewModel" />
+            type="com.epp.easytracker.newprofile.NewProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

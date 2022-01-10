@@ -9,7 +9,7 @@
     <data>
         <variable
             name="endAlignmentViewModel"
-            type="com.example.startracker.alignment.endalignment.EndAlignmentViewModel" />
+            type="com.epp.easytracker.alignment.endalignment.EndAlignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

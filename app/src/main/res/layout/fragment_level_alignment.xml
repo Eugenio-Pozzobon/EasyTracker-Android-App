@@ -9,7 +9,7 @@
     <data>
         <variable
             name="levelAlignmentViewModel"
-            type="com.example.startracker.alignment.levelalignment.LevelAlignmentViewModel" />
+            type="com.epp.easytracker.alignment.levelalignment.LevelAlignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

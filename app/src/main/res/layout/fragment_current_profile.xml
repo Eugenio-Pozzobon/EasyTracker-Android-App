@@ -11,7 +11,7 @@
 
         <variable
             name="currentProfileViewModel"
-            type="com.example.startracker.currentprofile.CurrentProfileViewModel" />
+            type="com.epp.easytracker.currentprofile.CurrentProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

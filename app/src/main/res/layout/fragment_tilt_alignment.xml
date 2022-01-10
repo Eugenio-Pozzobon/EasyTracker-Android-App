@@ -9,7 +9,7 @@
     <data>
         <variable
             name="tiltAlignmentViewModel"
-            type="com.example.startracker.alignment.tiltalignment.TiltAlignmentViewModel" />
+            type="com.epp.easytracker.alignment.tiltalignment.TiltAlignmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
