@@ -209,7 +209,7 @@ class LevelAlignmentFragment : Fragment() {
                 Snackbar.LENGTH_LONG,
             )
             btSnack.show()
-            (activity as MainActivity).hc05.reconnect()
+            (activity as MainActivity).hc05.reconnect(requireContext())
             if(!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
                 (activity as MainActivity).hc05.mmIsConnected.observeForever(checkConnection)
             }

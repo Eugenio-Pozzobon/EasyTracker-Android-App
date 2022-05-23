@@ -41,17 +41,22 @@ class LoadProfilesFragment : Fragment() {
 
         val adapter = ProfileListAdapter(ProfileListener{
             profileId -> loadProfileViewModel.onProfileClicked(profileId)
+        }, EditListener{
+            profileId -> loadProfileViewModel.onEditClicked(profileId)
+        }, DeleteListener{
+                profileId -> loadProfileViewModel.onDeleteClicked(profileId)
         })
+
 
         val manager = LinearLayoutManager(activity)
         binding.profileList.layoutManager = manager
         binding.profileList.adapter = adapter
 
-        loadProfileViewModel.profiles.observe(viewLifecycleOwner, {
+        loadProfileViewModel.profiles.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.submitList(it)
             }
-        })
+        }
 
         val redButtonColor = ContextCompat.getColor(requireContext(), R.color.press_button)
         val greenButtonColor = ContextCompat.getColor(requireContext(), R.color.button_ok)
@@ -68,20 +73,29 @@ class LoadProfilesFragment : Fragment() {
                 .navigate(R.id.action_loadProfilesFragment_to_newProfileFragment)
         }
 
-        loadProfileViewModel.navigateToEditProfile.observe(viewLifecycleOwner, {
+        loadProfileViewModel.navigateToCurrentProfile.observe(viewLifecycleOwner) {
 
-            if(it == true) {
+            if (it == true) {
                 this.findNavController()
                     .navigate(R.id.action_loadProfilesFragment_to_currentProfileFragment)
             }
-        })
+        }
 
-        loadProfileViewModel.clearButtonVisible.observe(viewLifecycleOwner, {
+        loadProfileViewModel.navigateToEditProfile.observe(viewLifecycleOwner) {
+
+            if (it == true) {
+                this.findNavController()
+                    .navigate(R.id.action_loadProfilesFragment_to_editProfileFragment)
+            }
+        }
+
+        loadProfileViewModel.clearButtonVisible.observe(viewLifecycleOwner) {
             if (it == false) { // Observed state is true.
                 binding.buttonClear.setBackgroundColor(greenButtonColor)
-                this.findNavController().navigate(R.id.action_loadProfilesFragment_to_newProfileFragment)
+                this.findNavController()
+                    .navigate(R.id.action_loadProfilesFragment_to_newProfileFragment)
             }
-        })
+        }
 
         //Todo: deletar e editar perfil icons
         return binding.root

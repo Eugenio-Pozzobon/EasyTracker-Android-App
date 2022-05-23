@@ -11,12 +11,19 @@
         <variable
             name="clickListener"
             type="com.epp.easytracker.loadprofiles.ProfileListener" />
+
+        <variable
+            name="editListener"
+            type="com.epp.easytracker.loadprofiles.EditListener" />
+
+        <variable
+            name="deleteListener"
+            type="com.epp.easytracker.loadprofiles.DeleteListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(profile)}"
         android:orientation="vertical">
 
 
@@ -26,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:onClick="@{() -> clickListener.onClick(profile)}"
             android:textColor="@color/cyan_brand_desaturated"
             android:textSize="18sp"
             app:ProfileName="@{profile}"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,11 +48,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="2dp"
-            android:layout_marginEnd="8dp"
+            android:onClick="@{() -> clickListener.onClick(profile)}"
             android:textColor="@color/cyan_brand_desaturated"
             android:textSize="14sp"
             app:ProfileData="@{profile}"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
@@ -61,16 +69,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_data" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginEnd="24dp"
-            android:src="@drawable/button_icon_navigate_next_24"
-            android:contentDescription="@string/todo_string"
+
+        <!--            android:onClick="@{() -> editListener.onEdit(profile)}"-->
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/profile_data"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/profile_name"/>
+            app:layout_constraintTop_toTopOf="@+id/profile_name">
+
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:contentDescription="@string/todo_string"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:onClick="@{() -> editListener.onEdit(profile)}"
+                android:focusable="true" />
+
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/todo_string"
+                android:onClick="@{() -> deleteListener.onDelete(profile)}"
+                android:src="@drawable/ic_baseline_delete_24" />
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

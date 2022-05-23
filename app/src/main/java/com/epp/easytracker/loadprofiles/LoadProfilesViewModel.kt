@@ -24,6 +24,11 @@ class LoadProfilesViewModel(
     val navigateToEditProfile
         get() = _navigateToEditProfile
 
+
+    private val _navigateToCurrentProfile = MutableLiveData<Boolean>()
+    val navigateToCurrentProfile
+        get() = _navigateToCurrentProfile
+
     private lateinit var profileSelected:Profile
     private lateinit var lastProfileSelected:Profile
 
@@ -44,12 +49,43 @@ class LoadProfilesViewModel(
         }
     }
 
+    fun onEditClicked(id: Long) {
+        Log.i("VIEWMODELDEBUG", id.toString())
+        viewModelScope.launch {
+            if (getLastProfile(true) != null) {
+                lastProfileSelected = getLastProfile(true)!!
+                lastProfileSelected.lastProfile = false
+                update(lastProfileSelected)
+            }
+
+            Log.i("VIEWMODELDEBUG", "END UPDATE")
+            profileSelected = getProfileWithId(id)
+            profileSelected.lastProfile = true
+            update(profileSelected)
+            allowLoadToEditFragment()
+        }
+    }
+
+    fun onDeleteClicked(id: Long) {
+        Log.i("VIEWMODELDEBUG", id.toString())
+        viewModelScope.launch {
+            deleteProfileWithId(id)
+            allowLoadToCurrentFragment()
+        }
+    }
+
     private fun allowLoadToCurrentFragment(){
         Log.i("VIEWMODELDEBUG", "allowLoadToCurrentFragment")
+        _navigateToCurrentProfile.value = true
+    }
+
+    private fun allowLoadToEditFragment(){
+        Log.i("VIEWMODELDEBUG", "allowLoadToEditFragment")
         _navigateToEditProfile.value = true
     }
 
     init {
+        _navigateToCurrentProfile.value = false
         _navigateToEditProfile.value = false
     }
 
@@ -67,6 +103,13 @@ class LoadProfilesViewModel(
             prof = database.getProfileWithId(key)
         }
         return prof
+    }
+
+    private suspend fun deleteProfileWithId(key: Long){
+        var prof:Profile
+        withContext(Dispatchers.IO) {
+            database.deleteProfileWithId(key)
+        }
     }
 
     private suspend fun update(profile: Profile) {

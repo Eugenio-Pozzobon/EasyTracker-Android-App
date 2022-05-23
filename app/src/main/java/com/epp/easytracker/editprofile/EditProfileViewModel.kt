@@ -1,4 +1,4 @@
-package com.epp.easytracker.newprofile
+package com.epp.easytracker.editprofile
 
 import android.app.Application
 import androidx.lifecycle.*

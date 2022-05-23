@@ -176,7 +176,7 @@ class CurrentProfileFragment : Fragment() {
             connecting = true
             binding.buttonConnect.text = getString(R.string.connecting_status)
             binding.buttonConnect.setBackgroundColor(yellowButtonColor)
-            (activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString())
+            (activity as MainActivity).hc05.connect(currentProfileViewModel.bluetoothMac.value.toString(), requireContext())
             connectingTime = System.currentTimeMillis()
             countDownBluetooth.start()
             if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {
@@ -209,7 +209,7 @@ class CurrentProfileFragment : Fragment() {
             binding.buttonConnect.text = getString(R.string.connecting_status)
             binding.buttonConnect.setBackgroundColor(yellowButtonColor)
             if (startBluetooth()) {
-                (activity as MainActivity).hc05.reconnect()
+                (activity as MainActivity).hc05.reconnect(requireContext())
                 connectingTime = System.currentTimeMillis()
                 countDownBluetooth.start()
                 if (!(activity as MainActivity).hc05.mmIsConnected.hasActiveObservers()) {

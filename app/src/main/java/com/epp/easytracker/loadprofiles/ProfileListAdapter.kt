@@ -9,11 +9,11 @@ import com.epp.easytracker.database.Profile
 import com.epp.easytracker.databinding.ListProfilesBinding
 
 
-class ProfileListAdapter(val clickListener: ProfileListener) : ListAdapter<Profile, ProfileListAdapter.ViewHolder>(ProfileDiffCallback()){
+class ProfileListAdapter(private val clickListener: ProfileListener, private val editListener: EditListener, private val deleteListener: DeleteListener) : ListAdapter<Profile, ProfileListAdapter.ViewHolder>(ProfileDiffCallback()){
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(clickListener, item)
+        holder.bind(clickListener,editListener, deleteListener, item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,9 +24,11 @@ class ProfileListAdapter(val clickListener: ProfileListener) : ListAdapter<Profi
 
     class ViewHolder private constructor (val binding: ListProfilesBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(clickListener: ProfileListener, item: Profile) {
+        fun bind(clickListener: ProfileListener, editListener: EditListener, deleteListener: DeleteListener, item: Profile) {
             binding.profile = item
             binding.clickListener = clickListener
+            binding.editListener = editListener
+            binding.deleteListener = deleteListener
             binding.executePendingBindings()
         }
 
@@ -53,4 +55,12 @@ class ProfileDiffCallback: DiffUtil.ItemCallback<Profile>(){
 
 class ProfileListener(val clickListener: (profileId: Long) -> Unit) {
     fun onClick(profile: Profile) = clickListener(profile.profileId)
+}
+
+class EditListener(val editListener: (profileId: Long) -> Unit) {
+    fun onEdit(profile: Profile) = editListener(profile.profileId)
+}
+
+class DeleteListener(val deleteListener: (profileId: Long) -> Unit) {
+    fun onDelete(profile: Profile) = deleteListener(profile.profileId)
 }

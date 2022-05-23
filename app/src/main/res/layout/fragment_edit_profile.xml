@@ -7,7 +7,7 @@
     <data>
         <variable
             name="editProfileViewModel"
-            type="com.epp.easytracker.newprofile.EditProfileViewModel" />
+            type="com.epp.easytracker.editprofile.EditProfileViewModel" />
     </data>
 
 

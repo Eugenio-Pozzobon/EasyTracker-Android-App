@@ -1,8 +1,0 @@
-  14/09/2021 18:50:09: iniciando composição “Camada 2/icon_animação”.
-
-  Saída para: C:\Users\eugen\OneDrive\Área de Trabalho\Camada 2-icon_animação_1.avi    14/09/2021 18:50:23: composição concluída “Camada 2/icon_animação”.
-
-
-  Tempo total decorrido: 14 segundos
-Log fechado em 14/09/2021 às 18:50:23
-

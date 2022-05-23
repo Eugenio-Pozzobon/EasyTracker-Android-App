@@ -35,7 +35,7 @@ interface ProfileDatabaseDao {
      * When updating a row with a value already set in a column,
      * replaces the old value with the new one.
      *
-     * @param Profile new value to write
+     * @param profile new value to write
      */
     @Update
     suspend fun update(profile: Profile)
@@ -73,6 +73,13 @@ interface ProfileDatabaseDao {
      */
     @Query("SELECT * from profile_table WHERE profileId = :key")
     fun getProfileWithId(key: Long): Profile
+
+
+    /**
+     * Selects and delete the profile with given profileId.
+     */
+    @Query("DELETE from profile_table WHERE profileId = :key")
+    fun deleteProfileWithId(key: Long)
 
     /**
      * Return if database is empty or not

@@ -104,6 +104,14 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/loadProfilesFragment" />
+        <action
+            android:id="@+id/action_loadProfilesFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/loadProfilesFragment" />
     </fragment>
     <fragment
         android:id="@+id/levelAlignmentFragment"

@@ -13,6 +13,12 @@ android {
             keyAlias 'EASYTRACKERastro'
             storeFile file('D:\\Git\\Easy-Tracker-Android-App\\keyStoreEasyTracker.jks')
         }
+        debug  {
+            storePassword '398093'
+            keyPassword '398093'
+            keyAlias 'EASYTRACKERastro'
+            storeFile file('D:\\Git\\Easy-Tracker-Android-App\\keyStoreEasyTracker.jks')
+        }
     }
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
@@ -41,6 +47,10 @@ android {
         release {
             minifyEnabled false
             signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {

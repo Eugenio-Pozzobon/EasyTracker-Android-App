@@ -18,7 +18,6 @@ import androidx.navigation.ui.NavigationUI
 import com.epp.easytracker.R
 import com.epp.easytracker.database.ProfileDatabase
 import com.epp.easytracker.databinding.FragmentEditProfileBinding
-import com.epp.easytracker.newprofile.EditProfileViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 

@@ -2,7 +2,9 @@ package com.epp.easytracker
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -132,13 +134,13 @@ class BluetoothService {
      * Launch this in a separated thread
      * @param DeviceMAC that is the bluetooth address
      */
-    fun connect(DeviceMAC: String) {
+    fun connect(DeviceMAC: String, context: Context) {
         thread {
             try {
                 if (_mmIsConnected.value != true) {
                     mmDeviceMAC = DeviceMAC
                     RunnableThread = ConnectedThread(DeviceMAC, handler)
-                    RunnableThread.connectThread()
+                    RunnableThread.connectThread(context)
                     _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
                     if (RunnableThread.mmThreadIsConnected) {
                         RunnableThread.run()
@@ -174,14 +176,14 @@ class BluetoothService {
      * Reconnect with a bluetooth device specified by your address
      * Launch this in a separated thread
      */
-    fun reconnect() {
+    fun reconnect(context: Context) {
         thread{
             try {
                 if (_mmIsConnected.value == true) { //disconect just if it is connected
                     RunnableThread.disconnectThread()
                 }
                 RunnableThread = ConnectedThread(mmDeviceMAC, handler)
-                RunnableThread.connectThread()
+                RunnableThread.connectThread(context)
                 _mmIsConnected.postValue(RunnableThread.mmThreadIsConnected)
                 if (RunnableThread.mmThreadIsConnected) {
                     RunnableThread.run()
@@ -221,7 +223,7 @@ class BluetoothService {
         override fun run() {
 
             // check if it still connected
-            if (mmThreadIsConnected == true) {
+            if (mmThreadIsConnected) {
 
                 var getWriteTime: Long = System.currentTimeMillis()
                 val buffer = ByteArray(1)
@@ -237,7 +239,7 @@ class BluetoothService {
                         //delaytime is the delay that ui wait for read next buffer.
                         var delaytime = 10
                         if ((mmInStream.available() > 1000)) {
-                            // if the buffer is overload, i.e, is bigger then 230 bytes,
+                            // if the buffer is overloaded, i.e, is bigger then 230 bytes,
                             // reduce the delay so the UI can update faster enough
                             delaytime = 1
                         }
@@ -306,10 +308,12 @@ class BluetoothService {
 
         // This function check if the phone has bt adapter
         // and then connect with device using the UUID
-        fun connectThread() {
-            if (BluetoothAdapter.getDefaultAdapter() != null) {
+        fun connectThread(context: Context) {
+            val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
 
-                mmAdapter = BluetoothAdapter.getDefaultAdapter()
+            if (bluetoothManager.adapter != null) {
+
+                mmAdapter = bluetoothManager.adapter
                 mmThreadIsDesconnecting = false
 
                 if (!mmAdapter.isEnabled) {

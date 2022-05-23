@@ -6,7 +6,14 @@
         <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/drawable-xxxhdpi-v23/launch_screen.xml" value="0.24444444444444444" />
         <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/drawable-xxxhdpi/launch_screen.xml" value="0.1707236842105263" />
         <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/drawable/bluetooth_vector.xml" value="0.2" />
+        <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/drawable/gps_circle_vector.xml" value="0.2265" />
+        <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.2265" />
+        <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2265" />
+        <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/layout/activity_main.xml" value="0.21784420289855072" />
         <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/layout/fragment_current_profile.xml" value="0.16354166666666667" />
+        <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/layout/fragment_edit_profile.xml" value="0.10989583333333333" />
+        <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/layout/fragment_level_alignment.xml" value="0.21784420289855072" />
+        <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/layout/list_profiles.xml" value="0.4" />
         <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/layout/nav_header.xml" value="0.16052631578947368" />
         <entry key="..\:/Git/Easy-Tracker-Android-App/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.10493421052631578" />
       </map>
