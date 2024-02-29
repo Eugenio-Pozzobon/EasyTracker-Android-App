@@ -62,6 +62,8 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
+
+
         <!-- With data binding and LiveData, we can track the buttons' visibility states
              from the ViewModel. The click handler is in the ViewModel as well, and
              you can set it for the Views using this lambda pattern. -->

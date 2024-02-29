@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.epp.easytracker.database.Profile
 import com.epp.easytracker.database.ProfileDatabaseDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -15,10 +16,16 @@ class LoadProfilesViewModel(
 ) : AndroidViewModel(application) {
 
     var profiles = database.getAllProfiles()
+    val profilesFlow = profiles.asFlow()
+    val clearButtonVisible = profilesFlow
+        .map { profiles ->
+            profiles.isNotEmpty()
+        }
+        .asLiveData() // Only if you need to observe this as LiveData in the UI
 
-    val clearButtonVisible = Transformations.map(profiles) {
-        it?.isNotEmpty()
-    }
+//    val clearButtonVisible = Transformations.map(profiles) {
+//        it?.isNotEmpty()
+//    }
 
     private val _navigateToEditProfile = MutableLiveData<Boolean>()
     val navigateToEditProfile

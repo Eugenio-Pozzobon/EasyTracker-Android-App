@@ -11,17 +11,16 @@ android {
             storePassword '398093'
             keyPassword '398093'
             keyAlias 'EASYTRACKERastro'
-            storeFile file('D:\\Git\\Easy-Tracker-Android-App\\keyStoreEasyTracker.jks')
+            storeFile file('../keyStoreEasyTracker.jks')
         }
         debug  {
             storePassword '398093'
             keyPassword '398093'
             keyAlias 'EASYTRACKERastro'
-            storeFile file('D:\\Git\\Easy-Tracker-Android-App\\keyStoreEasyTracker.jks')
+            storeFile file('../keyStoreEasyTracker.jks')
         }
     }
-    compileSdkVersion 31
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 34
 
     buildFeatures {
         viewBinding true
@@ -32,9 +31,9 @@ android {
     defaultConfig {
         applicationId "com.epp.com.easytracker"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 34
+        versionCode 2
+        versionName "1.1"
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -67,27 +66,27 @@ configurations.all {
 }
 
 dependencies {
-    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation "androidx.drawerlayout:drawerlayout:1.2.0"
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.mediarouter:mediarouter:1.2.5'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.mediarouter:mediarouter:1.6.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
 
 
-    implementation 'androidx.room:room-runtime:2.4.0'
-    kapt 'androidx.room:room-compiler:2.4.0'
-    implementation 'androidx.room:room-ktx:2.4.0'
+    implementation 'androidx.room:room-runtime:2.6.1'
+    kapt 'androidx.room:room-compiler:2.6.1'
+    implementation 'androidx.room:room-ktx:2.6.1'
 
     // Android KTX
     implementation "androidx.core:core-ktx:$version_core"
 
 
-    def nav_version = "2.3.5"
+    def nav_version = "2.7.7"
 
     // Java language implementation
 
@@ -102,18 +101,18 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Jetpack Compose Integration
-    implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
+    implementation "androidx.navigation:navigation-compose:2.7.7"
 
-    api 'com.google.android.material:material:1.4.0-alpha02'
+    api 'com.google.android.material:material:1.11.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.10'
 
-    androidTestImplementation 'androidx.test:core:1.4.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test:runner:1.4.1-alpha03'
+    androidTestImplementation 'androidx.test:core:1.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
     testImplementation 'junit:junit:4.13.2'
-    kapt 'androidx.test.espresso:espresso-core:3.4.0'
+    kapt 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-location:21.1.0'
 }
