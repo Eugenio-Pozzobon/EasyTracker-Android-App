@@ -28,9 +28,6 @@ android {
         dataBinding true
     }
 
-    aaptOptions {
-        cruncherEnabled = false
-    }
 
     defaultConfig {
         applicationId "com.epp.com.easytracker"
@@ -60,6 +57,7 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
+    namespace 'com.epp.easytracker'
 }
 
 configurations.all {
